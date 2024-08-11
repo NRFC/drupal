@@ -1,0 +1,57 @@
+{
+  "node": {
+    "team": [
+      {
+        "title": "U16 Boys",
+        "field_section": "Boys",
+        "field_support_team": [
+          {
+            "person": "John Hodds",
+            "role": ["Lead coach"]
+          },
+          {
+            "person": "Rob Savage",
+            "role": ["Coach"]
+          },
+          {
+            "person": "",
+            "role": ["Coach", "First Aider"]
+          }
+        ]
+      },
+      {
+        "title": "U16 Girls",
+        "field_photographs": [
+          "https://api.lionrugby.com/assets/5793584e-3ce2-44e9-bed7-32e9817c0820.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+          "https://api.lionrugby.com/assets/d566b57f-04e9-481f-8ffa-4a66300ef812.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+          "https://api.lionrugby.com/assets/dc936fc4-bba5-46bc-93e8-f05174b78308.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+          "https://api.lionrugby.com/assets/69dbd5fc-8330-496d-b11e-efa0a2c618e8.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+          "https://api.lionrugby.com/assets/50a52874-5d45-4093-a229-beeddd6573d2.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+          "https://api.lionrugby.com/assets/e2d03412-0f94-418b-b276-8e79554cbd28.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+        ],
+        "field_section": "Girls",
+        "field_team_description": [
+          "The Under 16s is a vibrant, exciting and popular age group at Norwich with 20+ girls regularly attending training sessions. We have a vast range of experience and skills from girls who are future International stars to those just starting out on their rugby journey. So whatever level you play at or aspire to you’re bound to fit in here and are always guaranteed a warm welcome from this social bunch of young women."
+        ],
+        "field_support_team": [
+          {
+            "person": "Sain Ha;ll",
+            "role": ["Lead coach"]
+          },
+          {
+            "person": "Toby Hartley",
+            "role": ["Coach"]
+          },
+          {
+            "person": "Bob Cameron",
+            "role": ["Coach", "First Aider"]
+          },
+          {
+            "person": "Claire Honess",
+            "role": ["Manager"]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "taxonomy": {
+    "Role": {
+      "description": "Roles within the club, e.g. coach, 1st aider",
+      "terms": [
+        "Coach",
+        "First Aider",
+        "Lead coach",
+        "Manager"
+      ]
+    },
+    "Team section": {
+      "description": "Seniors, Youth etc",
+      "terms": [
+        "Senior",
+        "Youth:Boys",
+        "Youth:Girls",
+        "Minis"
+      ]
+    }
+  }
+}

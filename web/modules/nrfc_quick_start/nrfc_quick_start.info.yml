@@ -1,0 +1,5 @@
+name: 'NRFC Quick Start'
+type: module
+description: 'Import site data'
+package: Custom
+core_version_requirement: ^10 || ^11
