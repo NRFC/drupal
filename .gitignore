@@ -60,3 +60,6 @@
 /drush
 /drupal.phar
 /drupal
+
+# custom
+.docker/initdb.d/

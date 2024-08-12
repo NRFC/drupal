@@ -62,9 +62,7 @@ final class NrfcQuickStartCommands extends DrushCommands
       if (!Vocabulary::load($vid)) {
         Vocabulary::create(['vid' => $vid, 'description' => $definition["description"], 'name' => $taxonomy])->save();
       }
-      foreach ($definition["terms"] as $term) {
-        $this->addTerm($vid, $term);
-      }
+      $this->addTerms($vid, $definition["terms"]);
     }
   }
 
@@ -78,18 +76,21 @@ final class NrfcQuickStartCommands extends DrushCommands
    * @throws InvalidPluginDefinitionException
    * @throws PluginNotFoundException
    */
-  private function addTerm($vid, $term): void
+  private function addTerms($vid, $terms, $parent = null): void
   {
-    $nest = explode(":", $term);
-    $parent = null;
-    foreach ($nest as $n) {
-      // $n exist already?
-      if ($this->getTermByName($vid, $n)) {
-        $parent = $n;
-      } else {
-        $parent = Term::create(["vid" => $vid, "name" => $n, "parent" => $parent]);
-        $parent->enforceIsNew();
-        $parent->save();
+    foreach ($terms as $term => $children) {
+      $_term = $this->getTermByName($vid, $term);
+      if (!$_term) {
+        $_term = Term::create([
+          "vid" => $vid,
+          "name" => $term,
+          "parent" => $parent
+        ]);
+        $_term->enforceIsNew();
+        $_term->save();
+      }
+      if (count($children)>0) {
+        $this->addTerms($vid, $children, $_term);
       }
     }
   }
