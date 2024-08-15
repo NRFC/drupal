@@ -4,6 +4,9 @@
       "description": "Roles associated with the teams, e.g. coach, 1st aider",
       "terms": {
         "Coach": {},
+        "Head Coach": {},
+        "Captain": {},
+        "Vice Captain": {},
         "First Aider": {},
         "Lead coach": {},
         "Manager": {}

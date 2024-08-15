@@ -1,57 +1,394 @@
 {
-  "node": {
-    "team": [
-      {
-        "title": "U16 Boys",
-        "field_section": "Boys",
-        "field_support_team": [
-          {
-            "person": "John Hodds",
-            "role": ["Lead coach"]
-          },
-          {
-            "person": "Rob Savage",
-            "role": ["Coach"]
-          },
-          {
-            "person": "",
-            "role": ["Coach", "First Aider"]
-          }
-        ]
-      },
-      {
-        "title": "U16 Girls",
-        "field_photographs": [
-          "https://api.lionrugby.com/assets/5793584e-3ce2-44e9-bed7-32e9817c0820.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
-          "https://api.lionrugby.com/assets/d566b57f-04e9-481f-8ffa-4a66300ef812.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
-          "https://api.lionrugby.com/assets/dc936fc4-bba5-46bc-93e8-f05174b78308.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
-          "https://api.lionrugby.com/assets/69dbd5fc-8330-496d-b11e-efa0a2c618e8.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
-          "https://api.lionrugby.com/assets/50a52874-5d45-4093-a229-beeddd6573d2.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
-          "https://api.lionrugby.com/assets/e2d03412-0f94-418b-b276-8e79554cbd28.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
-        ],
-        "field_section": "Girls",
-        "field_team_description": [
-          "The Under 16s is a vibrant, exciting and popular age group at Norwich with 20+ girls regularly attending training sessions. We have a vast range of experience and skills from girls who are future International stars to those just starting out on their rugby journey. So whatever level you play at or aspire to you’re bound to fit in here and are always guaranteed a warm welcome from this social bunch of young women."
-        ],
-        "field_support_team": [
-          {
-            "person": "Sain Ha;ll",
-            "role": ["Lead coach"]
-          },
-          {
-            "person": "Toby Hartley",
-            "role": ["Coach"]
-          },
-          {
-            "person": "Bob Cameron",
-            "role": ["Coach", "First Aider"]
-          },
-          {
-            "person": "Claire Honess",
-            "role": ["Manager"]
-          }
-        ]
-      }
-    ]
-  }
+  "team": [
+    {
+      "title": "U13 Boys",
+      "field_section": "Boys",
+      "field_team_description": "https://www.lionrugby.com/teams/boys-youth/team-boys-youth-under-13s",
+      "field_team_photo": "https://api.lionrugby.com/assets/2fb833d6-907c-424d-93d8-5f665f7338d4.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "Adrian Ball",
+          "role": [
+            "Lead coach"
+          ]
+        },
+        {
+          "person": "Stuart Southgate",
+          "role": [
+            "Coach"
+          ]
+        },
+        {
+          "person": "Matt Charlton",
+          "role": [
+            "Manager"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "U14 Boys",
+      "field_section": "Boys",
+      "field_team_description": "https://www.lionrugby.com/teams/boys-youth/teams-boys-youth-under-14s",
+      "field_photographs": [
+        "https://api.lionrugby.com/assets/a1dbbc34-495e-4f65-a0d5-d23493539e96.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/f16d66e4-318e-41e4-a8dc-a2eed9b47976.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/1366424b-c13a-4517-ae90-65b8286f48a8.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/343eb83d-8d37-40a3-bfbc-9be15cb6ce87.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/521b9e80-57bd-4934-8288-23972ab11058.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/2918ddf1-4fae-4650-9cf9-13876e8473a2.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/48ebd6dd-25be-4faa-b117-ae90f7226849.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/3d74c7dc-9e01-4d22-a082-73c7e76059a4.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/d04c13d0-fddc-49f2-9dc1-d890f507ddb9.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/15cc2657-f453-4978-984e-5f90180948fd.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+      ],
+      "field_team_photo": "https://api.lionrugby.com/assets/5d37a76e-ce74-4e66-ac98-a74b4e056dcb.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "Simon Rawlings",
+          "role": [
+            "Lead coach",
+            "Manager"
+          ]
+        },
+        {
+          "person": "Freddie Rawlings",
+          "role": [
+            "Coach"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "U15 Boys",
+      "field_section": "Boys",
+      "field_team_description": "https://www.lionrugby.com/teams/boys-youth/u15s-boys-youth-team",
+      "field_support_team": [
+        {
+          "person": "Toby Batch",
+          "role": [
+            "Coach",
+            "First Aider"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "U16 Boys",
+      "field_section": "Boys",
+      "field_team_description": "https://www.lionrugby.com/teams/boys-youth/u16s-boys-youth-team",
+      "field_team_photo": "https://api.lionrugby.com/assets/6d294f5b-69fc-4b8b-991d-7ab48a37b0f9.jpeg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "John Hodds",
+          "role": [
+            "Lead coach"
+          ]
+        },
+        {
+          "person": "Rob Savage",
+          "role": [
+            "Coach"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Colts",
+      "field_section": "Boys",
+      "field_team_description": "https://www.lionrugby.com/teams/boys-youth/under-18s-boys-youth",
+      "field_photographs": [
+        "https://api.lionrugby.com/assets/db7476ae-a63c-44e1-a549-5f306996c20e.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/b740e866-559e-4916-b608-2aa0f6c5caeb.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/0868735e-e698-4678-9345-b75396de2e96.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/3a0e0c5d-b429-41f3-84c0-1b02dbf05bba.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/b2f9a3d6-6aad-4a94-9621-bf8194462b11.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/f946481c-9f05-4150-899e-958fdc5400af.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/279ca34c-7447-4bd1-a519-25220dee3b70.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/2a91bab4-9fdb-43a8-aadc-16684699870e.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/41e5dd1d-5004-4078-bf5e-4449a705f7b2.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/f3b54c2e-68aa-4c2f-87aa-49cd23e04ef6.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/3730052a-cc51-41f7-9a4d-06110abf2f7b.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/a65febd5-4cff-4f24-84e8-e5c405c68de9.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/af741791-077a-4d76-bb42-0f77341dc5bb.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/87765442-7bdf-477d-81a7-a3a0e64ab96a.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/ca532c53-0edb-4c6e-8a47-d1ab290a066a.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/86191053-0eaa-499c-8a1f-0f9815d2d822.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/c191950b-4978-480d-b17a-ae9b56d53a9d.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/d6f0cde3-3137-443e-9229-4c6ebe3d76bb.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/f58f54ac-3e4d-4411-8dc3-3c9b4c6b4d55.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+      ],
+      "field_team_photo": "https://api.lionrugby.com/assets/c003bd21-6314-41c2-a8c9-71ac0f2b16fe.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "Stewart Cameron",
+          "role": [
+            "Lead coach"
+          ]
+        },
+        {
+          "person": "Simon Rawlings",
+          "role": [
+            "Manager"
+          ]
+        },
+        {
+          "person": "Adrian Hendrick",
+          "role": [
+            "Coach"
+          ]
+        },
+        {
+          "person": "Matt Kent",
+          "role": [
+            "Manager",
+            "First Aider"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "U12 Girls",
+      "field_section": "Girls",
+      "field_team_description": "https://www.lionrugby.com/teams/women-and-girls/u12s-girls",
+      "field_photographs": [
+        "https://api.lionrugby.com/assets/ea226c3d-add2-41c4-9e2c-456d9d68b609.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/4400d068-1a47-4466-a14b-1a235ae23ede.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/d32600fe-7e95-443b-986d-1890c6dcea5e.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/5b125380-66dc-4e6e-9a02-9aab3ae34370.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/72daa224-72b3-47d0-90c3-684a97ab476e.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/8a45b72f-6989-4edb-8d1c-988d8f7d051f.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/0506319a-5103-48f1-a4cd-1788e92bb4b8.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/fb1f8470-31f1-4e38-81f7-45ce3b485dc6.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/59c80fb4-c724-4ab4-b6dd-7fd754a2aaee.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+      ],
+      "field_team_photo": "https://api.lionrugby.com/assets/16c51f7a-b9df-4f2a-aa1b-99df20d9622d.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "Izzy Hartley",
+          "role": [
+            "Lead coach"
+          ]
+        },
+        {
+          "person": "Claire Honess",
+          "role": [
+            "Manager"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "U14 Girls",
+      "field_section": "Girls",
+      "field_team_description": "https://www.lionrugby.com/teams/women-and-girls/u14s-girls",
+      "field_photographs": [
+        "https://api.lionrugby.com/assets/1ba5f048-0542-47ca-8e78-8b845aec9bea.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/f7f6954d-2f77-45c0-adaf-fd6faf6b81c6.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/60ed44a8-799c-46fd-a89c-76ec9a153460.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/f24902cb-71ba-4241-baff-5ca436380f32.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/82475b13-750f-41e7-8626-e42692f45fcd.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/f71d73dd-ea79-40f0-a963-56652fd48f1a.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/7839bcb1-4fad-4118-95f9-8874cbf0908e.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/0a2bb35e-999b-4774-9cee-26cd6ef97150.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/59d2472b-556b-42ba-8c70-53a33507da58.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/4edef201-a436-494b-a94d-f2184594f8c3.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/bc777f65-a49d-4290-8eb9-ba1f5945b16f.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/853d790b-fdb2-42c4-84ee-cc01bb22eb84.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/d9f5cafb-21c1-4953-9319-54c9321e9488.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/a704956a-bdcd-451f-a36d-a6e0ec8a9cb2.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/c04e0d8a-d4d2-4a70-b36b-773e2ff2cb85.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+      ],
+      "field_team_photo": "https://api.lionrugby.com/assets/1bb09615-7137-4844-aa1e-e0727fd579aa.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "Darrell Roper",
+          "role": [
+            "Coach"
+          ]
+        },
+        {
+          "person": "Izzy Hartley",
+          "role": [
+            "Lead coach"
+          ]
+        },
+        {
+          "person": "Claire Honess",
+          "role": [
+            "Manager"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "U16 Girls",
+      "field_photographs": [
+        "https://api.lionrugby.com/assets/4e7bf065-4e23-49ca-bbf5-686944cf45a6.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/69dbd5fc-8330-496d-b11e-efa0a2c618e8.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/50a52874-5d45-4093-a229-beeddd6573d2.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/e2d03412-0f94-418b-b276-8e79554cbd28.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/73722e78-34fa-45ff-ba96-e4088f0967d3.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/5793584e-3ce2-44e9-bed7-32e9817c0820.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/d566b57f-04e9-481f-8ffa-4a66300ef812.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/36086db5-be84-42ce-b0fa-f124341073db.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/68b781af-9833-492d-aac6-c9e9636998b7.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/dc936fc4-bba5-46bc-93e8-f05174b78308.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/e603455e-66a2-4e76-88d6-69ff05beee9b.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/5fac1264-652c-439c-8ec4-b1a012cdad88.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/ce463566-c8a1-42fd-b22c-580ccb776dea.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+      ],
+      "field_section": "Girls",
+      "field_team_description": "https://www.lionrugby.com/teams/women-and-girls/u16s-girls",
+      "field_team_photo": "https://api.lionrugby.com/assets/b3071d59-d082-450e-a1ab-cca16791a078.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "Sian Hall",
+          "role": [
+            "Lead coach"
+          ]
+        },
+        {
+          "person": "Toby Hartley",
+          "role": [
+            "Coach"
+          ]
+        },
+        {
+          "person": "Bob Cameron",
+          "role": [
+            "Coach",
+            "First Aider"
+          ]
+        },
+        {
+          "person": "Claire Honess",
+          "role": [
+            "Manager"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "U18 Girls",
+      "field_section": "Girls",
+      "field_team_description": "https://www.lionrugby.com/teams/women-and-girls/u18s-girls",
+      "field_photographs": [
+        "https://api.lionrugby.com/assets/e21cc6d2-9ad4-4d2d-b563-fc8fa8f1b2da.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/6c4c5045-ae84-44f9-a444-e57a7a863d81.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/e8f9c3ca-d737-4d6e-af30-8980afc1d0e6.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/01cbccab-cad4-4658-8755-bb5b46f134b0.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/a9dff9d9-d9fe-44ab-82ea-4d4ace1dc8fc.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/578f1970-1707-4afe-a339-967ce69deebe.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/25e57ba8-d80d-4ce0-94f5-9de805003e7f.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/52943faa-dc6e-41c4-aee9-98748b4d0407.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+      ],
+      "field_team_photo": "https://api.lionrugby.com/assets/ddb44d52-0bac-408f-a273-084f463241c2.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "Chris Drohan",
+          "role": [
+            "Lead coach"
+          ]
+        },
+        {
+          "person": "Ian Smith",
+          "role": [
+            "Coach"
+          ]
+        },
+        {
+          "person": "Claire Honess",
+          "role": [
+            "Manager"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "1st VX",
+      "field_section": "Senior",
+      "field_team_description": "https://www.lionrugby.com/teams/senior/norwich-1st-x-v",
+      "field_photographs": [
+        "https://api.lionrugby.com/assets/82c74607-38a0-4258-a3c8-be9c8cbe9325.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/67b1ce11-b51d-415a-9e61-c29abade5eaa.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/548fe1cb-c4b0-41c8-9216-b79bad5337a6.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/020e6d39-723a-4e55-a400-3bad914015da.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/d8203c69-9682-4ac1-8bcb-5038302921f7.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/da9067ca-22ff-4ccc-abbc-901cd8379e27.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/f08e4fc5-118c-4d18-946a-8616686fc529.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+      ],
+      "field_team_photo": "https://api.lionrugby.com/assets/9f15b0d5-9bf3-4ffc-b101-d95d3d5654f8.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "Dave Tiueti",
+          "role": [
+            "Head coach"
+          ]
+        },
+        {
+          "person": "Matt Selby",
+          "role": [
+            "Forwards coach"
+          ]
+        },
+        {
+          "person": "Mark Robertson",
+          "role": [
+            "Strength and Conditioning Coach"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "2nd VX",
+      "field_section": "Senior",
+      "field_team_description": "https://www.lionrugby.com/teams/senior/2nd-xv-team",
+      "field_photographs": [
+        "https://api.lionrugby.com/assets/8e513294-ab2e-4b98-9549-d8e7448e071c.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/df57fc00-f392-4231-9d91-5d3847a7adef.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/f422587c-9bdf-4d1f-903a-dbfe96b4e7fc.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/0150f7bc-ed15-4ea5-83b2-b280ba60a682.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/95002836-bf44-40aa-bf1a-44d50b3145cd.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/799e6daf-3710-4ae5-a2dc-f5868a28b31c.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/9fb0e552-18ec-46bf-a516-0e765c6ff25a.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/329d7e14-8aae-445d-a358-89036e46bfff.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/455259fc-c656-4065-a1da-802692d81251.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/6b6770dc-c639-4087-9e52-5691c425ae6b.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+      ],
+      "field_team_photo": "https://api.lionrugby.com/assets/2fc04e8a-d74f-46d6-be8d-622515686271.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100",
+      "field_support_team": [
+        {
+          "person": "Rob Hickford",
+          "role": [
+            "Captain"
+          ]
+        },
+        {
+          "person": "Cameron Horide",
+          "role": [
+            "Vice Captain"
+          ]
+        },
+        {
+          "person": "George Pope",
+          "role": [
+            "Coach"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3rd VX (AXV)",
+      "field_section": "Senior",
+      "field_team_description": "https://www.lionrugby.com/teams/senior/3rd-xv-axv",
+      "field_photographs": [
+        "https://api.lionrugby.com/assets/0245e124-cce2-4e17-b984-312cab578ff7.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/944ee98d-f13a-4236-aea9-418b3491e1b5.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/19e26154-2797-4940-8ebc-e765e6755323.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100",
+        "https://api.lionrugby.com/assets/c0c0b95a-fac4-43ad-bc8c-f059947ddbc5.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=990&height=625&quality=100"
+      ],
+      "field_team_photo": "https://api.lionrugby.com/assets/d9c65a77-f23e-4f75-8f76-4416a04c7105.jpg?access_token=G8UBC4U78CIGsrmAlDxvGc1D4BYldaok&fit=cover&width=1250&height=575&quality=100"
+    }
+  ]
 }
