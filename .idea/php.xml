@@ -143,6 +143,11 @@
       <path value="$PROJECT_DIR$/vendor/phpstan/phpdoc-parser" />
       <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/vendor/phpspec/prophecy-phpunit" />
+      <path value="$PROJECT_DIR$/vendor/captainhook/captainhook-phar" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/gnupg" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/composer-distributor" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/executor" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/filesystem" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

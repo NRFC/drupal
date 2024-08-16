@@ -37,7 +37,9 @@
             "drupal/core-composer-scaffold": true,
             "drupal/core-project-message": true,
             "phpstan/extension-installer": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "captainhook/captainhook-phar": true,
+            "phpro/grumphp": true
         },
         "sort-packages": true
     },
@@ -96,22 +98,11 @@
                 "  * Remove the plugin that prints this message:",
                 "      composer remove drupal/core-project-message"
             ]
-        },
-        "hooks": {
-            "pre-commit": [
-                "echo committing as $(git config user.name)",
-                "php-cs-fixer fix ."
-            ],
-            "commit-msg": "grep -q '[A-Z]+-[0-9]+.*' $1",
-            "pre-push": [
-                "php vendor/bin/phpstan.phar",
-                "php vendor/bin/phpunit"
-            ],
-            "post-merge": "composer install"
         }
     },
     "require-dev": {
         "behat/mink": "^1.11",
+        "captainhook/captainhook-phar": "^5.23",
         "mglaman/phpstan-drupal": "^1.2",
         "phpspec/prophecy-phpunit": "^2.2",
         "phpstan/extension-installer": "^1.4",
@@ -125,13 +116,7 @@
         "symfony/test-pack": "^1.1"
     },
     "scripts": {
-        "post-update-cmd": [
-            "php -r \"copy('etc/pre-commit', '.git/hooks/pre-commit');\"",
-            "php -r \"copy('etc/pre-push', '.git/hooks/pre-push');\""
-        ],
-        "post-install-cmd": [
-            "php -r \"copy('etc/pre-commit', '.git/hooks/pre-commit');\"",
-            "php -r \"copy('etc/pre-push', '.git/hooks/pre-push');\""
-        ]
+        "post-update-cmd": "vendor/bin/captainhook install -f",
+        "post-install-cmd": "vendor/bin/captainhook install -f"
     }
 }
