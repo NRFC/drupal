@@ -61,5 +61,9 @@
 /drupal.phar
 /drupal
 
+# files that are collected by composer
+web/themes/contrib
+web/modules/contrib
+
 # custom
 .docker/initdb.d/

@@ -17,11 +17,13 @@
     "require": {
         "ext-dom": "*",
         "composer/installers": "^2.0",
+        "drupal/bootstrap5": "^4.0",
         "drupal/core-composer-scaffold": "^10.2",
         "drupal/core-project-message": "^10.2",
         "drupal/core-recommended": "^10.2",
         "drupal/paragraphs": "^1.18",
         "drupal/pathauto": "^1.13",
+        "drupal/twbstools": "2.1.x-dev",
         "drush/drush": "^12.5"
     },
     "conflict": {
