@@ -67,3 +67,4 @@ web/modules/contrib
 
 # custom
 .docker/initdb.d/
+node_modules
