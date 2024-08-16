@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+export MODIFIED="git diff --diff-filter=M --name-only --cached  | grep \".php$\""
+export IGNORE=""
+phpcs="vendor/bin/phpcs --report=code --colors --report-width=80 --standard=PSR2 --ignore=${IGNORE}"
+
+__run "1/3" "php lint" "${MODIFIED} | xargs -r php -l"
+__run "2/3" "code sniffer" "${MODIFIED} | xargs -r ${phpcs}"
+__run "3/3" "phpstan" "${MODIFIED} | xargs -r vendor/bin/phpstan analyse"
