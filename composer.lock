@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f889d268f939313c5daf3ab5d6ff737",
+    "content-hash": "70b7d3e1dba2240aff2c11c2eedf84e2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1953,6 +1953,121 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/twbstools",
                 "issues": "https://www.drupal.org/project/issues/twbstools"
+            }
+        },
+        {
+            "name": "drupal/viewfield",
+            "version": "3.0.0-beta10",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/viewfield.git",
+                "reference": "8.x-3.0-beta10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/viewfield-8.x-3.0-beta10.zip",
+                "reference": "8.x-3.0-beta10",
+                "shasum": "2f11e9978c63e721e6ef77933e9c4b4b7c0ca2dc"
+            },
+            "require": {
+                "drupal/core": "^9.2 || ^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-3.0-beta10",
+                    "datestamp": "1720550053",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "danflanagan8",
+                    "homepage": "https://www.drupal.org/user/3615359"
+                },
+                {
+                    "name": "jerdavis",
+                    "homepage": "https://www.drupal.org/user/228997"
+                },
+                {
+                    "name": "keithm",
+                    "homepage": "https://www.drupal.org/user/691250"
+                },
+                {
+                    "name": "sun",
+                    "homepage": "https://www.drupal.org/user/54136"
+                }
+            ],
+            "description": "Defines an entity reference field type to display a view.",
+            "homepage": "http://drupal.org/project/viewfield",
+            "support": {
+                "source": "https://git.drupalcode.org/project/viewfield",
+                "issues": "https://www.drupal.org/project/issues/viewfield"
+            }
+        },
+        {
+            "name": "drupal/views_slideshow",
+            "version": "5.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_slideshow.git",
+                "reference": "5.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_slideshow-5.0.1.zip",
+                "reference": "5.0.1",
+                "shasum": "f181dd86f40f0a65186ee818daded06a98e5d510"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "5.0.1",
+                    "datestamp": "1724040371",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Neslee Canil Pinto",
+                    "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "nickdickinsonwilde",
+                    "homepage": "https://www.drupal.org/user/3094661"
+                },
+                {
+                    "name": "redndahead",
+                    "homepage": "https://www.drupal.org/user/160320"
+                },
+                {
+                    "name": "vbouchet",
+                    "homepage": "https://www.drupal.org/user/1671428"
+                }
+            ],
+            "description": "Describes relationships between entities.",
+            "homepage": "https://www.drupal.org/project/views_slideshow",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views_slideshow",
+                "issues": "https://www.drupal.org/project/issues/views_slideshow"
             }
         },
         {
@@ -9603,7 +9718,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "drupal/twbstools": 20
+        "drupal/twbstools": 20,
+        "drupal/viewfield": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,

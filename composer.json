@@ -24,6 +24,8 @@
         "drupal/paragraphs": "^1.18",
         "drupal/pathauto": "^1.13",
         "drupal/twbstools": "2.1.x-dev",
+        "drupal/viewfield": "^3.0@beta",
+        "drupal/views_slideshow": "^5.0",
         "drush/drush": "^12.5"
     },
     "conflict": {

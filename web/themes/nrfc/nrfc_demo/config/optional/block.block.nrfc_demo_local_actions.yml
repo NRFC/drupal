@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  theme:
+    - nrfc_demo
+id: nrfc_demo_local_actions
+theme: nrfc_demo
+region: content
+weight: -2
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

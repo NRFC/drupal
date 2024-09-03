@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - nrfc_demo
+id: nrfc_demo_help
+theme: nrfc_demo
+region: content
+weight: -3
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }
