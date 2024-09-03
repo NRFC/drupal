@@ -148,6 +148,7 @@
       <path value="$PROJECT_DIR$/vendor/phar-io/composer-distributor" />
       <path value="$PROJECT_DIR$/vendor/phar-io/executor" />
       <path value="$PROJECT_DIR$/vendor/phar-io/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/twbs/bootstrap" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
