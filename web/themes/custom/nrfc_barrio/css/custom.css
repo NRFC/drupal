@@ -1,2 +1,8 @@
+.node {
+  background: blue;
+}
 
-/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjdXN0b20uY3NzIiwic291cmNlc0NvbnRlbnQiOltdfQ== */
+.content {
+  background: yellow;
+}
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImN1c3RvbS5zY3NzIiwiY3VzdG9tLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNFLGdCQUFBO0FDQUY7O0FER0E7RUFDRSxrQkFBQTtBQ0FGIiwiZmlsZSI6ImN1c3RvbS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbi5ub2RlIHtcbiAgYmFja2dyb3VuZDogYmx1ZTtcbn1cblxuLmNvbnRlbnQge1xuICBiYWNrZ3JvdW5kOiB5ZWxsb3c7XG59XG4iLCIubm9kZSB7XG4gIGJhY2tncm91bmQ6IGJsdWU7XG59XG5cbi5jb250ZW50IHtcbiAgYmFja2dyb3VuZDogeWVsbG93O1xufSJdfQ== */

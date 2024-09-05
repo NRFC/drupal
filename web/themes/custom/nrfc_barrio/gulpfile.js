@@ -22,7 +22,7 @@ let gulp = require('gulp'),
 
 const paths = {
   scss: {
-    src: './scss/*.scss',
+    src: './scss/style.scss',
     dest: './css',
     watch: './scss/**/*.scss',
     bootstrap: './node_modules/bootstrap/scss/bootstrap.scss',

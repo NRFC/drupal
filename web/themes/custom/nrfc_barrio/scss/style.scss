@@ -10,7 +10,7 @@ Description: Bootstrap 4 with Sass
 -------------------------------------------------*/
 
 body {
-    background: $white;
+  background: $white;
 }
 
 
@@ -18,43 +18,86 @@ body {
 --------------------------------------------------*/
 
 a {
-    color: $accent-shade;
+  color: $accent-shade;
 }
 
 .bg-inverse {
-    background: $primary-shade !important;
+  background: $primary-shade !important;
 }
 
 .site-footer {
-    background: $accent-shade !important;
+  background: $accent-shade !important;
 }
 
 .menu--main li a {
-    color: $primary-shade;
+  color: $primary-shade;
 }
 
 .menu--account li a {
-    color: $primary-shade;
+  color: $primary-shade;
 }
 
 .site-name-slogan a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .card-group img {
-    margin: 0;
-    width: 100%;
-    height: auto;
+  margin: 0;
+  width: 100%;
+  height: auto;
 }
 
 .card-group .field--type-image {
-    margin: 0
+  margin: 0
 }
 
 .slick {
-    width: 100%;
+  width: 100%;
 }
 
-.slick>div {
-    margin: 0 15px;
+.slick > div {
+  margin: 0 15px;
+}
+
+.field--name-field-support-team {
+  clear: both;
+
+  .field__items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  > div > div {
+    flex-wrap: wrap;
+    width: 310px;
+    border: 2px solid #000;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    text-align: center;
+    margin: 20px 15px;
+  }
+
+  .field__item {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .field__item img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 100%;
+    //object-fit: cover;
+    border-bottom: 2px solid #000;
+  }
+
+  .field--name-field-email {
+    clear: both;
+  }
+
+  .field--name-field-phone-number {
+    text-align: left;
+  }
 }
