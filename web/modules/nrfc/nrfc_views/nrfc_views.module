@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for NRFC Views module.
+ */
+
+use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_pre_render().
+ *
+ * Act on the view immediately before rendering it.
+ */
+function nrfc_views_views_pre_render(ViewExecutable $view): void
+{
+  if ($view->id() == "committee")
+    $source = $view->result;
+  $sorted = [];
+  $sorted += nrfc_views_find_nodes("PRESIDENT", $source);
+  $sorted += nrfc_views_find_nodes("CHAIRMAN", $source);
+  $sorted += nrfc_views_find_nodes("SECRETARY", $source);
+  $sorted += nrfc_views_find_nodes("TREASURER", $source);
+  $sorted += nrfc_views_find_nodes("COMMERCIAL DIRECTOR", $source);
+  $sorted += nrfc_views_find_nodes("DIRECTOR OF RUGBY", $source);
+  $sorted += nrfc_views_find_nodes("Trustee", $source);
+
+  $view->result = $sorted;
+}
+
+function nrfc_views_find_nodes(string $needle, array $haystack): array
+{
+  $found = [];
+  foreach ($haystack as $row_id => $row) {
+    $roles = Node::load($row->nid)->get("field_role")->getValue();
+    foreach ($roles as $role_id) {
+      $term = Term::load($role_id["target_id"]);
+      if (strtolower($term->get('name')->value) === strtolower($needle)) {
+        $found[$row_id] = $row;
+      }
+    }
+  }
+  return $found;
+}

@@ -1,0 +1,5 @@
+name: 'NRFC Views'
+type: module
+description: 'Tweaks view results, ordering and stuff like that.'
+package: nrfc
+core_version_requirement: ^10 || ^11

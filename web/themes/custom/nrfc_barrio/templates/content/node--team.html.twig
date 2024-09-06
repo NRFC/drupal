@@ -81,6 +81,9 @@
       </h2>
     {% endif %}
     {{ title_suffix }}
+  </header>
+  <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
+    {{ content }}
     {% if display_submitted %}
       <div class="node__meta">
         {{ author_picture }}
@@ -92,9 +95,5 @@
         {{ metadata }}
       </div>
     {% endif %}
-  </header>
-  <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
-  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    {{ content }}
   </div>
 </article>
