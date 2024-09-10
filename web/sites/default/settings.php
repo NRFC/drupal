@@ -830,4 +830,5 @@ $databases['default']['default'] = array (
   'driver' => 'mysql',
   'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
 );
-$settings['config_sync_directory'] = 'sites/default/files/config_ERpbFiaCf7Z3xTf4RNCgVeXe9lLcLEaUHgrXD5b0GiVntfon5p01QGtQNFnHONvH-ifSNmqvVw/sync';
+
+$settings['state_cache'] = TRUE;
