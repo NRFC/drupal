@@ -706,8 +706,8 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
  * @see https://www.drupal.org/docs/installing-drupal/trusted-host-settings
  */
  $settings['trusted_host_patterns'] = [
-   '^norwichrugby\.com$',
-   '^.+\.norwichrugby\.com$',
+   '^nrfc\.test$',
+   '^.+\.nrfc\.test$',
    '^norwichrugby\.org$',
    '^.+\.norwichrugby\.org$',
  ];
@@ -805,30 +805,23 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 /**
  * Load local development override configuration, if available.
  *
- * Create a settings.local.php file to override variables on secondary (staging,
+ * Create a settings.90_local.php file to override variables on secondary (staging,
  * development, etc.) installations of this site.
  *
- * Typical uses of settings.local.php include:
+ * Typical uses of settings.90_local.php include:
  * - Disabling caching.
  * - Disabling JavaScript/CSS compression.
  * - Rerouting outgoing emails.
  *
  * Keep this code block at the end of this file to take full effect.
  */
-#
-if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-  include $app_root . '/' . $site_path . '/settings.local.php';
-}
-$databases['default']['default'] = array (
-  'database' => 'drupal',
-  'username' => 'drupal_database_user',
-  'password' => 'drupal_database_password',
-  'prefix' => '',
-  'host' => '127.0.0.1',
-  'port' => '3306',
-  'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
-  'driver' => 'mysql',
-  'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
-);
 
-$settings['state_cache'] = TRUE;
+
+
+$settings_path = $app_root . '/' . $site_path;
+$settings_files = scandir($settings_path, SCANDIR_SORT_ASCENDING,);
+foreach ($settings_files as $settings_file) {
+  if ($settings_file !== "settings.php" && str_starts_with($settings_file, 'settings')) {
+    include $settings_file . "/" . $settings_file;
+  }
+}

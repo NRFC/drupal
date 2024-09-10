@@ -120,7 +120,7 @@
         "symfony/test-pack": "^1.1"
     },
     "scripts": {
-        "post-update-cmd": "vendor/bin/captainhook install -f",
-        "post-install-cmd": "vendor/bin/captainhook install -f"
+        "dev-post-update-cmd": "vendor/bin/captainhook install -f",
+        "dev-post-install-cmd": "vendor/bin/captainhook install -f"
     }
 }

@@ -66,6 +66,6 @@ web/themes/contrib
 web/modules/contrib
 
 # custom
-.docker/initdb.d/
+../infra/.docker/initdb.d/
 node_modules
 dump.sql
