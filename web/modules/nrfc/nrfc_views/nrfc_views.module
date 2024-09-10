@@ -16,18 +16,19 @@ use Drupal\views\ViewExecutable;
  */
 function nrfc_views_views_pre_render(ViewExecutable $view): void
 {
-  if ($view->id() == "committee")
+  if ($view->id() == "committee") {
     $source = $view->result;
-  $sorted = [];
-  $sorted += nrfc_views_find_nodes("PRESIDENT", $source);
-  $sorted += nrfc_views_find_nodes("CHAIRMAN", $source);
-  $sorted += nrfc_views_find_nodes("SECRETARY", $source);
-  $sorted += nrfc_views_find_nodes("TREASURER", $source);
-  $sorted += nrfc_views_find_nodes("COMMERCIAL DIRECTOR", $source);
-  $sorted += nrfc_views_find_nodes("DIRECTOR OF RUGBY", $source);
-  $sorted += nrfc_views_find_nodes("Trustee", $source);
+    $sorted = [];
+    $sorted += nrfc_views_find_nodes("PRESIDENT", $source);
+    $sorted += nrfc_views_find_nodes("CHAIRMAN", $source);
+    $sorted += nrfc_views_find_nodes("SECRETARY", $source);
+    $sorted += nrfc_views_find_nodes("TREASURER", $source);
+    $sorted += nrfc_views_find_nodes("COMMERCIAL DIRECTOR", $source);
+    $sorted += nrfc_views_find_nodes("DIRECTOR OF RUGBY", $source);
+    $sorted += nrfc_views_find_nodes("Trustee", $source);
 
-  $view->result = $sorted;
+    $view->result = $sorted;
+  }
 }
 
 function nrfc_views_find_nodes(string $needle, array $haystack): array
