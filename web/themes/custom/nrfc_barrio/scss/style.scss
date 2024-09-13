@@ -71,6 +71,7 @@ a {
 .field--name-field-support-team, .view-id-committee {
   clear: both;
 
+  // Coaches & committee members
   .field__items {
     display: flex;
     flex-direction: row;
@@ -114,5 +115,29 @@ a {
     .field__label {
       display: none;
     }
+  }
+}
+
+.merchandise {
+  .views-field-title, .views-field-body {
+    color: rgb(15, 86, 60);
+    text-transform: uppercase;
+    font-family: Montserrat, sans-serif;
+    font-feature-settings: "kern";
+    font-size: 17px;
+    font-weight: 700;
+    height: 60px;
+  }
+
+  .views-view-responsive-grid__item {
+    flex-wrap: wrap;
+    width: 310px;
+    border: 2px solid #000;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    text-align: center;
+    margin: 20px 15px;
+    background: #C0C0C0;
   }
 }

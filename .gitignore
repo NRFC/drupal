@@ -70,3 +70,4 @@ web/modules/contrib
 node_modules
 dump.sql
 web/sites/default/settings.*local.php
+dump.*
