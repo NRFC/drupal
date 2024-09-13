@@ -69,3 +69,4 @@ web/modules/contrib
 ../infra/.docker/initdb.d/
 node_modules
 dump.sql
+web/sites/default/settings.*local.php
