@@ -149,6 +149,17 @@
       <path value="$PROJECT_DIR$/vendor/phar-io/executor" />
       <path value="$PROJECT_DIR$/vendor/phar-io/filesystem" />
       <path value="$PROJECT_DIR$/vendor/twbs/bootstrap" />
+      <path value="$PROJECT_DIR$/vendor/jawira/case-converter" />
+      <path value="$PROJECT_DIR$/vendor/react/promise" />
+      <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
+      <path value="$PROJECT_DIR$/vendor/ramsey/conventional-commits" />
+      <path value="$PROJECT_DIR$/vendor/seld/phar-utils" />
+      <path value="$PROJECT_DIR$/vendor/seld/jsonlint" />
+      <path value="$PROJECT_DIR$/vendor/seld/signal-handler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/vendor/opis/string" />
+      <path value="$PROJECT_DIR$/vendor/opis/json-schema" />
+      <path value="$PROJECT_DIR$/vendor/opis/uri" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
