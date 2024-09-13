@@ -821,7 +821,9 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 $settings_path = $app_root . '/' . $site_path;
 $settings_files = scandir($settings_path, SCANDIR_SORT_ASCENDING,);
 foreach ($settings_files as $settings_file) {
+  print("$settings_file: " . $settings_file . "\n");
   if ($settings_file !== "settings.php" && str_starts_with($settings_file, 'settings')) {
+    print("Yes\n");
     include $settings_path . "/" . $settings_file;
   }
 }
