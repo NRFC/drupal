@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/drupal.iml" filepath="$PROJECT_DIR$/.idea/drupal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../infra/.idea/infra.iml" filepath="$PROJECT_DIR$/../infra/.idea/infra.iml" />
     </modules>
   </component>
 </project>
