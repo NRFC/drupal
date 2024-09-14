@@ -54,8 +54,8 @@ if (file_exists($envFile)) {
 gulp --cwd web/themes/custom/nrfc_barrio
 ```
 
-## Content syncing
 
-```bash
-rsync -a dev.norwichrugby.com:/var/www/dev.norwichrugby.com/web/sites/default/files web/sites/default
-```
+## DEV STUFF, DON'T USE
+
+docker exec devnorwichrugbycom-mysql-1 mysqldump -uroot -proot_password drupal > dump.20240914.sql
+docker volume create drupal_files
