@@ -71,3 +71,5 @@ node_modules
 dump.sql
 web/sites/default/settings.*local.php
 dump.*
+.env
+etc/config-sync
