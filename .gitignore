@@ -73,3 +73,5 @@ web/sites/default/settings.*local.php
 dump.*
 .env
 etc/config-sync
+/web/modules/custom/
+/skunk

@@ -1,0 +1,4 @@
+nrfc_league_table:
+  css:
+    component:
+      css/nrfc-league-table-widget.css: {}

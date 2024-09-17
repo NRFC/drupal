@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for NRFC League table scraper module.
+ */
+
+function nrfc_league_table_scraper_cron()
+{
+  $today = date("z");
+  $lastRun = \Drupal::state()->get('nrfc_league_table_scraper_last_run', -1);
+  if ((int)$today > (int)$lastRun) {
+    \Drupal::logger('nrfc_league_table_scraper')->info("Running Cron for NRFC League scrapper");
+
+    // \Drupal::state()->get('nrfc_league_table_scraper_last_run', (int)$today);
+  }
+}

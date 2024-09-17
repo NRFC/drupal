@@ -27,7 +27,8 @@
         "drupal/twbstools": "2.1.x-dev",
         "drupal/viewfield": "^3.0@beta",
         "drupal/views_slideshow": "^5.0",
-        "drush/drush": "^12.5"
+        "drush/drush": "^12.5",
+        "ext-libxml": "*"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -106,6 +107,7 @@
     "require-dev": {
         "behat/mink": "^1.11",
         "captainhook/captainhook-phar": "^5.23",
+        "drupal/examples": "^4.0",
         "drupal/generated_content": "^1.5",
         "mglaman/phpstan-drupal": "^1.2",
         "phpspec/prophecy-phpunit": "^2.2",

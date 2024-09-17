@@ -1,0 +1,12 @@
+
+# Default value.
+field.value.nrfc_league_table:
+  type: mapping
+  label: Default value
+  mapping:
+    url:
+      type: uri
+      label: URL
+    xpath:
+      type: string
+      label: CSS Selector
