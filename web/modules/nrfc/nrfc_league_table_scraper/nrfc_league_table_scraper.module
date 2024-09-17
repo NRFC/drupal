@@ -11,7 +11,51 @@ function nrfc_league_table_scraper_cron()
   $lastRun = \Drupal::state()->get('nrfc_league_table_scraper_last_run', -1);
   if ((int)$today > (int)$lastRun) {
     \Drupal::logger('nrfc_league_table_scraper')->info("Running Cron for NRFC League scrapper");
+    $fetcher = \Drupal::service('nrfc_league_table_scraper.html_fetcher');
+$url = "https://www.englandrugby.com/fixtures-and-results/search-results?team=15039&season=2024-2025#tables";
 
+    $html = $fetcher->fetchHtml($url);
+    $dom = new \DOMDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML($html);
+    libxml_clear_errors();
+    $leagueTable = $dom->getElementById('league-table');
+    $rows = $leagueTable->getElementsByTagName('tr');
+    foreach ($rows as $row) {
+      foreach ($row->getElementsByTagName('td') as $td) {
+        \Drupal::logger("nrfc_league_table_scraper")->info($td->textContent);
+      }
+    }
     // \Drupal::state()->get('nrfc_league_table_scraper_last_run', (int)$today);
   }
 }
+
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_theme().
+ */
+function nrfc_league_table_scraper_theme(): array {
+  return [
+    'nrfc_league_table_values' => ['render element' => 'elements'],
+  ];
+}
+
+/**
+ * Prepares variables for nrfc league table scraper templates.
+ *
+ * Default template: nrfc-league-table-values.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the nrfc league table scraper information and any
+ *     fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_nrfc_league_table_values(array &$variables): void {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+

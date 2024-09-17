@@ -28,7 +28,8 @@
         "drupal/viewfield": "^3.0@beta",
         "drupal/views_slideshow": "^5.0",
         "drush/drush": "^12.5",
-        "ext-libxml": "*"
+        "ext-libxml": "*",
+        "ext-curl": "*"
     },
     "conflict": {
         "drupal/drupal": "*"

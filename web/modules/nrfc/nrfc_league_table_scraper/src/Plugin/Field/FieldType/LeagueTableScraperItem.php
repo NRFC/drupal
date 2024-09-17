@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\nrfc_league_table_scraper\Plugin\Field\FieldType;
 
-use Drupal\Component\Utility\Random;
 use Drupal\Core\Field\Annotation\FieldType;
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
@@ -14,6 +12,8 @@ use Drupal\Core\TypedData\DataDefinition;
 /**
  * Defines the 'nrfc_league_table' field type.
  *
+ * @property string|void $url
+ * @property string|void $xpath
  * @FieldType(
  *   id = "nrfc_league_table",
  *   label = @Translation("League Table"),
@@ -23,9 +23,6 @@ use Drupal\Core\TypedData\DataDefinition;
  * )
  */
 final class LeagueTableScraperItem extends FieldItemBase {
-  private string $xpath;
-  private string $url;
-
   /**
    * {@inheritdoc}
    */
