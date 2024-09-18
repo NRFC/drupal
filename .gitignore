@@ -75,3 +75,4 @@ dump.*
 etc/config-sync
 /web/modules/custom/
 /skunk
+*.tgz
