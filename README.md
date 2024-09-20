@@ -15,8 +15,8 @@ composer install --dev
 ```bash
 yarn add --global gulp-cli
 yarn --cwd $(pwd)/web/themes/custom/nrfc_barrio
-gulp --cwd web/themes/custom/nrfc_barrio styles
-gulp --cwd web/themes/custom/nrfc_barrio js
+web/themes/custom/nrfc_barrio/node_modules/.bin/gulp --cwd web/themes/custom/nrfc_barrio styles
+web/themes/custom/nrfc_barrio/node_modules/.bin/gulp --cwd web/themes/custom/nrfc_barrio js
 ```
 
 #### Set up environment
@@ -51,7 +51,7 @@ if (file_exists($envFile)) {
 ### Watch SASS files
 
 ```bash
-gulp --cwd web/themes/custom/nrfc_barrio
+web/themes/custom/nrfc_barrio/node_modules/.bin/gulp --cwd web/themes/custom/nrfc_barrio
 ```
 
 

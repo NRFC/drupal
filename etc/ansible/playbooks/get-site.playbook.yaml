@@ -3,25 +3,29 @@
 
   tasks:
     -
-    - name: Set dump dir
-      set_fact:
-        dump_dir: "/var/tmp/dumps"
 
     - name: Set NOW
       set_fact:
         now: "{{ ansible_date_time.iso8601 | replace(':','_') }}"
+    -
+    - name: Set dump dir
+      set_fact:
+        dump_dir: "/var/tmp/dumps/{{ now }}"
 
     - name: Set file names
       set_fact:
-        dump_file: "{{ dump_dir }}/{{ now }}.sql.gz.enc"
-        files_dir: "{{ dump_dir }}/{{ now }}"
-        archive_file: "{{ dump_dir }}/{{ now }}.tgz"
+        dump_file: "{{ dump_dir }}/dump.sql.gz.enc"
+        files_dir: "{{ dump_dir }}/files"
+        archive_file: "/tmp/{{ now }}.tgz"
 
-    - name: Ensure dump dir
+    - name: Ensure dump dir & files
       file:
-        path: "{{ dump_dir }}"
+        path: "{{ item }}"
         state: directory
         mode: '0755'
+      with_items:
+        - "{{ dump_dir }}"
+        - "{{ files_dir }}"
 
     - name: Dump MySQL database and encrypt without writing to disk
       shell: >
@@ -32,20 +36,15 @@
           --lock-tables=false \
           --databases {{ db_name }} \
           --host 127.0.0.1 \
-          --user={{ db_user_name }} \
-          --password={{ db_user_password }} \
+          --user=root \
+          --password={{ db_root_password }} \
           | \
           gzip \
           | \
           openssl aes-256-cbc \
             -out "{{ dump_file }}" \
             -pbkdf2 \
-            -pass pass:qwerty
-
-    - name: Get the dump
-      fetch:
-        src: "{{ dump_file }}"
-        dest: backups
+            -pass pass:{{ db_crypt_password }}
 
     - name: Get the fies from docker
       shell: >
@@ -53,14 +52,9 @@
 
     - name: compress the files
       shell: >
-        tar -C {{ dump_dir }} -zcvf {{ archive_file }} {{ files_dir | basename }}
+        tar -C {{ dump_dir }} -zcvf {{ archive_file }} .
 
-    - name: Get the files
+    - name: Get the backup
       fetch:
         src: "{{ archive_file }}"
         dest: backups
-
-    - name: Tidy up
-      file:
-        path: "{{ dump_dir }}"
-        state: absent

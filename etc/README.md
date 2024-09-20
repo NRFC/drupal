@@ -14,10 +14,12 @@ The site config file to set up apache on a dev machine.
 
 ### Debian/Ubuntu
 
-Assuming you have PHP 8.x and the other requirements set up to run a drupal/symfony site
+Assuming you have PHP 8.x and the other requirements set up to run a drupal/symfony site, ececute these from the repo root.
 
- * `sudo sed "s,REPO_ROOT,$(pwd)/web,g" etc/apache.conf > /etc/apache2/sites-available/004-dev-nrfc.conf`
+ * `sed "s,REPO_ROOT,$(pwd)/web,g" etc/apache.conf | sudo tee /etc/apache2/sites-available/004-dev-nrfc.conf`
+ * `sudo a2ensite 004-dev-nrfc.conf`
  * `sudo systemctl restart apache2`
+ * `echo 127.0.0.1 www.nrfc.test | sudo tee -a /etc/hosts`
 
 ### ansible
 
