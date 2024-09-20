@@ -16,6 +16,7 @@ use Drupal\views\ViewExecutable;
  */
 function nrfc_views_views_pre_render(ViewExecutable $view): void
 {
+  \Drupal::logger(basename(__FILE__))->info($view->id());
   if ($view->id() == "committee") {
     $source = $view->result;
     $sorted = [];
@@ -28,6 +29,22 @@ function nrfc_views_views_pre_render(ViewExecutable $view): void
     $sorted += nrfc_views_find_nodes("Trustee", $source);
 
     $view->result = $sorted;
+
+  } elseif ($view->id() == "contacts_us") {
+
+    foreach ($view->result as $key => $value) {
+      $newRoles = [];
+      $roles = $value->_entity->get("field_role")->getValue();
+      foreach ($roles as $role) {
+        $term = Term::load($role["target_id"]);
+        if ($term && !in_array(
+          strtolower($term->get('name')->value), ["club officials", "trustee"])
+        ) {
+          $newRoles[] = $role;
+        }
+      }
+      $value->_entity->set('field_role', $newRoles);
+    }
   }
 }
 
