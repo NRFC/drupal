@@ -1,0 +1,9 @@
+---
+myservers:
+  hosts:
+    dev:
+      ansible_host: 138.68.184.179
+      ansible_port: 22
+      ansible_ssh_user: tobias
+      db_user_name: drupal
+      db_name: drupal

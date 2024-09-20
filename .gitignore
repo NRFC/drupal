@@ -76,3 +76,4 @@ etc/config-sync
 /web/modules/custom/
 /skunk
 *.tgz
+.crypt-password

@@ -8,7 +8,9 @@ services:
       - 3306:3306
     volumes:
       - db-data:/var/lib/mysql
-#       - .docker/initdb.d:/docker-entrypoint-initdb.d
+      - .docker/initdb.d:/docker-entrypoint-initdb.d
 
 volumes:
   db-data:
+
+# openssl aes-256-cbc -d -a -in $(ls -rt etc/ansible/playbooks/backups/dev/var/tmp/dumps/*.sql.gz.enc) -out .docker/initdb.d/dump.sql -pass pass:$(cat .crypt-password)
