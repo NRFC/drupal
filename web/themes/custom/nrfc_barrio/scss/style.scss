@@ -162,5 +162,11 @@ a {
 }
 
 #block-nrfc-barrio-views-block-committee-block-1 {
-  background: $primary-shade;
+    flex-wrap: wrap;
+    border: 2px solid #000;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    text-align: center;
+    margin: 20px 15px;
 }
