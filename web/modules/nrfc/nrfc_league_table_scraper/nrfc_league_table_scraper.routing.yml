@@ -1,0 +1,7 @@
+nrfc_league_table_scraper.scraper_settings:
+  path: '/admin/config/system/nrfc_scraper_settings'
+  defaults:
+    _form: '\Drupal\nrfc_league_table_scraper\Form\NrfcLeagueTableScraperForm'
+    _title: 'Scraper settings'
+  requirements:
+    _permission: 'administer site configuration'

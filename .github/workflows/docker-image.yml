@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build --file etc/docker/Dockerfile --tag tobybatch/nrfc etc/docker
+      run: docker build --file etc/docker/Dockerfile --no-cache --tag tobybatch/nrfc etc/docker
