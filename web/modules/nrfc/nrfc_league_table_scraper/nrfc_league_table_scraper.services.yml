@@ -1,4 +1,8 @@
 services:
-  nrfc_league_table_scraper:
+  nrfc_league_table_scraper_form:
     class: \Drupal\nrfc_league_table_scraper\Form\NrfcLeagueTableScraperForm
     arguments: ['@config.factory', '@config.typed', '@entity_type.manager']
+  nrfc_league_table_scraper_engine:
+    class: \Drupal\nrfc_league_table_scraper\Service\NrfcLeagueTableScraperEngine
+    tags:
+      - { name: nrfc_league_table_scraper_engine }

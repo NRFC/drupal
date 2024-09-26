@@ -11,7 +11,7 @@ function nrfc_league_table_scraper_cron()
   $lastRun = \Drupal::state()->get('nrfc_league_table_scraper_last_run', -1);
 //  if ((int)$today > (int)$lastRun) {
   \Drupal::logger('nrfc_league_table_scraper')->info("Running Cron for NRFC League scrapper");
-
+  \Drupal::service('nrfc_league_table_scraper_engine')->updateAll();
 
   // \Drupal::state()->set('nrfc_league_table_scraper_last_run', (int)$today);
 //  }

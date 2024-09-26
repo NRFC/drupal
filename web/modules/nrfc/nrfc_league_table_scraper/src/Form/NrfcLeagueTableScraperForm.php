@@ -87,12 +87,6 @@ class NrfcLeagueTableScraperForm extends ConfigFormBase
       ),
     ];
 
-//    $nodes = \Drupal\node\Entity\Node::loadMultiple(
-//      $this->entityTypeManager::entityQuery('node')
-//        ->accessCheck(true)
-//        ->condition('type', 'team')
-//        ->execute()
-//    );
     $query = $this->entityTypeManager
       ->getStorage('node')
       ->getQuery();
