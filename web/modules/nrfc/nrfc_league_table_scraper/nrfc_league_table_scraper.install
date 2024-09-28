@@ -1,0 +1,34 @@
+<?php
+function nrfc_league_table_scraper_schema()
+{
+  $schema['nrfc_league_table_scraper_table_data'] = [
+    'description' => 'Custom Rate İşlemleri',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique record ID.',
+      ],
+      'team_nid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Oylayan Kişi',
+      ],
+      'team_name' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE,],
+      'win' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0,],
+      'lose' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0,],
+      'draw' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0,],
+      'points_for' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0,],
+      'points_against' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0,],
+      'try_bonus' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0,],
+      'lose_bonus' => ['type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0,],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'id' => ['id'],
+    ],
+  ];
+  return $schema;
+}

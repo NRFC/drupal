@@ -853,11 +853,11 @@ abstract class TestCase extends Assert implements Reorderable, SelfDescribing, T
 
             if ($runEntireClass) {
                 $template = new Template(
-                    '/home/tobias/usr/nrfc/drupal/vendor/composer/../phpunit/phpunit/src/Util/PHP/Template/TestCaseClass.tpl',
+                    '/home/tobias/usr/nrfc/dev.norwichrugby.com/vendor/composer/../phpunit/phpunit/src/Util/PHP/Template/TestCaseClass.tpl',
                 );
             } else {
                 $template = new Template(
-                    '/home/tobias/usr/nrfc/drupal/vendor/composer/../phpunit/phpunit/src/Util/PHP/Template/TestCaseMethod.tpl',
+                    '/home/tobias/usr/nrfc/dev.norwichrugby.com/vendor/composer/../phpunit/phpunit/src/Util/PHP/Template/TestCaseMethod.tpl',
                 );
             }
 

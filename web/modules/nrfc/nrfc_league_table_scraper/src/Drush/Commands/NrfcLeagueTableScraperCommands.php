@@ -34,12 +34,10 @@ final class NrfcLeagueTableScraperCommands extends DrushCommands {
   /**
    * Command description here.
    */
-  #[CLI\Command(name: 'nrfc_league_table_scraper:command-name', aliases: ['foo'])]
-  #[CLI\Argument(name: 'arg1', description: 'Argument description.')]
-  #[CLI\Option(name: 'option-name', description: 'Option description')]
+  #[CLI\Command(name: 'nrfc_league_table_scraper:fetch')]
   #[CLI\Usage(name: 'nrfc_league_table_scraper:command-name foo', description: 'Usage description')]
-  public function commandName($arg1, $options = ['option-name' => 'default']) {
-    $this->logger()->success(dt('Achievement unlocked.'));
+  public function commandName() {
+    nrfc_league_table_scraper_cron();
   }
 
   /**

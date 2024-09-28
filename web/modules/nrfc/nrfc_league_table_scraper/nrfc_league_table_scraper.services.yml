@@ -1,8 +1,21 @@
 services:
+
+  logger.channel_nrfc: # TODO - move this to a parent module
+    parent: logger.channel_base
+    arguments: ['nrfc']
+
   nrfc_league_table_scraper_form:
     class: \Drupal\nrfc_league_table_scraper\Form\NrfcLeagueTableScraperForm
-    arguments: ['@config.factory', '@config.typed', '@entity_type.manager']
+    arguments: # TODO - Why isn't this used? I needed to create a create function in the class
+      - '@config.factory'
+      - '@config.typed'
+      - '@entity_type.manager'
+
   nrfc_league_table_scraper_engine:
     class: \Drupal\nrfc_league_table_scraper\Service\NrfcLeagueTableScraperEngine
+    arguments:
+      - '@http_client'
+      - '@database'
+      - '@logger.channel_nrfc'
     tags:
       - { name: nrfc_league_table_scraper_engine }

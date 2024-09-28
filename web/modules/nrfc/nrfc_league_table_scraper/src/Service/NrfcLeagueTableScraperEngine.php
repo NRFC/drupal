@@ -1,10 +1,15 @@
 <?php
 
-namespace Drupal\nrfc_league_table_scraper\Form;
+namespace Drupal\nrfc_league_table_scraper\Service;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Extension\ExtensionList;
-use Drupal\Core\File\FileSystemInterface;
+use DOMDocument;
+use DOMXPath;
+use Drupal\Core\Database\Connection;
+use Drupal\Core\Logger\LoggerChannel;
+use Drupal\nrfc_league_table_scraper\Entity\TeamConfig;
+use Exception;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Configure site information settings for this site.
@@ -13,111 +18,138 @@ use Drupal\Core\File\FileSystemInterface;
  */
 class NrfcLeagueTableScraperEngine
 {
-    private ConfigFactoryInterface $config_factory;
-    private ExtensionList $extension_list;
-    private FileSystemInterface $file_system;
+  private Client $httpsClient;
+  private Connection $connection;
+  private LoggerChannel $l;
 
-    public function __construct(
-        ConfigFactoryInterface $config_factory,
-        ExtensionList          $extension_list,
-        FileSystemInterface    $file_system
-    )
-    {
-        $this->config_factory = $config_factory;
-        $this->extension_list = $extension_list;
-        $this->file_system = $file_system;
+  public function __construct(
+    Client        $httpsClient,
+    Connection    $dbConnection,
+    LoggerChannel $logger,
+  )
+  {
+    $this->httpsClient = $httpsClient;
+    $this->connection = $dbConnection;
+    $this->l = $logger;
+  }
 
-        $file_system = \Drupal::service('file_system');
-        $file_system->prepareDirectory(
-            $this->directory,
-            FileSystemInterface:: CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS
-        );
+  public function updateAll(): void
+  {
+    $teams = TeamConfig::fromConfig();
+    $this->l->debug("Update %count teams", ["%count" => count($teams)]);
+    foreach ($teams as $team) {
+      $this->updateTeam($team);
     }
+  }
 
-    public function updateAll(): void
-    {
-        $teams = $this->getTeams();
-        foreach ($teams as $team) {
-            $this->updateTeam($team);
+  public function updateTeam(TeamConfig $team): void
+  {
+    $this->l->debug("Updating " . $team);
+    $node = \Drupal\node\Entity\Node::load($team->getTeamNid());
+    $this->fetch($team);
+  }
+
+  public function fetch(TeamConfig $team): void
+  {
+    try {
+      $url = $team->makeUrl();
+      $this->l->debug("Fetching page from " . $url);
+      $response = $this->httpsClient->get($url);
+      $body = $response->getBody()->getContents();
+      $this->l->debug("RFU Response length " . strlen($body));
+
+      $dom = new DOMDocument();
+      libxml_use_internal_errors(true);
+      $dom->loadHTML($body);
+      $xpath = new DOMXPath($dom);
+      $rows = $xpath->query(TeamConfig::getXPath());
+      $this->l->debug("Found " . count($rows) . " rows");
+      foreach ($rows as $row) {
+        $cells = $row->childNodes;
+        // TODO figure out these settings from the table header
+        if (count($cells) >= 11) { // technically 10 is required but <11 means we don't have valid data
+          $teamName = trim($cells[3]->nodeValue);
+          $this->cleanRow($team->getTeamNid(), $teamName);
+          $this->addRow(
+            $team->getTeamNid(),
+            $teamName,
+            trim($cells[7]->nodeValue),
+            trim($cells[9]->nodeValue),
+            trim($cells[11]->nodeValue),
+            trim($cells[13]->nodeValue),
+            trim($cells[15]->nodeValue),
+            trim($cells[19]->nodeValue),
+            trim($cells[21]->nodeValue)
+          );
         }
+      }
+    } catch (GuzzleException $e) {
+      $this->l->error("Unable to fetch league results page ");
     }
+  }
 
-    public function getTeams(): array
-    {
-        return [
-            "nid_138" => [
-                "nid" => 138,
-                "teamId" => "15036",
-                "competition" => "261",
-                "division" => "56597",
-            ],
-        ];
+  /**
+   * @throws Exception
+   */
+  private function cleanRow(int $nid, string $teamName): void
+  {
+    try {
+      $this->l->debug("Cleaning row: nid=" . $nid . ", " . $teamName);
+      $result = $this->connection
+        ->delete('nrfc_league_table_scraper_table_data')
+        ->condition('team_nid', $nid)
+        ->condition('team_name', $teamName)
+        ->execute();
+    } catch (Exception $e) {
+      $this->l->warning("Error clearing league row, team_nid=%team_nid team_name=%team_name", [
+        '%team_nid' => $nid,
+        '%team_name' => $teamName,
+      ]);
     }
+  }
 
-    public function updateTeam(array $team)
-    {
-        if (!(
-            in_array("nid", $team) &&
-            in_array("teamId", $team) &&
-            in_array("competition", $team) &&
-            in_array("division", $team)
-        )) {
-            \Drupal::logger('nrfc_league_table_scraper')
-                ->warning("Badly formatted scarper config: " . json_encode($team));
-            return;
-        }
-
-        $node = \Drupal\node\Entity\Node::load($team['nid']);
-        $filename = $this->makeFilePath($node->getTitle());
-        if ($this->isExpired($filename)) {
-            $this->fetch($team, $filename);
-        } else {
-            $this->parse($team, $filename);
-        }
+  /**
+   * @throws Exception
+   */
+  private function addRow($nid, $teamName, $win, $lose, $draw, $points_for, $points_against, $try_bonus, $lose_bonus): void
+  {
+    $this->l->debug("Inserting row: nid=" . $nid . ", " . $teamName);
+    try {
+      $result = $this->connection->insert('nrfc_league_table_scraper_table_data')
+        ->fields([
+          'team_nid' => $nid,
+          'team_name' => $teamName,
+          'win' => $win,
+          'lose' => $lose,
+          'draw' => $draw,
+          'points_for' => $points_for,
+          'points_against' => $points_against,
+          'try_bonus' => $try_bonus,
+          'lose_bonus' => $lose_bonus,
+        ])
+        ->execute();
+    } catch (Exception $e) {
+      $this->l->error(
+        "Unable to insert league results page, " .
+        "nid=%nid " .
+        "teamName=%teamName " .
+        "win=%win " .
+        "lose=%lose " .
+        "draw=%draw " .
+        "points_for=%points_for " .
+        "points_against=%points_against " .
+        "try_bonus=%try_bonus " .
+        "lose_bonus=%lose_bonus", [
+        "%nid" => $nid,
+        "%teamName" => $teamName,
+        "%win" => $win,
+        "%lose" => $lose,
+        "%draw" => $draw,
+        "%points_for" => $points_for,
+        "%points_against" => $points_against,
+        "%try_bonus" => $try_bonus,
+        "%lose_bonus" => $lose_bonus
+      ]);
     }
-
-    public function makeFilePath($teamName): string
-    {
-        $directory = 'public://nrfc_scraper';
-        $fileName = $this->makeFileName($teamName);
-        $filePath = $this->extension_list->getPath(
-                'nrfc_league_table_scraper') . '/scraper/' . $fileName . '.html';
-        $this->file_system->prepareDirectory(
-            $directory,
-            FileSystemInterface:: CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS
-        );
-        return $filePath;
-    }
-
-    protected function makeFileName($teamName): string
-    {
-        return strtolower(trim(
-            preg_replace('#\W+#', '_', $teamName, '_')
-        ));
-    }
-
-    public function isExpired($filename): boolean
-    {
-
-        return false;
-    }
-
-    public function fetch($teamConfig, $filename): void
-    {
-//        $file = file_save_data($data, 'public://my-dir/MY_FILE.txt', FileSystemInterface::EXISTS_REPLACE);
-    }
-
-    public function parse(array $team, string $filename)
-    {
-        /** @var \Drupal\Core\Extension\ExtensionList $extension_list */
-        $extension_list = \Drupal::service('extension.list.module');
-        $filepath = $extension_list->getPath('MY_MODULE') . '/assets/MY_FILE.txt';
-
-        $directory = 'public://my-dir';
-        /** @var \Drupal\Core\File\FileSystemInterface $file_system */
-        $file_system = \Drupal::service('file_system');
-        $file_system->prepareDirectory($directory, FileSystemInterface:: CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
-        $file_system->copy($filepath, $directory . '/' . basename($filepath), FileSystemInterface::EXISTS_REPLACE);
-    }
-
+  }
 }

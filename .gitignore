@@ -77,3 +77,4 @@ etc/config-sync
 /skunk
 *.tgz
 .crypt-password
+.phpunit.result.cache

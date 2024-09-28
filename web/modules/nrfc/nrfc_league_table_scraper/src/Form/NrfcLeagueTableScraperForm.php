@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @internal
  */
-class NrfcLeagueTableScraperForm extends ConfigFormBase
+final class NrfcLeagueTableScraperForm extends ConfigFormBase
 {
   const FORM_ID = 'nrfc_league_table_scraper';
   const SETTINGS_NAME = self::FORM_ID . '.scraper_settings';
@@ -29,7 +29,6 @@ class NrfcLeagueTableScraperForm extends ConfigFormBase
     $this->entityTypeManager = $entity_type_manager;
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -37,9 +36,10 @@ class NrfcLeagueTableScraperForm extends ConfigFormBase
     return new static(
       $container->get('config.factory'),
       $container->get('config.typed'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
     );
   }
+
   /**
    * {@inheritdoc}
    */

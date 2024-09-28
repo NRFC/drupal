@@ -110,6 +110,7 @@
         "drupal/devel": "^5.3",
         "drupal/examples": "^4.0",
         "drupal/generated_content": "^1.5",
+        "drupal/log_stdout": "^1.5",
         "mglaman/phpstan-drupal": "^1.2",
         "phpspec/prophecy-phpunit": "^2.2",
         "phpstan/extension-installer": "^1.4",
