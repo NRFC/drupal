@@ -11,6 +11,15 @@ services:
       - '@config.typed'
       - '@entity_type.manager'
 
+#   nrfc_league_table_scraper_block:
+#     class: \Drupal\nrfc_league_table_scraper\Plugin\Block\NrfcLeagueTableBlock
+#     arguments:
+#       - '@XX'
+#       - '@XX'
+#       - '@XX'
+#       - '@current_route_match'
+#       - '@entity_type.manager'
+
   nrfc_league_table_scraper_engine:
     class: \Drupal\nrfc_league_table_scraper\Service\NrfcLeagueTableScraperEngine
     arguments:

@@ -111,7 +111,7 @@ class NrfcLeagueTableScraperEngine
   /**
    * @throws Exception
    */
-  private function addRow($nid, $teamName, $win, $lose, $draw, $points_for, $points_against, $try_bonus, $lose_bonus): void
+  private function addRow($nid, $teamName, $win, $draw, $lose, $points_for, $points_against, $try_bonus, $lose_bonus): void
   {
     $this->l->debug("Inserting row: nid=" . $nid . ", " . $teamName);
     try {

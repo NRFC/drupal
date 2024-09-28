@@ -16,3 +16,16 @@ function nrfc_league_table_scraper_cron()
   // \Drupal::state()->set('nrfc_league_table_scraper_last_run', (int)$today);
 //  }
 }
+
+/**
+ * Implements hook_theme().
+ */
+function nrfc_league_table_scraper_theme() {
+  return [
+    'nrfc_league_table_scraper' => [
+      'variables' => [
+        'rows' => [],
+      ],
+    ],
+  ];
+}

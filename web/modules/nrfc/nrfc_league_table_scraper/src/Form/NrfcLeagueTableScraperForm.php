@@ -34,7 +34,7 @@ final class NrfcLeagueTableScraperForm extends ConfigFormBase
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('config.factory'),
+      $container->get('config.factory'),  # TODO - ignore these errors
       $container->get('config.typed'),
       $container->get('entity_type.manager'),
     );
