@@ -1,0 +1,8 @@
+name: 'NRFC'
+type: module
+description: 'Top level module to manage the other custom functions'
+package: nrfc
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:system
+  - drupal:menu_ui

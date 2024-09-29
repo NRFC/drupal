@@ -1,0 +1,7 @@
+nrfc.admin_link:
+  title: 'NRFC Admin Section'
+  description: 'A custom administration section.'
+  parent: system.admin_config
+  route_name: nrfc.admin_page
+  weight: -999
+  menu_name: admin

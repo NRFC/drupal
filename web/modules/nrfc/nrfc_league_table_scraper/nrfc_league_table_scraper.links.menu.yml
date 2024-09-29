@@ -1,6 +1,6 @@
 nrfc_league_table_scraper.scraper_settings:
   title: 'NRFC league table scraper settings'
-  parent: system.admin_config_system
+  parent: nrfc.admin_link
   description: 'blah blah blah.'
   route_name: nrfc_league_table_scraper.scraper_settings
   weight: 20

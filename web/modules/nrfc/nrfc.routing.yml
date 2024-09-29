@@ -1,0 +1,9 @@
+nrfc.admin_page:
+  path: '/admin/nrfc'
+  defaults:
+    _controller: '\Drupal\nrfc\Controller\AdminSectionController::adminPage'
+    _title: 'NRFC Admin Section'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
