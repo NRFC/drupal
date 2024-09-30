@@ -16,6 +16,7 @@
     ],
     "require": {
         "ext-dom": "*",
+        "ext-libxml": "*",
         "composer/installers": "^2.0",
         "drupal/bootstrap5": "^4.0",
         "drupal/bootstrap_sass": "^5.0",
@@ -27,8 +28,7 @@
         "drupal/twbstools": "2.1.x-dev",
         "drupal/viewfield": "^3.0@beta",
         "drupal/views_slideshow": "^5.0",
-        "drush/drush": "^12.5",
-        "ext-libxml": "*"
+        "drush/drush": "^12.5"
     },
     "conflict": {
         "drupal/drupal": "*"

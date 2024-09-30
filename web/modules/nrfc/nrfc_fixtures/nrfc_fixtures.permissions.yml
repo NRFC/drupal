@@ -1,0 +1,3 @@
+administer nrfc_fixtures:
+  title: 'Administer nrfc fixturess'
+  restrict access: true

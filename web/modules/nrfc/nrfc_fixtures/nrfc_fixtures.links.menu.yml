@@ -4,3 +4,9 @@ nrfc_fixtures.admin_page:
   parent: nrfc.admin_page
   route_name: nrfc_fixtures.admin_page
   weight: 40
+
+entity.nrfc_fixtures.collection:
+  title: 'NRFC Fixturess'
+  description: 'List of nrfc fixturess.'
+  route_name: entity.nrfc_fixtures.collection
+  parent: system.admin_content

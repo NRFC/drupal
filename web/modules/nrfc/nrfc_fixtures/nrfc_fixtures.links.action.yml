@@ -1,0 +1,5 @@
+nrfc_fixtures.add_form:
+  title: 'Add nrfc fixtures'
+  route_name: entity.nrfc_fixtures.add_form
+  appears_on:
+    - entity.nrfc_fixtures.collection

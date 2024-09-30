@@ -1,0 +1,5 @@
+entity.nrfc_fixtures.collection:
+  title: 'NRFC Fixturess'
+  route_name: entity.nrfc_fixtures.collection
+  base_route: system.admin_content
+  weight: 10
