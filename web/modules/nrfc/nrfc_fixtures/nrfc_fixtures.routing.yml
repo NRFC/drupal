@@ -7,3 +7,14 @@ nrfc_fixtures.admin_page:
     _permission: 'administer site configuration'
   options:
     _admin_route: TRUE
+
+nrfc_fixtures.admin_page.team:
+  path: '/admin/config/system/nrfc/nrfc_fixtures/{team}'
+  defaults:
+    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesAdminController::teamPage'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      team:
+        type: entity:node

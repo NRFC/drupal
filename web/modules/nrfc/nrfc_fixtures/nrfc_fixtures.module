@@ -1,1 +1,14 @@
 <?php
+
+/**
+ * Implements hook_theme().
+ */
+function nrfc_fixtures_theme() {
+  return [
+    'nrfc_fixtures_index' => [
+      'variables' => [
+        'teams' => [],
+      ],
+    ],
+  ];
+}

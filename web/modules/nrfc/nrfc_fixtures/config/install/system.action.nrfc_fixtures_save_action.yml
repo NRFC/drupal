@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - nrfc_fixtures
+id: nrfc_fixtures_save_action
+label: 'Save nrfc fixturess'
+type: nrfc_fixtures
+plugin: entity:save_action:nrfc_fixtures
+configuration: {  }

@@ -2,11 +2,9 @@
 
 namespace Drupal\nrfc_league_table_scraper\Plugin\Block;
 
-use Drupal\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Database\Database;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -24,14 +22,15 @@ final class NrfcLeagueTableBlock extends BlockBase implements ContainerFactoryPl
 {
   protected RouteMatchInterface $routeMatch;
 
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $routeMatch) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $routeMatch)
+  {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->routeMatch = $routeMatch;
   }
 
   public static function create(\Symfony\Component\DependencyInjection\ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
   {
-        return new static(
+    return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -44,7 +43,7 @@ final class NrfcLeagueTableBlock extends BlockBase implements ContainerFactoryPl
    */
   public function build(): array
   {
-    $node =  $this->routeMatch->getParameter('node');
+    $node = $this->routeMatch->getParameter('node');
     if ($node instanceof Node) {
       // Get the node ID.
       $nid = $node->id();

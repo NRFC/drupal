@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - nrfc_fixtures
+id: nrfc_fixtures_delete_action
+label: 'Delete nrfc fixturess'
+type: nrfc_fixtures
+plugin: entity:delete_action:nrfc_fixtures
+configuration: {  }

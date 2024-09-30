@@ -1,0 +1,8 @@
+<ul>
+  {% for team in teams %}
+    <li><a href="{{ url(
+        'nrfc_fixtures.admin_page.team',
+        {'team':team.id}
+      ) }}">{{ team.getTitle }}</a></li>
+  {% endfor %}
+</ul>
