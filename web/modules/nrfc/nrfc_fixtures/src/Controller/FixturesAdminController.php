@@ -54,20 +54,31 @@ class FixturesAdminController extends ControllerBase
       ];
     }
 
-//    $rows = $query
-//      ->condition('team_nid', $team->id())
-//      ->accessCheck(TRUE)
-//      ->execute();
+    $results = $query
+      ->condition('team_nid', $team->id())
+      ->accessCheck(TRUE)
+      ->execute();
 
-    $rows = [
-      ["one", "Home"],
-      ["two", "Away"],
-    ];
+    $rows = [];
+    foreach ($results as $result) {
+      $rows[] = [
+        $result->get("date"),
+        $result->get("ko"),
+        $result->get("home"),
+        $result->get("type"),
+        $result->get("opponent"),
+        $result->get("result"),
+        $result->get("report"),
+        $result->get("referee"),
+        $result->get("food"),
+        $result->get("food_notes"),
+      ];
+    }
+    $rows[] = ["", "", "", "", "", "", "", "", "", "",];
 
     $build = [
       '#theme' => 'nrfc_fixtures_team',
-      '#team' => $team,
-      '#rows' => "{}",
+      '#team' => $team->getTitle(),
       '#attached' => [
         'library' => [
           'nrfc_fixtures/nrfc_fixtures',

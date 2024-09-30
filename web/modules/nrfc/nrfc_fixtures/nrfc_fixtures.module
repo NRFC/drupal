@@ -12,8 +12,7 @@ function nrfc_fixtures_theme() {
     ],
     'nrfc_fixtures_team' => [
       'variables' => [
-        'teams' => [],
-        'rows' => [],
+        'team' => "team name",
       ],
     ],
   ];

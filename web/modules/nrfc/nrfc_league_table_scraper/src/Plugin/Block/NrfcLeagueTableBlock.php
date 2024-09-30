@@ -66,9 +66,6 @@ final class NrfcLeagueTableBlock extends BlockBase implements ContainerFactoryPl
       return [
         '#theme' => 'nrfc_league_table_scraper',
         '#rows' => $rows,
-        '#cache' => [
-          'max-age' => 0,
-        ],
       ];
     }
     return [];
