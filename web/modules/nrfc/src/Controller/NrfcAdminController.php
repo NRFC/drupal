@@ -8,7 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 /**
  * Defines the admin section controller.
  */
-class AdminSectionController extends ControllerBase
+class NrfcAdminController extends ControllerBase
 {
 
   /**

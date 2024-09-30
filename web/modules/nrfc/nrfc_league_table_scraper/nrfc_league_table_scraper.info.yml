@@ -1,5 +1,5 @@
 name: 'NRFC League table scraper'
 type: module
-description: 'Scraps the league table from the RFU England site'
+description: 'Scrapes the league table from the RFU England site'
 package: nrfc
 core_version_requirement: ^10 || ^11

@@ -1,0 +1,9 @@
+nrfc_fixtures.admin_page:
+  path: '/admin/config/system/nrfc/nrfc_fixtures'
+  defaults:
+    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesAdminController::adminPage'
+    _title: 'Fixtures'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE

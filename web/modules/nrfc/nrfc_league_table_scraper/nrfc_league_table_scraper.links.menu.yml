@@ -1,6 +1,6 @@
 nrfc_league_table_scraper.scraper_settings:
   title: 'NRFC league table scraper settings'
-  parent: nrfc.admin_link
-  description: 'blah blah blah.'
-  route_name: nrfc_league_table_scraper.scraper_settings
+  parent: nrfc.admin_page
+  description: 'Set up the scraper to load league tables from England RFU.'
+  route_name: nrfc_league_table_scraper.admin_page
   weight: 20

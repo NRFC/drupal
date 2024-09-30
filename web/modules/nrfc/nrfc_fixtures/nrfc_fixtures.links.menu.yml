@@ -1,0 +1,6 @@
+nrfc_fixtures.admin_page:
+  title: 'NRFC Fixtures'
+  description: 'Manage fixtures for the teams.'
+  parent: nrfc.admin_page
+  route_name: nrfc_fixtures.admin_page
+  weight: 40

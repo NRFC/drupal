@@ -1,0 +1,9 @@
+services:
+
+  nrfc_fixtures.admin_page:
+    class: \Drupal\nrfc_fixtures\Service\FixturesAdminController
+    arguments:
+      - '@database'
+      - '@logger.channel_nrfc'
+    tags:
+      - { name: nrfc_fixtures.admin_page }

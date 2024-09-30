@@ -1,0 +1,8 @@
+name: 'NRFC Fixtures'
+type: module
+description: 'Manage team fixtures'
+package: nrfc
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:system
+  - drupal:menu_ui
