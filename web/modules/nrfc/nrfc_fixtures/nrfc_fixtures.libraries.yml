@@ -1,0 +1,15 @@
+nrfc_fixtures:
+  css:
+    layout:
+      css/nrfc_fixtures_layout.css: {}
+      https://bossanova.uk/jspreadsheet/v4/jexcel.css: { type: external, minified: true }
+      https://jsuites.net/v4/jsuites.css: { type: external, minified: true }
+    theme:
+      css/nrfc_fixtures_theme.css: {}
+  js:
+    js/nrfc_fixtures.js: {}
+    https://bossanova.uk/jspreadsheet/v4/jexcel.js: { type: external, minified: true }
+    https://jsuites.net/v4/jsuites.js: { type: external, minified: true }
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

@@ -38,16 +38,48 @@ class FixturesAdminController extends ControllerBase
     return [
       '#theme' => 'nrfc_fixtures_index',
       '#teams' => $nodes,
-      '#cache' => [
-        'max-age' => 0,
-      ],
     ];
   }
 
-  public function teamPage(Node $team, Request $request) {
-    //  $url = Url::fromRoute('entity.node.edit_form', array('node' => NID));
-    return [
-      "#markup" => "<b>Team:</b> " . $team->getTitle(),
+  public function teamPage(Node $team, Request $request)
+  {
+    try {
+      $query = $this->entityTypeManager()
+        ->getStorage('nrfc_fixtures')
+        ->getQuery();
+    } catch (InvalidPluginDefinitionException|PluginNotFoundException $e) {
+      $this->getLogger(__CLASS__)->error($e->getMessage());
+      return [
+        "#markup" => "Error generating accessing the DB, something is really fubar'd"
+      ];
+    }
+
+//    $rows = $query
+//      ->condition('team_nid', $team->id())
+//      ->accessCheck(TRUE)
+//      ->execute();
+
+    $rows = [
+      ["one", "Home"],
+      ["two", "Away"],
     ];
+
+    $build = [
+      '#theme' => 'nrfc_fixtures_team',
+      '#team' => $team,
+      '#rows' => "{}",
+      '#attached' => [
+        'library' => [
+          'nrfc_fixtures/nrfc_fixtures',
+        ],
+        'drupalSettings' => [
+          'nrfc_fixtures' => [
+            "rows" => $rows
+          ]
+        ]
+      ],
+    ];
+
+    return $build;
   }
 }

@@ -65,6 +65,7 @@ final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterf
 
     $fields = parent::baseFieldDefinitions($entity_type);
 
+    $fields['team_nid'] = BaseFieldDefinition::create('integer')->setRequired(TRUE);
     $fields['date'] = BaseFieldDefinition::create('datetime')->setRequired(TRUE);
     $fields['ko'] = BaseFieldDefinition::create('string');
     $fields['home'] = BaseFieldDefinition::create('list_string')->setRequired(TRUE);
