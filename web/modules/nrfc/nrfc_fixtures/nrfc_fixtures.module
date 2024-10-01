@@ -13,7 +13,9 @@ function nrfc_fixtures_theme() {
     'nrfc_fixtures_team' => [
       'variables' => [
         'team' => "team name",
+        "upload_form" => NULL,
       ],
+      'render element' => 'form',
     ],
   ];
 }

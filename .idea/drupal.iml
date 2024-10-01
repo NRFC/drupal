@@ -4,10 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/web/modules/nrfc/nrfc_quick_start/src/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/web/core" isTestSource="false" packagePrefix="Drupal" />
-      <sourceFolder url="file://$MODULE_DIR$/web/core/lib" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/web/core/tests" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/web/themes/contrib/bootstrap5/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/web/modules/nrfc/nrfc_league_table_scraper/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/asm89/stack-cors" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/chi-teck/drupal-code-generator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />

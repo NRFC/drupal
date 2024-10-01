@@ -36,7 +36,7 @@ class NrfcLeagueTableScraperEngine
   public function updateAll(): void
   {
     $teams = TeamConfig::fromConfig();
-    $this->l->debug("Update %count teams", ["%count" => count($teams)]);
+//    $this->l->debug("Update %count teams", ["%count" => count($teams)]);
     foreach ($teams as $team) {
       $this->updateTeam($team);
     }
@@ -44,7 +44,7 @@ class NrfcLeagueTableScraperEngine
 
   public function updateTeam(TeamConfig $team): void
   {
-    $this->l->debug("Updating " . $team);
+//    $this->l->debug("Updating " . $team);
     $node = \Drupal\node\Entity\Node::load($team->getTeamNid());
     $this->fetch($team);
   }
@@ -56,14 +56,14 @@ class NrfcLeagueTableScraperEngine
       $this->l->debug("Fetching page from " . $url);
       $response = $this->httpsClient->get($url);
       $body = $response->getBody()->getContents();
-      $this->l->debug("RFU Response length " . strlen($body));
+//      $this->l->debug("RFU Response length " . strlen($body));
 
       $dom = new DOMDocument();
       libxml_use_internal_errors(true);
       $dom->loadHTML($body);
       $xpath = new DOMXPath($dom);
       $rows = $xpath->query(TeamConfig::getXPath());
-      $this->l->debug("Found " . count($rows) . " rows");
+//      $this->l->debug("Found " . count($rows) . " rows");
       foreach ($rows as $row) {
         $cells = $row->childNodes;
         // TODO figure out these settings from the table header
@@ -94,7 +94,7 @@ class NrfcLeagueTableScraperEngine
   private function cleanRow(int $nid, string $teamName): void
   {
     try {
-      $this->l->debug("Cleaning row: nid=" . $nid . ", " . $teamName);
+//      $this->l->debug("Cleaning row: nid=" . $nid . ", " . $teamName);
       $result = $this->connection
         ->delete('nrfc_league_table_scraper_table_data')
         ->condition('team_nid', $nid)
@@ -113,7 +113,7 @@ class NrfcLeagueTableScraperEngine
    */
   private function addRow($nid, $teamName, $win, $draw, $lose, $points_for, $points_against, $try_bonus, $lose_bonus): void
   {
-    $this->l->debug("Inserting row: nid=" . $nid . ", " . $teamName);
+//    $this->l->debug("Inserting row: nid=" . $nid . ", " . $teamName);
     try {
       $result = $this->connection->insert('nrfc_league_table_scraper_table_data')
         ->fields([

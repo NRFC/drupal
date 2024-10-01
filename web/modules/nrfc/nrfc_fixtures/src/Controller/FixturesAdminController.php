@@ -5,6 +5,7 @@ namespace Drupal\nrfc_fixtures\Controller;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Form\FormBuilder;
 use Drupal\node\Entity\Node;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -90,6 +91,11 @@ class FixturesAdminController extends ControllerBase
         ]
       ],
     ];
+
+    $form = $this->formBuilder()->getForm(
+      'Drupal\nrfc_fixtures\Form\NrfcFixturesUploadForm'
+    );
+    $build['#upload_form'] = $form;
 
     return $build;
   }
