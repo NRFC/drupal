@@ -78,17 +78,17 @@ final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterf
 
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['team_nid'] = BaseFieldDefinition::create('integer')->setRequired(TRUE);
-    $fields['date'] = BaseFieldDefinition::create('datetime')->setRequired(TRUE);
-    $fields['ko'] = BaseFieldDefinition::create('string');
-    $fields['home'] = BaseFieldDefinition::create('list_string')->setRequired(TRUE);
-    $fields['match_type'] = BaseFieldDefinition::create('list_string');
-    $fields['opponent'] = BaseFieldDefinition::create('string')->setRequired(TRUE);
-    $fields['result'] = BaseFieldDefinition::create('string');
-    $fields['report'] = BaseFieldDefinition::create('entity_reference');
-    $fields['referee'] = BaseFieldDefinition::create('list_string');
-    $fields['food'] = BaseFieldDefinition::create('integer');
-    $fields['food_notes'] = BaseFieldDefinition::create('string');
+    $fields['team_nid'] = BaseFieldDefinition::create('integer')->setLabel(t('Team NID'))->setRequired(TRUE);
+    $fields['date'] = BaseFieldDefinition::create('datetime')->setLabel(t('Date'))->setRequired(TRUE);
+    $fields['ko'] = BaseFieldDefinition::create('string')->setLabel(t('Kick off'));
+    $fields['home'] = BaseFieldDefinition::create('list_string')->setLabel(t('Home/Away'))->setRequired(TRUE);
+    $fields['match_type'] = BaseFieldDefinition::create('list_string')->setLabel(t('Match type'));
+    $fields['opponent'] = BaseFieldDefinition::create('string')->setLabel(t('Opponent'))->setRequired(TRUE);
+    $fields['result'] = BaseFieldDefinition::create('string')->setLabel(t('Result'));
+    $fields['report'] = BaseFieldDefinition::create('entity_reference')->setLabel(t('Report'));
+    $fields['referee'] = BaseFieldDefinition::create('list_string')->setLabel(t('Referee'));
+    $fields['food'] = BaseFieldDefinition::create('integer')->setLabel(t('Food'));
+    $fields['food_notes'] = BaseFieldDefinition::create('string')->setLabel(t('Food Notes'));
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Authored on'))

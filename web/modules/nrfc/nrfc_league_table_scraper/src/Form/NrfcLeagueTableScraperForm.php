@@ -23,7 +23,8 @@ final class NrfcLeagueTableScraperForm extends ConfigFormBase
   public function __construct(
     ConfigFactoryInterface $config_factory,
     TypedConfigManagerInterface $typedConfigManager,
-    EntityTypeManagerInterface $entity_type_manager)
+    EntityTypeManagerInterface $entity_type_manager
+  )
   {
     parent::__construct($config_factory, $typedConfigManager);
     $this->entityTypeManager = $entity_type_manager;

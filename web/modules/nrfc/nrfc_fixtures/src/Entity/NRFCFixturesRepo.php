@@ -103,14 +103,14 @@ class NRFCFixturesRepo extends EntityRepository
       ->getQuery();
   }
 
-  public function createOrUpdateFixture(array $fixtureData, Node $team): bool
+  public function createOrUpdateFixture(array $fixtureData, Node $team): NRFCFixtures|bool
   {
     // TODO Validate fixture data
     try { # TODO better error handling
       $team_nid = $team->id();
-      $delete = $fixtureData['delete'];
-      $nid = $fixtureData['nid'];
-      $date = $fixtureData["date"] ?? "";
+      $delete = $fixtureData['delete'] ?? "";
+      $nid = $fixtureData['nid'] ?? "";
+      $date = date("Y-m-d", strtotime($fixtureData["date"] ?? ""));
       $ko = $fixtureData["ko"] ?? "";
       $ha = $fixtureData["home"] ?? "";
       $match_type = $fixtureData["match_type"] ?? "";
@@ -144,6 +144,7 @@ class NRFCFixturesRepo extends EntityRepository
           $node->food->value = $food;
           $node->food_notes->value = $food_notes;
           $node->save();
+          return $node;
         }
       } else {
         $this->entityTypeManager
@@ -162,12 +163,24 @@ class NRFCFixturesRepo extends EntityRepository
             'food' => $food,
             'food_notes' => $food_notes,
           ])->save();
+          return $node;
       }
     } catch (\Exception $e) {
       $this->logger->error($e->getMessage());
       return false;
     }
     return true;
+  }
+
+  public function deleteAll($team): void
+  {
+    // delete all fixtures
+    $entities = $this->entityTypeManager
+      ->getStorage("nrfc_fixtures")
+      ->loadByProperties(array('team_nid' => $team->id()));
+    foreach ($entities as $entity) {
+      $entity->delete();
+    }
   }
 
   private static function getReportId($report): ?int

@@ -2,14 +2,17 @@
 
 namespace Drupal\nrfc_fixtures\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\file\Entity\File;
 use Drupal\node\Entity\Node;
-use Drupal\nrfc_fixtures\Entity\NRFCFixtures;
+use Drupal\nrfc_fixtures\Entity\NRFCFixturesRepo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -17,34 +20,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @internal
  */
-final class NrfcFixturesUploadForm extends FormBase
+class NrfcFixturesUploadForm extends ConfigFormBase
 {
   // https://www.drupal.org/docs/drupal-apis/form-api/introduction-to-form-api
   const FORM_ID = 'nrfc_fixtures_upload_form';
 
-  private EntityTypeManagerInterface $entityTypeManager;
-
-  public function __construct(
-    EntityTypeManagerInterface $entity_type_manager, RouteMatchInterface $routeMatch)
-  {
-    $this->entityTypeManager = $entity_type_manager;
-    $this->routeMatch = $routeMatch;
-  }
-
-  private static function parseType($typeString): string
-  {
-    $type = strtoupper($typeString);
-    return match ($type) {
-      "L" => "League",
-      "F" => "Friendly",
-      "Fe" => "Festival",
-      "T" => "Tournament",
-      "NC" => "National Cup",
-      "CC" => "County Cup",
-      "C" => "Cup",
-      default => "",
-    };
-  }
+  protected ?EntityTypeManagerInterface $entityTypeManager = null;
+  protected ?NRFCFixturesRepo $nrfcFixturesRepo = null;
 
   /**
    * {@inheritdoc}
@@ -59,7 +41,7 @@ final class NrfcFixturesUploadForm extends FormBase
    */
   public function buildForm(array $form, FormStateInterface $form_state)
   {
-    $team = $this->routeMatch->getParameter('team');
+    $team = $this->getRouteMatch()->getParameter('team');
 
     $form['nrfc_fixtures_upload_form'] = [
       '#type' => 'details',
@@ -113,7 +95,65 @@ final class NrfcFixturesUploadForm extends FormBase
       '#url' => \Drupal\Core\Url::fromRoute('nrfc_fixtures.admin_page.template'),
     ];
 
+    $row_data = $this->getNrfcFixturesRepo()->getFixturesForTeamAsArray($team);
+    foreach ($row_data as $key => $row) {
+      if ($row['date']) {
+        $row_data[$key]["date_as_string"] = date("d-m-Y", strtotime($row['date']));
+      }
+      if ($row['report']) {
+        $row_data[$key]["report_as_string"] = NRFCFixturesRepo::makeReportName(intval($row["report"]));
+      }
+    }
+
+    // TODO - discuss? move this to the repo class and drop the entity manger from this one
+    $nids = $this->getEntityTypeManager()
+      ->getStorage('node')
+      ->getQuery()
+      ->condition('type', 'match_report')
+      ->accessCheck()
+      ->execute();
+    $reports = Node::loadMultiple($nids);
+
+    $matchReports = [];
+    foreach ($reports as $report) {
+      $matchReports[] = NRFCFixturesRepo::makeReportName($report);
+    }
+
+    $build = [
+      '#theme' => 'nrfc_fixtures_team',
+      '#team' => $team->getTitle(),
+      '#attached' => [
+        'library' => [
+          'nrfc_fixtures/nrfc_fixtures',
+        ],
+        'drupalSettings' => [
+          'nrfc_fixtures' => [
+            "rows" => $row_data,
+            "match_reports" => $matchReports,
+          ]
+        ]
+      ],
+    ];
+
+    $form['nrfc_fixtures_upload_form']['fixture_table'] = [
+      "#markup" => \Drupal::service('renderer')->render($build)
+    ];
+
     return $form;
+  }
+
+  protected function getEntityTypeManager(): EntityTypeManagerInterface {
+    if (!$this->entityTypeManager) {
+      $this->entityTypeManager = \Drupal::service('entity_type.manager');
+    }
+    return $this->entityTypeManager;
+  }
+
+  protected function getNrfcFixturesRepo(): NRFCFixturesRepo {
+    if (!$this->nrfcFixturesRepo) {
+      $this->nrfcFixturesRepo = \Drupal::service('nrfc_fixtures.repo');
+    }
+    return $this->nrfcFixturesRepo;
   }
 
   public function validateForm(array &$form, FormStateInterface $form_state): void
@@ -139,18 +179,18 @@ final class NrfcFixturesUploadForm extends FormBase
 
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
-    $team = $this->routeMatch->getParameter('team');
+    $team = $this->getRouteMatch()->getParameter('team');
     $nid = $team->id();
+    $node = Node::load($nid);
 
     if (!empty($form_state->getValue('clear_first'))) {
       if ($form_state->getValue('clear_first') === "clear first") {
-        // delete all fixtures
-        $entities = $this->entityTypeManager
-          ->getStorage("nrfc_fixtures")
-          ->loadByProperties(array('type' => 'nrfc_fixtures'));
-        foreach ($entities as $entity) {
-          $entity->delete();
-        }
+        $this->getNrfcFixturesRepo()->deleteAll($node);
+          $this->messenger()->addMessage(
+            sprintf(
+              "Cleared existing fixtures for %s.", $node->getTitle()
+            ),
+          );
       }
     }
 
@@ -163,42 +203,42 @@ final class NrfcFixturesUploadForm extends FormBase
       $cnt = 0;
       while ($row = fgetcsv($fh)) {
         $cnt += 1;
+        if ($cnt === 1) {
+          // first row is a header row
+          continue;
+        }
         if (count($row) < 5) {
           $this->messenger()->addMessage(
             sprintf("Rejecting row %d, not enough columns(%d).", $cnt, count($row[0])),
           );
           continue;
         }
-        $date = date("d-m-y", strtotime(($row[0])));
+        $date = date("Y-m-d", strtotime(($row[0])));
         $ko = self::parseTime($row[1]);
         $ha = strtolower($row[2]) === "a" ? "Away" : "Home";
         $type = self::parseType($row[3]);
         $opponent = $row[4];
-        if ($date === "01-01-70" || empty($opponent)) {
+        if ($date !== "01-01-70" || $opponent !== "") {
+          $data = [
+            'team_nid' => $team->id(),
+            'date' => $date,
+            'ko' => $ko,
+            'home' => $ha,
+            'match_type' => $type,
+            'opponent' => $opponent,
+          ];
+          $fixture = $this->getNrfcFixturesRepo()->createOrUpdateFixture($data, $team);
+          $this->logger("nrfc")->info("Created row: %row",["%row" => $fixture]);
+        } else {
           $this->messenger()->addMessage(
             sprintf(
-              "Date and opponent are mandatory, '%s', '%s', '%s', '%s', '%s'.",
-              $row[0], $row[1], $row[2], $row[3], $row[4]
-            )
+              "Date and opponent are mandatory fields in the csv (date=%s, opponent=%s).",
+              $row[0],
+              $row[4]
+            ),
+            MessengerInterface::TYPE_WARNING
           );
-          continue;
         }
-        $this->logger(__CLASS__)->info(
-            sprintf(
-              "Creating row: '%s', '%s', '%s', '%s', '%s'.",
-              $date, $ko, $ha, $type, $opponent
-            )
-        );
-        $node = NRFCFixtures::create([
-          'type' => 'nrfc_fixtures',
-          'team_nid' => $team->id(),
-          'date' => $date,
-          'ko' => $ko,
-          'home' => $ha,
-          'match_type' => $type,
-          'opponent' => $opponent,
-        ]);
-        $node->save();
       }
     }
   }
@@ -217,14 +257,24 @@ final class NrfcFixturesUploadForm extends FormBase
     return trim($hour) . ":" . trim($minute);
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container)
+  private
+  static function parseType($typeString): string
   {
-    return new static(
-      $container->get('entity_type.manager'),
-      $container->get('current_route_match'),
-    );
+    $type = strtoupper($typeString);
+    return match ($type) {
+      "L" => "League",
+      "F" => "Friendly",
+      "Fe" => "Festival",
+      "T" => "Tournament",
+      "NC" => "National Cup",
+      "CC" => "County Cup",
+      "C" => "Cup",
+      default => "",
+    };
+  }
+
+  protected function getEditableConfigNames()
+  {
+    // N/A
   }
 }

@@ -11,14 +11,16 @@ nrfc_fixtures.admin_page:
 nrfc_fixtures.admin_page.team:
   path: '/admin/config/system/nrfc/nrfc_fixtures/team/{team}'
   defaults:
-    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesAdminController::teamPage'
+    _form: '\Drupal\nrfc_fixtures\Form\NrfcFixturesUploadForm'
+    _title: 'Team Fixture Settings'
   requirements:
     _permission: 'administer site configuration'
   options:
+    _admin_route: TRUE
     parameters:
       team:
         type: entity:node
-  methods: ["GET"]
+  methods: ["GET","POST"]
 
 nrfc_fixtures.admin_page.team.update:
   path: '/admin/config/system/nrfc/nrfc_fixtures/team/{team}'
@@ -30,7 +32,7 @@ nrfc_fixtures.admin_page.team.update:
     parameters:
       team:
         type: entity:node
-  methods: ["POST"]
+  methods: ["PUT"]
 
 nrfc_fixtures.admin_page.template:
   path: '/admin/config/system/nrfc/nrfc_fixtures/template'

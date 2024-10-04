@@ -19,14 +19,14 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 final class FixturesAdminController extends ControllerBase
 {
   private LoggerChannel $logger;
-  private NRFCFixturesRepo $repo;
+  private NRFCFixturesRepo $nrfcFixturesRepo;
 
   public function __construct(
     LoggerChannel    $logger,
-    NRFCFixturesRepo $repo)
+    NRFCFixturesRepo $nrfcFixturesRepo)
   {
     $this->logger = $logger;
-    $this->repo = $repo;
+    $this->nrfcFixturesRepo = $nrfcFixturesRepo;
   }
 
   /**
@@ -68,58 +68,6 @@ final class FixturesAdminController extends ControllerBase
     ];
   }
 
-  public function teamPage(Node $team, Request $request)
-  {
-    $data = $this->repo->getFixturesForTeamAsArray($team);
-    foreach ($data as $key => $row) {
-      if ($row['date']) {
-        $data[$key]["date_as_string"] = date("d-m-Y", strtotime($row['date']));
-      }
-      if ($row['report']) {
-        $data[$key]["report_as_string"] = NRFCFixturesRepo::makeReportName(intval($row["report"]));
-      }
-    }
-    $build = [
-      '#theme' => 'nrfc_fixtures_team',
-      '#team' => $team->getTitle(),
-      '#attached' => [
-        'library' => [
-          'nrfc_fixtures/nrfc_fixtures',
-        ],
-        'drupalSettings' => [
-          'nrfc_fixtures' => [
-            "rows" => $data,
-            "match_reports" => $this->getMatchReports(),
-          ]
-        ]
-      ],
-    ];
-
-    $form = $this->formBuilder()->getForm(
-      'Drupal\nrfc_fixtures\Form\NrfcFixturesUploadForm'
-    );
-    $build['#upload_form'] = $form;
-
-    return $build;
-  }
-
-  private function getMatchReports()
-  {
-    $nids = $this->entityTypeManager()
-      ->getStorage('node')
-      ->getQuery()
-      ->condition('type', 'match_report')
-      ->accessCheck()
-      ->execute();
-    $reports = Node::loadMultiple($nids);
-
-    $data = [];
-    foreach ($reports as $report) {
-      $data[] = NRFCFixturesRepo::makeReportName($report);
-    }
-    return $data;
-  }
-
   public function templateDownload(Request $request): StreamedResponse
   {
     $response = new StreamedResponse();
@@ -127,7 +75,7 @@ final class FixturesAdminController extends ControllerBase
       $handle = fopen('php://output', 'w+');
 
       $data = [$this->getHeader()];
-      $data[] = ["dd/mm/yy", "hh:mm", "H or A", "League", "Free text"];
+      $data[] = ["yyyy/mm/dd", "hh:mm", "H or A", "League", "Free text"];
       $data[] = ["", "", "", "", ""];
       $data[] = ["Delete this all following rows ", "", "", "", ""];
       $data[] = ["h/a should be either 'H' for a home game, or 'A' for an away game:", "", "", "", ""];
@@ -162,7 +110,7 @@ final class FixturesAdminController extends ControllerBase
 
   public function teamDownload(Node $team, Request $request)
   {
-    $rows = $this->repo->getFixturesForTeamAsArray($team);
+    $rows = $this->nrfcFixturesRepo->getFixturesForTeamAsArray($team);
     $response = new StreamedResponse();
     $response->setCallback(function () use ($rows) {
       $handle = fopen('php://output', 'w+');
@@ -204,14 +152,17 @@ final class FixturesAdminController extends ControllerBase
     $data = $request->getPayload();
     $errors = [];
     foreach ($data as $row) {
-      if (!$this->repo->createOrUpdateFixture($row, $team)) {
-        $errors[] = "Error setting fixture data " . implode(", ", $row);
+      if (is_array($row)) {
+        if (!$this->nrfcFixturesRepo->createOrUpdateFixture($row, $team)) {
+          $errors[] = "Error setting fixture data " . implode(", ", $row);
+        }
+      } else {
+        $errors[] = "Fixture data passed was not an array, " . $row;
       }
     }
 
     if (count($errors)) {
       $this->logger->warning(implode("|", $errors));
-      return 500;
     }
 
     return new Response($status = 204);

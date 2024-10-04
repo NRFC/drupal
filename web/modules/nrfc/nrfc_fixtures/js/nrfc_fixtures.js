@@ -133,7 +133,7 @@ async function nrfc_update_fixtures($team) {
   console.log("payload", payload);
   debugger;
   const rawResponse = await fetch(drupalSettings.path.pathPrefix, {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
