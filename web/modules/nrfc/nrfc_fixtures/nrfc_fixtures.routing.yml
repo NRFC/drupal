@@ -9,11 +9,43 @@ nrfc_fixtures.admin_page:
     _admin_route: TRUE
 
 nrfc_fixtures.admin_page.team:
-  path: '/admin/config/system/nrfc/nrfc_fixtures/{team}'
+  path: '/admin/config/system/nrfc/nrfc_fixtures/team/{team}'
   defaults:
     _controller: '\Drupal\nrfc_fixtures\Controller\FixturesAdminController::teamPage'
   requirements:
-    _permission: 'access content'
+    _permission: 'administer site configuration'
+  options:
+    parameters:
+      team:
+        type: entity:node
+  methods: ["GET"]
+
+nrfc_fixtures.admin_page.team.update:
+  path: '/admin/config/system/nrfc/nrfc_fixtures/team/{team}'
+  defaults:
+    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesAdminController::fixtureUpdate'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    parameters:
+      team:
+        type: entity:node
+  methods: ["POST"]
+
+nrfc_fixtures.admin_page.template:
+  path: '/admin/config/system/nrfc/nrfc_fixtures/template'
+  defaults:
+    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesAdminController::templateDownload'
+  requirements:
+    _permission: 'administer site configuration'
+
+
+nrfc_fixtures.admin_page.download:
+  path: '/admin/config/system/nrfc/nrfc_fixtures/download/{team}'
+  defaults:
+    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesAdminController::teamDownload'
+  requirements:
+    _permission: 'administer site configuration'
   options:
     parameters:
       team:

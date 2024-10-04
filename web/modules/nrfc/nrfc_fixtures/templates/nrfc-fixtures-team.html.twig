@@ -2,4 +2,16 @@
 
 {{ upload_form }}
 
-<div id="spreadsheet"></div>
+<div id="nrfc-spreadsheet-wrapper">
+  <div id="nrfc-spreadsheet"></div>
+  <input
+    type="button"
+    value="Add new row"
+    onclick="jQuery('#nrfc-spreadsheet').jspreadsheet('insertRow')"
+  />
+  <input
+    type="button"
+    value="Save changes"
+    onclick="nrfc_update_fixtures()"
+  />
+</div>

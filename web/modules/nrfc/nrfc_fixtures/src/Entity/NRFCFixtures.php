@@ -53,15 +53,28 @@ use Drupal\nrfc_fixtures\NRFCFixturesInterface;
  *     "delete-multiple-form" = "/admin/content/nrfc-fixtures/delete-multiple",
  *   },
  * )
+ *
+ * @property string $date
+ * @property string $ko;
+ * @property string $home;
+ * @property string $match_type;
+ * @property string $opponent;
+ * @property string $result;
+ * @property string $report;
+ * @property string $referee;
+ * @property string $food;
+ * @property string $food_notes;
  */
-final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterface {
+final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterface
+{
 
   use EntityChangedTrait;
 
   /**
    * {@inheritdoc}
    */
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array {
+  public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array
+  {
 
     $fields = parent::baseFieldDefinitions($entity_type);
 
@@ -69,7 +82,7 @@ final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterf
     $fields['date'] = BaseFieldDefinition::create('datetime')->setRequired(TRUE);
     $fields['ko'] = BaseFieldDefinition::create('string');
     $fields['home'] = BaseFieldDefinition::create('list_string')->setRequired(TRUE);
-    $fields['type'] = BaseFieldDefinition::create('list_string');
+    $fields['match_type'] = BaseFieldDefinition::create('list_string');
     $fields['opponent'] = BaseFieldDefinition::create('string')->setRequired(TRUE);
     $fields['result'] = BaseFieldDefinition::create('string');
     $fields['report'] = BaseFieldDefinition::create('entity_reference');
@@ -99,4 +112,23 @@ final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterf
     return $fields;
   }
 
+  public function __toString(): string
+  {
+    return sprintf(
+      "%s nid=%d team_id=%d date=%s ko=%s ha=%s match_type=%s opponent=%s result=%s report_id=%d referee=%s food=%s food_notes=%s",
+      __CLASS__,
+      $this->id(),
+      $this->team_nid->value,
+      $this->date->value,
+      $this->ko->value,
+      $this->home->value,
+      $this->match_type->value,
+      $this->opponent->value,
+      $this->result->value,
+      $this->report->target_id,
+      $this->referee->value,
+      $this->food->value,
+      $this->food_notes->value,
+    );
+  }
 }
