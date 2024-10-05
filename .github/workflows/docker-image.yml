@@ -16,21 +16,20 @@ jobs:
 
     steps:
 
+    - name: Check out code
+      uses: actions/checkout@v2
+
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-#     - uses: actions/checkout@v4
-#     - name: Build the Docker image
-#       run: docker build --file etc/docker/Dockerfile --no-cache --tag tobybatch/nrfc etc/docker
-
     - name: Build and push Docker image
       id: push
       uses: docker/build-push-action@v5
       with:
-        context: ./etc/docker
-        file: ./etc/docker/Dockerfile
-        push: true
+        context: etc/docker
+        file: etc/docker/Dockerfile
+        push: false
         tags: tobybatch/nrfc
