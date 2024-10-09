@@ -1,3 +1,11 @@
+nrfc_fixtures.all_fixtures_page:
+  path: '/fixtures'
+  defaults:
+    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesController::all'
+    _title: 'Fixtures'
+  requirements:
+    _permission: 'access content'
+
 nrfc_fixtures.admin_page:
   path: '/admin/config/system/nrfc/nrfc_fixtures'
   defaults:

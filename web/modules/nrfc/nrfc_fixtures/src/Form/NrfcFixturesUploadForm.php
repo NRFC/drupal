@@ -120,7 +120,7 @@ class NrfcFixturesUploadForm extends ConfigFormBase
     }
 
     $build = [
-      '#theme' => 'nrfc_fixtures_team',
+      '#theme' => 'admin.nrfc_fixtures_team',
       '#team' => $team->getTitle(),
       '#attached' => [
         'library' => [

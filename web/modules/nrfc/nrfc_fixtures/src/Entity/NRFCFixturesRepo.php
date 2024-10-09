@@ -11,30 +11,27 @@ use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Plugin\Context\ContextRepositoryInterface;
 use Drupal\node\Entity\Node;
 
+class NRFCFixturesRepo extends EntityRepository {
 
-class NRFCFixturesRepo extends EntityRepository
-{
   private LoggerChannel $logger;
 
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
-    LanguageManagerInterface   $language_manager,
+    LanguageManagerInterface $language_manager,
     ContextRepositoryInterface $context_repository,
-    LoggerChannel              $logger,
+    LoggerChannel $logger,
 
-  )
-  {
+  ) {
     parent::__construct($entity_type_manager, $language_manager, $context_repository);
     $this->logger = $logger;
   }
 
-  public static function makeReportName(Node|int $report): ?string
-  {
+  public static function makeReportName(Node|int $report): ?string {
     if (!$report instanceof Node) {
       $report = Node::load(intval($report));
     }
     if (!$report) {
-      return null;
+      return NULL;
     }
     return sprintf(
       "%s - %s [%d]",
@@ -44,13 +41,11 @@ class NRFCFixturesRepo extends EntityRepository
     );
   }
 
-  public function getFixturesForTeamAsArray(Node $team): array
-  {
+  public function getFixturesForTeamAsArray(Node $team): array {
     return $this->fixturesToArray($this->getFixturesForTeam(($team)));
   }
 
-  public function fixturesToArray(array $fixtures): array
-  {
+  public function fixturesToArray(array $fixtures): array {
     $data = [];
     foreach ($fixtures as $fixture) {
       $data[] = $this->fixtureToArray($fixture);
@@ -58,8 +53,7 @@ class NRFCFixturesRepo extends EntityRepository
     return $data;
   }
 
-  public function fixtureToArray(NRFCFixtures $fixture): array
-  {
+  public function fixtureToArray(NRFCFixtures $fixture): array {
     return [
       'nid' => $fixture->id(),
       'team_nid' => $fixture->team_nid,
@@ -76,8 +70,7 @@ class NRFCFixturesRepo extends EntityRepository
     ];
   }
 
-  public function getFixturesForTeam(Node|int $team): array
-  {
+  public function getFixturesForTeam(Node|int $team): array {
     $team = self::teamOrNid($team);
 
     return $this->entityTypeManager
@@ -88,23 +81,20 @@ class NRFCFixturesRepo extends EntityRepository
         ->execute());
   }
 
-  private static function teamOrNid(Node|int $team): Node
-  {
+  private static function teamOrNid(Node|int $team): Node {
     if (!($team instanceof Node)) {
       $team = Node::load($team);
     }
     return $team;
   }
 
-  private function getQuery(): \Drupal\Core\Entity\Query\QueryInterface
-  {
+  private function getQuery(): \Drupal\Core\Entity\Query\QueryInterface {
     return $this->entityTypeManager
       ->getStorage('nrfc_fixtures')
       ->getQuery();
   }
 
-  public function createOrUpdateFixture(array $fixtureData, Node $team): NRFCFixtures|bool
-  {
+  public function createOrUpdateFixture(array $fixtureData, Node $team): NRFCFixtures|bool {
     // TODO Validate fixture data
     try { # TODO better error handling
       $team_nid = $team->id();
@@ -121,7 +111,7 @@ class NRFCFixturesRepo extends EntityRepository
       $food = $fixtureData["food"] ?? "";
       $food_notes = $fixtureData["food_notes"] ?? "";
 
-      $node = false;
+      $node = FALSE;
       if ($nid) {
         /** @var $node NRFCFixtures */
         $node = $this->entityTypeManager
@@ -132,7 +122,8 @@ class NRFCFixturesRepo extends EntityRepository
       if ($node) {
         if ($delete) {
           $node->delete();
-        } else {
+        }
+        else {
           $node->date->value = $date;
           $node->ko->value = $ko;
           $node->home->value = $ha;
@@ -146,7 +137,8 @@ class NRFCFixturesRepo extends EntityRepository
           $node->save();
           return $node;
         }
-      } else {
+      }
+      else {
         $this->entityTypeManager
           ->getStorage('nrfc_fixtures')
           ->create([
@@ -163,32 +155,74 @@ class NRFCFixturesRepo extends EntityRepository
             'food' => $food,
             'food_notes' => $food_notes,
           ])->save();
-          return $node;
+        return $node;
       }
-    } catch (\Exception $e) {
-      $this->logger->error($e->getMessage());
-      return false;
     }
-    return true;
+    catch (\Exception $e) {
+      $this->logger->error($e->getMessage());
+      return FALSE;
+    }
+    return TRUE;
   }
 
-  public function deleteAll($team): void
-  {
+  private static function getReportId($report): ?int {
+    $elements = explode(" ", $report);
+    if (count($elements)) {
+      return intval(preg_replace("/[^0-9 ]/", '', array_pop($elements)));
+    }
+    return NULL;
+  }
+
+  public function deleteAll($team): void {
     // delete all fixtures
     $entities = $this->entityTypeManager
       ->getStorage("nrfc_fixtures")
-      ->loadByProperties(array('team_nid' => $team->id()));
+      ->loadByProperties(['team_nid' => $team->id()]);
     foreach ($entities as $entity) {
       $entity->delete();
     }
   }
 
-  private static function getReportId($report): ?int
-  {
-    $elements = explode(" ", $report);
-    if (count($elements)) {
-      return intval(preg_replace("/[^0-9 ]/", '', array_pop($elements)));
+  public function getAll() {
+    $all = $this->entityTypeManager
+      ->getStorage("nrfc_fixtures")
+      ->getQuery()
+      ->accessCheck()
+      ->sort("date", "DESC")
+      ->sort("team_nid", "DESC")
+      ->execute()
+      ;
+
+    $data = [];
+    foreach ($all as $entity) {
+      $fixture = NRFCFixtures::load($entity);
+      if (!$fixture) {
+        $this->logger->warning("Fixture not found: " . $entity->id());
+        continue;
+      }
+      $date = $fixture->date->value ?? false;
+      $team_nid = $fixture->team_nid->value ?? false;
+      if (!$team_nid || !$date) {
+        $this->logger->warning(
+          "Fixture missing team nid (%team_nid) and/or date (%date).",
+          [ "%team_nid" => $team_nid, "date" => $date,]
+        );
+        continue;
+      }
+
+      $teamTitle = Node::load($team_nid)->getTitle();
+      if (!in_array($date, $data)) {
+        $data[$date] = [];
+      }
+      $data[$date][] = array_merge(["team" => $teamTitle], $fixture->toArray());
     }
-    return null;
+
+    // This could probably be done with a super complex closure, I prefer verbose readable code
+    $sortedData = [];
+    foreach ($data as $date => $fixture) {
+      // Each date should have an array of
+    }
+
+    return $data;
   }
 }

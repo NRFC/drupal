@@ -1,1 +1,7 @@
 <?php
+
+// TODO - move this to a service, why?
+function nrfc_get_teams_in_order() {
+  $vocab = \Drupal\taxonomy\Entity\Vocabulary::load("team-section");
+//  $terms =
+}

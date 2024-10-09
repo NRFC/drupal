@@ -1,0 +1,48 @@
+<table>
+  <tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th colspan="5">Boys</th>
+    <th colspan="4">Girls</th>
+  </tr>
+  <tr>
+    <th>Date</th>
+    <th>Minis</th>
+    <th>U13</th>
+    <th>U14</th>
+    <th>U15</th>
+    <th>U16</th>
+    <th>Colts</th>
+    <th>U12</th>
+    <th>U14</th>
+    <th>U16</th>
+    <th>U18</th>
+  </tr>
+  {% for date, data in fixtures %}
+    <tr>
+      <td>{{ date }}</td>
+      <th>x</th>
+      <th>x</th>
+      <th>U14</th>
+      <th>U15</th>
+      <th>U16</th>
+      <th>Colts</th>
+      <th>U12</th>
+      <th>U14</th>
+      <th>U16</th>
+      <th>U18</th>
+    </tr>
+  {% endfor %}
+</table>
+
+<div>
+  <pre>
+    $data = [
+      "yy/mm/dd" => [
+        "team" => ["fixture data"]
+      ]
+    ];
+  </pre>
+</div>
+
+{{ dump(fixtures) }}
