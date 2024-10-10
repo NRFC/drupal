@@ -1,0 +1,20 @@
+{{ attach_library('nrfc_fixtures/nrfc_fixtures') }}
+
+<table class="nrfc-fixtures">
+    <tr>
+        <th>Date</th>
+        <th>Comp.</th>
+        <th>Team</th>
+        <th>Result</th>
+        <th>Report</th>
+    </tr>
+    {% for index, fixture in fixtures %}
+        <tr class="{{ nrfc_stripe(index) }}">
+            <td>{{ fixture.date }}</td>
+            <td>{{ fixture.match_type }}</td>
+            <td>{{ fixture.opponent }}</td>
+            <td>{{ fixture.result }}</td>
+            <td>{{ fixture.report }}</td>
+        </tr>
+    {% endfor %}
+</table>

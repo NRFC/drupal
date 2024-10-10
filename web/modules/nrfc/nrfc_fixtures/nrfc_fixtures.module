@@ -5,7 +5,12 @@
  */
 function nrfc_fixtures_theme() {
   return [
-    'nrfc_fixtures_all' => [
+    'nrfc_fixtures_multiple' => [
+      'variables' => [
+        'fixtures' => [],
+      ],
+    ],
+    'nrfc_fixtures_team' => [
       'variables' => [
         'fixtures' => [],
       ],
@@ -24,3 +29,4 @@ function nrfc_fixtures_theme() {
     ],
   ];
 }
+

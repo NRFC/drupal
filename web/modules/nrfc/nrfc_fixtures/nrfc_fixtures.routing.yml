@@ -1,10 +1,26 @@
-nrfc_fixtures.all_fixtures_page:
-  path: '/fixtures'
+nrfc_fixtures.section_fixtures_page:
+  path: '/fixtures/section/{sections}'
   defaults:
-    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesController::all'
-    _title: 'Fixtures'
+    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesController::sections'
+    _title_callback: '\Drupal\nrfc_fixtures\Controller\FixturesController::sectionsTitle'
   requirements:
     _permission: 'access content'
+  options:
+    parameters:
+      team:
+        type: sections
+
+nrfc_fixtures.team_fixtures_page:
+  path: '/fixtures/team/{team}'
+  defaults:
+    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesController::team'
+    _title_callback: '\Drupal\nrfc_fixtures\Controller\FixturesController::teamTitle'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      team:
+        type: entity:node
 
 nrfc_fixtures.admin_page:
   path: '/admin/config/system/nrfc/nrfc_fixtures'

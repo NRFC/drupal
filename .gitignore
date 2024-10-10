@@ -78,3 +78,4 @@ etc/config-sync
 *.tgz
 .crypt-password
 .phpunit.result.cache
+web/modules/nrfc/nrfc_fixtures/css/nrfc_fixtures_theme.css.map

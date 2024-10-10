@@ -1,9 +1,5 @@
 services:
 
-  logger.channel_nrfc: # TODO - move this to a parent module
-    parent: logger.channel_base
-    arguments: ['nrfc']
-
   nrfc_league_table_scraper_form:
     class: \Drupal\nrfc_league_table_scraper\Form\NrfcLeagueTableScraperForm
     arguments: # TODO - Why isn't this used? I needed to create a create function in the class

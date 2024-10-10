@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const target = document.getElementById('nrfc-spreadsheet');
+  if (!target) {
+    return;
+  }
   // https://bossanova.uk/jspreadsheet/v4/
   // console.log("match_reports", drupalSettings.nrfc_fixtures.match_reports)
   const data = [];
