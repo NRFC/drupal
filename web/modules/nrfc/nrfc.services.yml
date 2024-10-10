@@ -1,0 +1,13 @@
+services:
+
+  logger.channel_nrfc:
+    parent: logger.channel_base
+    arguments: ['nrfc']
+
+  nrfc.nrfc:
+    class: \Drupal\nrfc\Service\NRFC
+    arguments:
+      - '@entity_type.manager'
+      - '@logger.channel_nrfc'
+    tags:
+      - { name: nrfc.nrfc }

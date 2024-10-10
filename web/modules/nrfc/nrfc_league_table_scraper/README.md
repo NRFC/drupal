@@ -28,3 +28,6 @@ Current maintainers for Drupal 10:
 
 - FIRST_NAME LAST_NAME (NICKNAME) - https://www.drupal.org/u/NICKNAME
 
+## DEV STUFF
+
+sass --watch scss/nrfc-fixtures_theme.scss:css/nrfc_fixtures_theme.css

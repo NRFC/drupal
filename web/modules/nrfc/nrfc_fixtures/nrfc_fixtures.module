@@ -5,12 +5,22 @@
  */
 function nrfc_fixtures_theme() {
   return [
-    'nrfc_fixtures_index' => [
+    'nrfc_fixtures_multiple' => [
+      'variables' => [
+        'fixtures' => [],
+      ],
+    ],
+    'nrfc_fixtures_team' => [
+      'variables' => [
+        'fixtures' => [],
+      ],
+    ],
+    'admin.nrfc_fixtures_index' => [
       'variables' => [
         'teams' => [],
       ],
     ],
-    'nrfc_fixtures_team' => [
+    'admin.nrfc_fixtures_team' => [
       'variables' => [
         'team' => "team name",
         "upload_form" => NULL,
@@ -19,3 +29,4 @@ function nrfc_fixtures_theme() {
     ],
   ];
 }
+

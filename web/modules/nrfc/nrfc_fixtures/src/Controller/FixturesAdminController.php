@@ -63,7 +63,7 @@ final class FixturesAdminController extends ControllerBase
     $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
 
     return [
-      '#theme' => 'nrfc_fixtures_index',
+      '#theme' => 'admin.nrfc_fixtures_index',
       '#teams' => $nodes,
     ];
   }

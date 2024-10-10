@@ -25,3 +25,8 @@ services:
       - '@config.typed'
       - '@entity_type.manager'
       - '@nrfc_fixtures.repo'
+
+  nrfc_fixtures.twig.extension:
+    class: Drupal\nrfc_fixtures\Template\TwigExtension
+    tags:
+      - { name: twig.extension }
