@@ -62,6 +62,7 @@ final class FixturesController extends ControllerBase {
       $fixtures = array_merge($fixtures, $this->nrfcFixturesRepo->getFixturesByTermName($term));
     }
 
+    $ordered = $this->nrfc->getTeamsInOrder();
     // Sort $teams
     /*
     {

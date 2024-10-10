@@ -179,7 +179,7 @@ class NRFCFixturesRepo extends EntityRepository {
       ->accessCheck()
       ->sort("date", "ASC")
       ->execute();
-    $fixtures = NrfcFixtures::loadMultiple($entityIds);
+    $fixtures = NRFCFixtures::loadMultiple($entityIds);
 
     return array_map(function($fixture) {
       return self::fixtureToArray($fixture);
@@ -235,12 +235,18 @@ class NRFCFixturesRepo extends EntityRepository {
     foreach ($teams as $index => $team) {
       $sections = $team->get('field_section')->getValue();
       if (count($sections) === 0) {
-        $this->logger->error(sprintf("No team section found for term '%'.", $team->getTitle()));
+        $this->logger->error(sprintf(
+          "No team section found for term '%s'.",
+          $team->getTitle())
+        );
         continue;
       }
       else {
         if (count($sections) > 1) {
-          $this->logger->warning(sprintf("Multiple sections found for term '%'.", $team->getTitle()));
+          $this->logger->warning(sprintf(
+            "Multiple sections found for term '%s'.",
+            $team->getTitle())
+          );
         }
       }
       $tid = array_pop($sections[0]);
