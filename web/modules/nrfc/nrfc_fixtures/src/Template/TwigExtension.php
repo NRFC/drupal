@@ -26,7 +26,11 @@ class TwigExtension extends AbstractExtension {
     return [
       new TwigFunction('nrfc_stripe', [
         $this,
-        'getStripe'
+        'getStripe',
+      ]),
+      new TwigFunction('nrfc_fetch_fixture', [
+        $this,
+        'fetchFixture',
       ]),
     ];
   }
@@ -39,5 +43,21 @@ class TwigExtension extends AbstractExtension {
    */
   public function getStripe(int $index = 0): string {
     return ($index % 2 === 0) ? 'even' : 'odd';
+  }
+
+  public function fetchFixture(string $team, array $row): array {
+    if (in_array($team, array_keys($row))) {
+      $f = $row[$team];
+      $n = $f->id();
+      $o = $f->opponent->value;
+      $h = $f->home->value;
+      return [
+        "id" => $n,
+        "opponent" => $o,
+        "ha" => "(" . ($h == "TBC" ? "TBC" : substr($h, 0, 1)) . ")",
+        "style" => $h,
+      ];
+    }
+    return ["opponent" => "--",];
   }
 }

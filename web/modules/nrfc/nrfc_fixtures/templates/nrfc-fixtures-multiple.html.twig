@@ -1,49 +1,23 @@
+{{ attach_library('nrfc_fixtures/nrfc_fixtures') }}
 
-{{ dump(fixtures) }}
-
-<table>
+<table class="nrfc-fixtures">
   <tr>
-    <th>&nbsp;</th>
-    <th>&nbsp;</th>
-    <th colspan="5">Boys</th>
-    <th colspan="4">Girls</th>
+      <td>Date</td>
+    {% for header in headers %}
+      <td>{{ header }}</td>
+    {% endfor %}
   </tr>
-  <tr>
-    <th>Date</th>
-    <th>Minis</th>
-    <th>U13</th>
-    <th>U14</th>
-    <th>U15</th>
-    <th>U16</th>
-    <th>Colts</th>
-    <th>U12</th>
-    <th>U14</th>
-    <th>U16</th>
-    <th>U18</th>
-  </tr>
-  {% for date, data in fixtures %}
+  {% for date, row in fixtures %}
     <tr>
       <td>{{ date }}</td>
-      <th>x</th>
-      <th>x</th>
-      <th>U14</th>
-      <th>U15</th>
-      <th>U16</th>
-      <th>Colts</th>
-      <th>U12</th>
-      <th>U14</th>
-      <th>U16</th>
-      <th>U18</th>
+      {% for team in headers %}
+        {% set f = nrfc_fetch_fixture(team, row) %}
+        <td class="{{ f.style }}">
+          {% if f.opponent != "--" %}<a href="#/{{ f.id }}">{% endif %}
+          {{ f.opponent }} {{ f.ha }}
+        {% if f.opponent != "--" %}</a>{% endif %}
+        </td>
+      {% endfor %}
     </tr>
   {% endfor %}
 </table>
-
-<div>
-  <pre>
-    $data = [
-      "yy/mm/dd" => [
-        "team" => ["fixture data"]
-      ]
-    ];
-  </pre>
-</div>

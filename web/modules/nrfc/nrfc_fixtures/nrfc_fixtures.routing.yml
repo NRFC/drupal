@@ -22,6 +22,18 @@ nrfc_fixtures.team_fixtures_page:
       team:
         type: entity:node
 
+nrfc_fixtures.team_fixtures_detail:
+  path: '/fixtures/detail/{fixture}'
+  defaults:
+    _controller: '\Drupal\nrfc_fixtures\Controller\FixturesController::detail'
+    _title_callback: '\Drupal\nrfc_fixtures\Controller\FixturesController::detailTitle'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      team:
+        type: entity:node
+
 nrfc_fixtures.admin_page:
   path: '/admin/config/system/nrfc/nrfc_fixtures'
   defaults:

@@ -62,20 +62,55 @@ final class FixturesController extends ControllerBase {
       $fixtures = array_merge($fixtures, $this->nrfcFixturesRepo->getFixturesByTermName($term));
     }
 
+    $ordered = $this->nrfc->getTeamsInOrder();
+    $headers = [];
+    $rows = [];
+    foreach ($fixtures as $teamName => $fs) {
+      // The headers are populated with each row of data
+      $headers[] = $teamName;
+      foreach ($fs as $f) {
+        $date = $f->date->value;
+        if (!in_array($date, array_keys($rows))) {
+          $rows[$date] = [];
+        }
+        // If there are two fixtures on the same date for a team, only the later one will appear
+        $rows[$date][$teamName] = $f;
+      }
+    }
     // Sort $teams
     /*
     {
       "header: { "Minis", "U13B", U14B", U15B" }
-      "dates": {
-        "01/01/01": { fixture1, fixture2, fixture3, fixture4, },
-        "01/01/01": { fixture1, fixture2, fixture3, fixture4, },
-        "01/01/01": { fixture1, fixture2, fixture3, fixture4, },
-      }
+      "dd/mm/yyyy": {
+        "team1": { fixture },
+        "team2": { fixture },
+        "team2": { fixture },
+      },
     }
+
      */
     return [
       '#theme' => 'nrfc_fixtures_multiple',
-      '#fixtures' => $fixtures,
+      '#headers' => $headers,
+      '#fixtures' => $rows,
+      '#attached' => [
+        'library' => [
+          'nrfc_fixtures/nrfc_fixtures',
+        ],
+        'drupalSettings' => [
+          'nrfc_fixtures' => "some data",
+        ],
+      ],
+    ];
+  }
+
+  public function detailTitle(string $sections, Request $request): string {
+    return "DETAIL TIRE";
+  }
+
+  public function detail(string $fixture, Request $request) {
+    return [
+      "#markup" => "FIXTURE DETAILS"
     ];
   }
 
