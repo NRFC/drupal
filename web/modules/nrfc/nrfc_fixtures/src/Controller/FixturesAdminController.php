@@ -75,7 +75,7 @@ final class FixturesAdminController extends ControllerBase
       $handle = fopen('php://output', 'w+');
 
       $data = [$this->getHeader()];
-      $data[] = ["yyyy/mm/dd", "hh:mm", "H or A", "League", "Free text"];
+      $data[] = ["dd/mm/yyyy", "hh:mm", "H or A", "League", "Free text"];
       $data[] = ["", "", "", "", ""];
       $data[] = ["Delete this all following rows ", "", "", "", ""];
       $data[] = ["h/a should be either 'H' for a home game, or 'A' for an away game:", "", "", "", ""];

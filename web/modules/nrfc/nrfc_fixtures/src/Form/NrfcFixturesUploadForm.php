@@ -227,7 +227,7 @@ final class NrfcFixturesUploadForm extends ConfigFormBase implements ContainerIn
           );
           continue;
         }
-        $date = date("Y-m-d", strtotime(($row[0])));
+        $date = date("d/m/Y", strtotime(($row[0])));
         $ko = self::parseTime($row[1]);
         $ha = strtolower($row[2]) === "a" ? "Away" : "Home";
         $type = self::parseType($row[3]);

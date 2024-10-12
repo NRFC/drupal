@@ -93,7 +93,7 @@ class NRFCFixturesRepo extends EntityRepository {
       $team_nid = $team->id();
       $delete = $fixtureData['delete'] ?? "";
       $nid = $fixtureData['nid'] ?? "";
-      $date = date("d-m-Y", strtotime($fixtureData["date"] ?? ""));
+      $date = date("d/m/Y", strtotime($fixtureData["date"] ?? ""));
       $ko = $fixtureData["ko"] ?? "";
       $ha = $fixtureData["home"] ?? "";
       $match_type = $fixtureData["match_type"] ?? "";
