@@ -3,13 +3,12 @@
 namespace Drupal\nrfc_fixtures\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Config\TypedConfigManagerInterface;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
-use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Render\Renderer;
 use Drupal\file\Entity\File;
 use Drupal\node\Entity\Node;
 use Drupal\nrfc_fixtures\Entity\NRFCFixturesRepo;
@@ -20,27 +19,54 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @internal
  */
-class NrfcFixturesUploadForm extends ConfigFormBase
-{
+final class NrfcFixturesUploadForm extends ConfigFormBase implements ContainerInjectionInterface {
+
   // https://www.drupal.org/docs/drupal-apis/form-api/introduction-to-form-api
   const FORM_ID = 'nrfc_fixtures_upload_form';
 
-  protected ?EntityTypeManagerInterface $entityTypeManager = null;
-  protected ?NRFCFixturesRepo $nrfcFixturesRepo = null;
+  protected ?EntityTypeManagerInterface $entityTypeManager = NULL;
+
+  protected ?NRFCFixturesRepo $nrfcFixturesRepo = NULL;
+
+  private Renderer $renderer;
+
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    EntityTypeManagerInterface $entity_type_manager,
+    Renderer $renderer,
+    NRFCFixturesRepo $nrfcFixturesRepo,
+    protected $typedConfigManager = NULL,
+  ) {
+    parent::__construct(
+      $config_factory,
+      $typedConfigManager
+    );
+    $this->entityTypeManager = $entity_type_manager;
+    $this->renderer = $renderer;
+    $this->nrfcFixturesRepo = $nrfcFixturesRepo;
+  }
+
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('entity_type.manager'),
+      $container->get('renderer'),
+      $container->get('nrfc_fixtures.repo'),
+      $container->get('config.typed'),
+    );
+  }
 
   /**
    * {@inheritdoc}
    */
-  public function getFormId()
-  {
+  public function getFormId() {
     return self::FORM_ID;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state)
-  {
+  public function buildForm(array $form, FormStateInterface $form_state) {
     $team = $this->getRouteMatch()->getParameter('team');
 
     $form['nrfc_fixtures_upload_form'] = [
@@ -95,7 +121,7 @@ class NrfcFixturesUploadForm extends ConfigFormBase
       '#url' => \Drupal\Core\Url::fromRoute('nrfc_fixtures.admin_page.template'),
     ];
 
-    $row_data = $this->getNrfcFixturesRepo()->getFixturesForTeamAsArray($team);
+    $row_data = $this->nrfcFixturesRepo->getFixturesForTeamAsArray($team);
     foreach ($row_data as $key => $row) {
       if ($row['date']) {
         $row_data[$key]["date_as_string"] = date("d-m-Y", strtotime($row['date']));
@@ -106,7 +132,7 @@ class NrfcFixturesUploadForm extends ConfigFormBase
     }
 
     // TODO - discuss? move this to the repo class and drop the entity manger from this one
-    $nids = $this->getEntityTypeManager()
+    $nids = $this->entityTypeManager
       ->getStorage('node')
       ->getQuery()
       ->condition('type', 'match_report')
@@ -120,7 +146,7 @@ class NrfcFixturesUploadForm extends ConfigFormBase
     }
 
     $build = [
-      '#theme' => 'nrfc_fixtures_team',
+      '#theme' => 'admin.nrfc_fixtures_team',
       '#team' => $team->getTitle(),
       '#attached' => [
         'library' => [
@@ -130,34 +156,23 @@ class NrfcFixturesUploadForm extends ConfigFormBase
           'nrfc_fixtures' => [
             "rows" => $row_data,
             "match_reports" => $matchReports,
-          ]
-        ]
+          ],
+        ],
       ],
     ];
 
     $form['nrfc_fixtures_upload_form']['fixture_table'] = [
-      "#markup" => \Drupal::service('renderer')->render($build)
+      "#markup" => $this->renderer->render($build),
     ];
 
     return $form;
   }
 
-  protected function getEntityTypeManager(): EntityTypeManagerInterface {
-    if (!$this->entityTypeManager) {
-      $this->entityTypeManager = \Drupal::service('entity_type.manager');
-    }
-    return $this->entityTypeManager;
+  public function title(Node $team) {
+    return $team->getTitle() . " Fixtures Admin";
   }
 
-  protected function getNrfcFixturesRepo(): NRFCFixturesRepo {
-    if (!$this->nrfcFixturesRepo) {
-      $this->nrfcFixturesRepo = \Drupal::service('nrfc_fixtures.repo');
-    }
-    return $this->nrfcFixturesRepo;
-  }
-
-  public function validateForm(array &$form, FormStateInterface $form_state): void
-  {
+  public function validateForm(array &$form, FormStateInterface $form_state): void {
     $node = $this->routeMatch->getParameter('team');
     if (!$node instanceof Node) {
       $this->messenger()->addMessage(
@@ -177,20 +192,19 @@ class NrfcFixturesUploadForm extends ConfigFormBase
     }
   }
 
-  public function submitForm(array &$form, FormStateInterface $form_state)
-  {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     $team = $this->getRouteMatch()->getParameter('team');
     $nid = $team->id();
     $node = Node::load($nid);
 
     if (!empty($form_state->getValue('clear_first'))) {
       if ($form_state->getValue('clear_first') === "clear first") {
-        $this->getNrfcFixturesRepo()->deleteAll($node);
-          $this->messenger()->addMessage(
-            sprintf(
-              "Cleared existing fixtures for %s.", $node->getTitle()
-            ),
-          );
+        $this->nrfcFixturesRepo->deleteAll($node);
+        $this->messenger()->addMessage(
+          sprintf(
+            "Cleared existing fixtures for %s.", $node->getTitle()
+          ),
+        );
       }
     }
 
@@ -227,9 +241,12 @@ class NrfcFixturesUploadForm extends ConfigFormBase
             'match_type' => $type,
             'opponent' => $opponent,
           ];
-          $fixture = $this->getNrfcFixturesRepo()->createOrUpdateFixture($data, $team);
-          $this->logger("nrfc")->info("Created row: %row",["%row" => $fixture]);
-        } else {
+          $fixture = $this->nrfcFixturesRepo
+            ->createOrUpdateFixture($data, $team);
+          $this->logger("nrfc")
+            ->info("Created row: %row", ["%row" => $fixture]);
+        }
+        else {
           $this->messenger()->addMessage(
             sprintf(
               "Date and opponent are mandatory fields in the csv (date=%s, opponent=%s).",
@@ -243,8 +260,7 @@ class NrfcFixturesUploadForm extends ConfigFormBase
     }
   }
 
-  private static function parseTime($timeString): string
-  {
+  private static function parseTime($timeString): string {
     $data = explode(':', $timeString);
     if (count($data) < 2) {
       return "";
@@ -258,8 +274,8 @@ class NrfcFixturesUploadForm extends ConfigFormBase
   }
 
   private
-  static function parseType($typeString): string
-  {
+  static function parseType($typeString
+  ): string {
     $type = strtoupper($typeString);
     return match ($type) {
       "L" => "League",
@@ -273,8 +289,8 @@ class NrfcFixturesUploadForm extends ConfigFormBase
     };
   }
 
-  protected function getEditableConfigNames()
-  {
-    // N/A
+  protected function getEditableConfigNames(): array {
+    return [];
   }
+
 }

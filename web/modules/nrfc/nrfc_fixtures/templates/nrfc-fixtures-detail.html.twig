@@ -1,0 +1,38 @@
+{{ attach_library('nrfc_fixtures/nrfc_fixtures') }}
+
+<div class="nrfc-fixture">
+
+  <div class="{% if fixture.home == "Away" %}away{% endif %}">
+    {{ fixture.match_type }}
+    {{ fixture.home }} game,
+    {{ team }} vs {{ fixture.opponent }}
+  </div>
+
+  <div>
+    Edit link
+  </div>
+  <div>
+    KO Time: {{ fixture.ko }}
+  </div>
+  <div>
+    Result: {{ fixture.result }}
+  </div>
+  <div>
+    Report:
+    {% if fixture.report %}
+      <a href="{{ path('entity.node.canonical',
+        {'node': fixture.report}) }}">Link</a>
+    {% endif %}
+  </div>
+  <div>
+    Referee: {{ fixture.referee }}
+  </div>
+  <div>
+    Food: {{ fixture.food }}
+  </div>
+  <div>
+    Food Notes: {{ fixture.food_notes }}
+  </div>
+</div>
+
+{{ dump(fixture) }}

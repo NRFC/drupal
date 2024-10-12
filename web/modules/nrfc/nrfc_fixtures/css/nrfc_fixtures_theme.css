@@ -1,0 +1,27 @@
+.nrfc-fixtures {
+  color: black;
+  margin-bottom: 20px;
+}
+.nrfc-fixtures table {
+  border-collapse: collapse;
+}
+.nrfc-fixtures th {
+  background: #dcdcdc;
+}
+.nrfc-fixtures th, .nrfc-fixtures td {
+  border: 1px solid black;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.nrfc-fixtures .odd {
+  background: #ededed;
+}
+
+.nrfc-fixture {
+  background: #ededed;
+}
+.nrfc-fixture .away {
+  background: #f00;
+}
+
+/*# sourceMappingURL=nrfc_fixtures_theme.css.map */

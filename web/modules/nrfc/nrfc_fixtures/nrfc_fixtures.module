@@ -5,12 +5,30 @@
  */
 function nrfc_fixtures_theme() {
   return [
-    'nrfc_fixtures_index' => [
+    'nrfc-fixtures-detail' => [
+      'variables' => [
+        'team' => [],
+        'date' => [],
+        'fixture' => [],
+      ],
+    ],
+    'nrfc_fixtures_multiple' => [
+      'variables' => [
+        'headers' => [],
+        'fixtures' => [],
+      ],
+    ],
+    'nrfc_fixtures_team' => [
+      'variables' => [
+        'fixtures' => [],
+      ],
+    ],
+    'admin.nrfc_fixtures_index' => [
       'variables' => [
         'teams' => [],
       ],
     ],
-    'nrfc_fixtures_team' => [
+    'admin.nrfc_fixtures_team' => [
       'variables' => [
         'team' => "team name",
         "upload_form" => NULL,
@@ -19,3 +37,4 @@ function nrfc_fixtures_theme() {
     ],
   ];
 }
+

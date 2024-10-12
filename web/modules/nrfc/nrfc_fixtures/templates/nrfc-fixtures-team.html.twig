@@ -1,17 +1,20 @@
-<h1>{{ team }}</h1>
+{{ attach_library('nrfc_fixtures/nrfc_fixtures') }}
 
-{{ upload_form }}
-
-<div id="nrfc-spreadsheet-wrapper">
-  <div id="nrfc-spreadsheet"></div>
-  <input
-    type="button"
-    value="Add new row"
-    onclick="jQuery('#nrfc-spreadsheet').jspreadsheet('insertRow')"
-  />
-  <input
-    type="button"
-    value="Save changes"
-    onclick="nrfc_update_fixtures()"
-  />
-</div>
+<table class="nrfc-fixtures">
+    <tr>
+        <th>Date</th>
+        <th>Comp.</th>
+        <th>Team</th>
+        <th>Result</th>
+        <th>Report</th>
+    </tr>
+    {% for index, fixture in fixtures %}
+        <tr class="{{ nrfc_stripe(index) }}">
+            <td>{{ fixture.date }}</td>
+            <td>{{ fixture.match_type }}</td>
+            <td>{{ fixture.opponent }}</td>
+            <td>{{ fixture.result }}</td>
+            <td>{{ fixture.report }}</td>
+        </tr>
+    {% endfor %}
+</table>

@@ -31,7 +31,8 @@ use Drupal\nrfc_fixtures\NRFCFixturesInterface;
  *       "add" = "Drupal\nrfc_fixtures\Form\NRFCFixturesForm",
  *       "edit" = "Drupal\nrfc_fixtures\Form\NRFCFixturesForm",
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
- *       "delete-multiple-confirm" = "Drupal\Core\Entity\Form\DeleteMultipleForm",
+ *       "delete-multiple-confirm" =
+ *   "Drupal\Core\Entity\Form\DeleteMultipleForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\nrfc_fixtures\Routing\NRFCFixturesHtmlRouteProvider",
@@ -65,30 +66,42 @@ use Drupal\nrfc_fixtures\NRFCFixturesInterface;
  * @property string $food;
  * @property string $food_notes;
  */
-final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterface
-{
+final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterface {
 
   use EntityChangedTrait;
 
   /**
    * {@inheritdoc}
    */
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array
-  {
-
+  public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array {
     $fields = parent::baseFieldDefinitions($entity_type);
 
-    $fields['team_nid'] = BaseFieldDefinition::create('integer')->setLabel(t('Team NID'))->setRequired(TRUE);
-    $fields['date'] = BaseFieldDefinition::create('datetime')->setLabel(t('Date'))->setRequired(TRUE);
-    $fields['ko'] = BaseFieldDefinition::create('string')->setLabel(t('Kick off'));
-    $fields['home'] = BaseFieldDefinition::create('list_string')->setLabel(t('Home/Away'))->setRequired(TRUE);
-    $fields['match_type'] = BaseFieldDefinition::create('list_string')->setLabel(t('Match type'));
-    $fields['opponent'] = BaseFieldDefinition::create('string')->setLabel(t('Opponent'))->setRequired(TRUE);
-    $fields['result'] = BaseFieldDefinition::create('string')->setLabel(t('Result'));
-    $fields['report'] = BaseFieldDefinition::create('entity_reference')->setLabel(t('Report'));
-    $fields['referee'] = BaseFieldDefinition::create('list_string')->setLabel(t('Referee'));
-    $fields['food'] = BaseFieldDefinition::create('integer')->setLabel(t('Food'));
-    $fields['food_notes'] = BaseFieldDefinition::create('string')->setLabel(t('Food Notes'));
+    $fields['team_nid'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Team NID'))
+      ->setRequired(TRUE);
+    $fields['date'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('Date'))
+      ->setRequired(TRUE);
+    $fields['ko'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Kick off'));
+    $fields['home'] = BaseFieldDefinition::create('list_string')
+      ->setLabel(t('Home/Away'))
+      ->setRequired(TRUE);
+    $fields['match_type'] = BaseFieldDefinition::create('list_string')
+      ->setLabel(t('Match type'));
+    $fields['opponent'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Opponent'))
+      ->setRequired(TRUE);
+    $fields['result'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Result'));
+    $fields['report'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Report'));
+    $fields['referee'] = BaseFieldDefinition::create('list_string')
+      ->setLabel(t('Referee'));
+    $fields['food'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Food'));
+    $fields['food_notes'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Food Notes'));
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Authored on'))
@@ -112,8 +125,7 @@ final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterf
     return $fields;
   }
 
-  public function __toString(): string
-  {
+  public function __toString(): string {
     return sprintf(
       "%s nid=%d team_id=%d date=%s ko=%s ha=%s match_type=%s opponent=%s result=%s report_id=%d referee=%s food=%s food_notes=%s",
       __CLASS__,

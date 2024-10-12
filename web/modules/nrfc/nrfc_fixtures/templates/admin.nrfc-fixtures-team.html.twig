@@ -1,0 +1,19 @@
+<h1>{{ team }}</h1>
+
+{{ upload_form }}
+
+<div id="nrfc-spreadsheet-wrapper">
+  <div id="nrfc-spreadsheet"></div>
+  <div style="clear: both; display: block;">
+    <input
+      type="button"
+      value="Add new row"
+      onclick="jQuery('#nrfc-spreadsheet').jspreadsheet('insertRow')"
+    />
+    <input
+      type="button"
+      value="Save changes"
+      onclick="nrfc_update_fixtures()"
+    />
+  </div>
+</div>

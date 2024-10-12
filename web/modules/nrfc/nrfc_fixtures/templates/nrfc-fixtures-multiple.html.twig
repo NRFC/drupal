@@ -1,0 +1,24 @@
+{{ attach_library('nrfc_fixtures/nrfc_fixtures') }}
+
+<table class="nrfc-fixtures">
+  <tr>
+      <td>Date</td>
+    {% for header in headers %}
+      <td>{{ header }}</td>
+    {% endfor %}
+  </tr>
+  {% for date, row in fixtures %}
+    <tr>
+      <td>{{ date }}</td>
+      {% for team in headers %}
+        {% set f = nrfc_fetch_fixture(team, row) %}
+        <td class="{{ f.style }}">
+          {% if f.opponent != "--" %}<a href="{{ path('nrfc_fixtures.team_fixtures_detail', {'fixture': f.id}) }}">{% endif %}
+          {{ f.opponent }} {{ f.ha }}
+        {% if f.opponent != "--" %}</a>{% endif %}
+        </td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
+
