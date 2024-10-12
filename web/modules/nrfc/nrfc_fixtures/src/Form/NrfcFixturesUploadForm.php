@@ -168,6 +168,10 @@ final class NrfcFixturesUploadForm extends ConfigFormBase implements ContainerIn
     return $form;
   }
 
+  public function title(Node $team) {
+    return $team->getTitle() . " Fixtures Admin";
+  }
+
   public function validateForm(array &$form, FormStateInterface $form_state): void {
     $node = $this->routeMatch->getParameter('team');
     if (!$node instanceof Node) {

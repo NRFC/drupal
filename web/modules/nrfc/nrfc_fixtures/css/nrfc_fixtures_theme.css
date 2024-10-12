@@ -17,4 +17,11 @@
   background: #ededed;
 }
 
+.nrfc-fixture {
+  background: #ededed;
+}
+.nrfc-fixture .away {
+  background: #f00;
+}
+
 /*# sourceMappingURL=nrfc_fixtures_theme.css.map */

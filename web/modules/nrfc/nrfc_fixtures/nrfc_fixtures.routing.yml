@@ -31,8 +31,8 @@ nrfc_fixtures.team_fixtures_detail:
     _permission: 'access content'
   options:
     parameters:
-      team:
-        type: entity:node
+      fixture:
+        type: entity:nrfc_fixtures
 
 nrfc_fixtures.admin_page:
   path: '/admin/config/system/nrfc/nrfc_fixtures'
@@ -48,7 +48,7 @@ nrfc_fixtures.admin_page.team:
   path: '/admin/config/system/nrfc/nrfc_fixtures/team/{team}'
   defaults:
     _form: '\Drupal\nrfc_fixtures\Form\NrfcFixturesUploadForm'
-    _title: 'Team Fixture Settings'
+    _title_callback: '\Drupal\nrfc_fixtures\Form\NrfcFixturesUploadForm::title'
   requirements:
     _permission: 'administer site configuration'
   options:

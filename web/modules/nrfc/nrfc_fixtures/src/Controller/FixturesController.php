@@ -3,9 +3,11 @@
 namespace Drupal\nrfc_fixtures\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\node\Entity\Node;
 use Drupal\nrfc\Service\NRFC;
+use Drupal\nrfc_fixtures\Entity\NRFCFixtures;
 use Drupal\nrfc_fixtures\Entity\NRFCFixturesRepo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -77,18 +79,7 @@ final class FixturesController extends ControllerBase {
         $rows[$date][$teamName] = $f;
       }
     }
-    // Sort $teams
-    /*
-    {
-      "header: { "Minis", "U13B", U14B", U15B" }
-      "dd/mm/yyyy": {
-        "team1": { fixture },
-        "team2": { fixture },
-        "team2": { fixture },
-      },
-    }
-
-     */
+    // TODO - Sort $teams
     return [
       '#theme' => 'nrfc_fixtures_multiple',
       '#headers' => $headers,
@@ -104,13 +95,34 @@ final class FixturesController extends ControllerBase {
     ];
   }
 
-  public function detailTitle(string $sections, Request $request): string {
-    return "DETAIL TIRE";
+  public function detailTitle(NRFCFixtures $fixture, Request $request): string {
+    $team = Node::load($fixture->team_nid->value)->getTitle();
+    $opponent = $fixture->opponent->value;
+    $ha = $fixture->home->value;
+    if ($ha == "Away") {
+      $home = $opponent;
+      $away = $team;
+    } else {
+      $home = $team;
+      $away = $opponent;
+    }
+    // FIXME - Use drupal time formats
+    $date = date("d/m/y", strtotime($fixture->date->value));
+    return sprintf(
+      "%s vs %s, %s",
+      $home, $away, $date
+    );
   }
 
-  public function detail(string $fixture, Request $request) {
+  public function detail(NRFCFixtures $fixture, Request $request) {
+    $team = Node::load($fixture->team_nid->value)->getTitle();
+    $date = date("D jS M, Y", strtotime($fixture->date->value));
+
     return [
-      "#markup" => "FIXTURE DETAILS"
+      '#theme' => 'nrfc-fixtures-detail',
+      '#team' => $team,
+      '#date' => $date,
+      '#fixture' => $this->nrfcFixturesRepo->fixtureToArray($fixture),
     ];
   }
 

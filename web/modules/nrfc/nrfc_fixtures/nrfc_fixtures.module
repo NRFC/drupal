@@ -5,6 +5,13 @@
  */
 function nrfc_fixtures_theme() {
   return [
+    'nrfc-fixtures-detail' => [
+      'variables' => [
+        'team' => [],
+        'date' => [],
+        'fixture' => [],
+      ],
+    ],
     'nrfc_fixtures_multiple' => [
       'variables' => [
         'headers' => [],

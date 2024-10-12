@@ -13,7 +13,7 @@
       {% for team in headers %}
         {% set f = nrfc_fetch_fixture(team, row) %}
         <td class="{{ f.style }}">
-          {% if f.opponent != "--" %}<a href="#/{{ f.id }}">{% endif %}
+          {% if f.opponent != "--" %}<a href="{{ path('nrfc_fixtures.team_fixtures_detail', {'fixture': f.id}) }}">{% endif %}
           {{ f.opponent }} {{ f.ha }}
         {% if f.opponent != "--" %}</a>{% endif %}
         </td>
@@ -21,3 +21,4 @@
     </tr>
   {% endfor %}
 </table>
+
