@@ -31,5 +31,5 @@ jobs:
       with:
         context: etc/docker
         file: etc/docker/Dockerfile
-        push: false
+        push: true
         tags: tobybatch/nrfc
