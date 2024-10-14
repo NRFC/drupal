@@ -12,34 +12,29 @@ use Drupal\Core\Logger\LoggerChannel;
 use Drupal\Core\Plugin\Context\ContextRepositoryInterface;
 use Drupal\node\Entity\Node;
 use Drupal\nrfc\Service\NRFC;
+use Drupal\nrfc\Unit\MockTerm;
 use Drupal\taxonomy\Entity\Term;
 use Exception;
 
-class NRFCFixturesRepo extends EntityRepository {
+class NRFCFixturesRepo {
 
+  private EntityTypeManagerInterface $entityTypeManager;
   private LoggerChannel $logger;
 
   private array $termList = [];
 
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, LanguageManagerInterface $language_manager, ContextRepositoryInterface $context_repository, LoggerChannel $logger,
+
+  public function __construct(
+    EntityTypeManagerInterface $entityTypeManager,
+    LoggerChannel $logger
 
   ) {
-    parent::__construct($entity_type_manager, $language_manager, $context_repository);
+    $this->entityTypeManager = $entityTypeManager;
     $this->logger = $logger;
   }
 
-  public static function makeReportName(Node|int $report): ?string {
-    if (!$report instanceof Node) {
-      $report = Node::load(intval($report));
-    }
-    if (!$report) {
-      return NULL;
-    }
+  public function makeReportName(Node $report): ?string {
     return sprintf("%s - %s [%d]", date("d/m/y", $report->getChangedTime()), $report->getTitle(), $report->id());
-  }
-
-  public function getFixturesForTeamAsArray(Node $team): array {
-    return $this->fixturesToArray($this->getFixturesForTeam(($team)));
   }
 
   public function fixturesToArray(array $fixtures): array {
@@ -83,23 +78,19 @@ class NRFCFixturesRepo extends EntityRepository {
     return $team;
   }
 
-  private function getQuery(): QueryInterface {
-    return $this->entityTypeManager->getStorage('nrfc_fixtures')->getQuery();
-  }
-
   public function createOrUpdateFixture(array $fixtureData, Node $team): NRFCFixtures|bool {
-    // TODO Validate fixture data
-    try { # TODO better error handling
+    // TODO Refactor all this, Ocams razor, better validation and error handling
+    try {
       $team_nid = $team->id();
       $delete = $fixtureData['delete'] ?? "";
       $nid = $fixtureData['nid'] ?? "";
       $date = date("d/m/Y", strtotime($fixtureData["date"] ?? ""));
       $ko = $fixtureData["ko"] ?? "";
-      $ha = $fixtureData["home"] ?? "";
-      $match_type = $fixtureData["match_type"] ?? "";
+      $ha = strtolower($fixtureData["home"]) === "a" ? "Away" : "Home";
+      $match_type = $this->parseType($fixtureData["match_type"]);
       $opponent = $fixtureData["opponent"] ?? "";
       $result = $fixtureData["result"] ?? "";
-      $report = self::getReportId($fixtureData["report"] ?? "");
+      $report = $this->getReportId($row["report"] ?? "");
       $referee = $fixtureData["referee"] ?? "";
       $food = $fixtureData["food"] ?? "";
       $food_notes = $fixtureData["food_notes"] ?? "";
@@ -155,7 +146,7 @@ class NRFCFixturesRepo extends EntityRepository {
     return TRUE;
   }
 
-  private static function getReportId($report): ?int {
+  public function getReportId(string $report): ?int {
     $elements = explode(" ", $report);
     if (count($elements)) {
       return intval(preg_replace("/[^0-9 ]/", '', array_pop($elements)));
@@ -172,19 +163,6 @@ class NRFCFixturesRepo extends EntityRepository {
     }
   }
 
-  public function getTeam(Node $team) {
-    $entityIds = $this->entityTypeManager->getStorage("nrfc_fixtures")
-      ->getQuery()
-      ->condition('team_nid', $team->id())
-      ->accessCheck()
-      ->sort("date", "ASC")
-      ->execute();
-    $fixtures = NRFCFixtures::loadMultiple($entityIds);
-
-    return array_map(function($fixture) {
-      return self::fixtureToArray($fixture);
-    }, $fixtures);
-  }
 
   /**
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
@@ -260,7 +238,7 @@ class NRFCFixturesRepo extends EntityRepository {
     return $fixtures;
   }
 
-  public function caseInsensitiveTeamSectionSearch($name): Term|null {
+  public function caseInsensitiveTeamSectionSearch($name): Term|MockTerm|null { // FIXME - get rid of MockTerm
     if (count($this->termList) == 0) {
       /* @var Term[] $terms */
       $terms = $this->entityTypeManager->getStorage('taxonomy_term')
@@ -270,11 +248,25 @@ class NRFCFixturesRepo extends EntityRepository {
       }
     }
     if (in_array($name, array_keys($this->termList))) {
-      $t = $this->termList[$name];
       return Term::load($this->termList[$name]->tid);
     }
     $this->logger->warning("No section found for " . $name);
     return NULL;
   }
+
+  public function parseType(string $typeString): string {
+    $type = strtoupper($typeString);
+    return match ($type) {
+      "L" => "League",
+      "F" => "Friendly",
+      "FE" => "Festival",
+      "T" => "Tournament",
+      "NC" => "National Cup",
+      "CC" => "County Cup",
+      "C" => "Cup",
+      default => "",
+    };
+  }
+
 
 }

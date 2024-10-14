@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
   // https://bossanova.uk/jspreadsheet/v4/
-  // console.log("match_reports", drupalSettings.nrfc_fixtures.match_reports)
   const data = [];
-  drupalSettings.nrfc_fixtures.rows.forEach((row) => {
+  Object.values(drupalSettings.nrfc_fixtures.rows).forEach((row) => {
+    console.log(row);
     const fixture = [];
     fixture.push(false);
     fixture.push(row["nid"]);
@@ -21,9 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fixture.push(row["food"]);
     fixture.push(row["food_notes"]);
     data.push(fixture);
-  })
-  // console.log(drupalSettings.nrfc_fixtures.rows);
-  // console.log(data);
+  });
   jspreadsheet(target, {
     data: data,
     columns: [

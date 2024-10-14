@@ -56,6 +56,19 @@ final class NrfcFixturesUploadForm extends ConfigFormBase implements ContainerIn
     );
   }
 
+  private static function parseTime($timeString): string {
+    $data = explode(':', $timeString);
+    if (count($data) < 2) {
+      return "";
+    }
+    $hour = $data[0];
+    $minute = $data[1];
+    if (!$hour || !$minute || intval($hour) < 0 || intval($hour) > 23 || intval($minute) < 0 || intval($minute) > 59) {
+      return "";
+    }
+    return trim($hour) . ":" . trim($minute);
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -121,13 +134,20 @@ final class NrfcFixturesUploadForm extends ConfigFormBase implements ContainerIn
       '#url' => \Drupal\Core\Url::fromRoute('nrfc_fixtures.admin_page.template'),
     ];
 
-    $row_data = $this->nrfcFixturesRepo->getFixturesForTeamAsArray($team);
+    $row_data = array_map(
+      function($fixture) {
+        return $this->nrfcFixturesRepo->fixtureToArray($fixture);
+      }, $this->nrfcFixturesRepo->getFixturesForTeam($team)
+    );
     foreach ($row_data as $key => $row) {
       if ($row['date']) {
         $row_data[$key]["date_as_string"] = date("d-m-Y", strtotime($row['date']));
       }
       if ($row['report']) {
-        $row_data[$key]["report_as_string"] = NRFCFixturesRepo::makeReportName(intval($row["report"]));
+        $node = Node::load($row["report"]);
+        if ($node) {
+          $row_data[$key]["report_as_string"] = $this->nrfcFixturesRepo->makeReportName($node);
+        }
       }
     }
 
@@ -142,7 +162,7 @@ final class NrfcFixturesUploadForm extends ConfigFormBase implements ContainerIn
 
     $matchReports = [];
     foreach ($reports as $report) {
-      $matchReports[] = NRFCFixturesRepo::makeReportName($report);
+      $matchReports[] = $this->nrfcFixturesRepo->makeReportName($report);
     }
 
     $build = [
@@ -227,66 +247,20 @@ final class NrfcFixturesUploadForm extends ConfigFormBase implements ContainerIn
           );
           continue;
         }
-        $date = date("d/m/Y", strtotime(($row[0])));
-        $ko = self::parseTime($row[1]);
-        $ha = strtolower($row[2]) === "a" ? "Away" : "Home";
-        $type = self::parseType($row[3]);
-        $opponent = $row[4];
-        if ($date !== "01-01-70" || $opponent !== "") {
-          $data = [
-            'team_nid' => $team->id(),
-            'date' => $date,
-            'ko' => $ko,
-            'home' => $ha,
-            'match_type' => $type,
-            'opponent' => $opponent,
-          ];
-          $fixture = $this->nrfcFixturesRepo
-            ->createOrUpdateFixture($data, $team);
-          $this->logger("nrfc")
-            ->info("Created row: %row", ["%row" => $fixture]);
-        }
-        else {
-          $this->messenger()->addMessage(
-            sprintf(
-              "Date and opponent are mandatory fields in the csv (date=%s, opponent=%s).",
-              $row[0],
-              $row[4]
-            ),
-            MessengerInterface::TYPE_WARNING
-          );
-        }
+        $data = [];
+        $data["date"] = $row[0];
+        $data["ko"] = $row[1];
+        $data["home"] = $row[2];
+        $data["match_type"] = $row[3];
+        $data["opponent"] = $row[4];
+        $data["result"] = $row[5];
+        $data["report"] = $row[6];
+        $data["referee"] = $row[7];
+        $data["food"] = $row[8];
+        $data["food_notes"] = $row[9];
+        $this->nrfcFixturesRepo->createOrUpdateFixture($data, $team);
       }
     }
-  }
-
-  private static function parseTime($timeString): string {
-    $data = explode(':', $timeString);
-    if (count($data) < 2) {
-      return "";
-    }
-    $hour = $data[0];
-    $minute = $data[1];
-    if (!$hour || !$minute || intval($hour) < 0 || intval($hour) > 23 || intval($minute) < 0 || intval($minute) > 59) {
-      return "";
-    }
-    return trim($hour) . ":" . trim($minute);
-  }
-
-  private
-  static function parseType($typeString
-  ): string {
-    $type = strtoupper($typeString);
-    return match ($type) {
-      "L" => "League",
-      "F" => "Friendly",
-      "Fe" => "Festival",
-      "T" => "Tournament",
-      "NC" => "National Cup",
-      "CC" => "County Cup",
-      "C" => "Cup",
-      default => "",
-    };
   }
 
   protected function getEditableConfigNames(): array {

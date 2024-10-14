@@ -55,16 +55,16 @@ use Drupal\nrfc_fixtures\NRFCFixturesInterface;
  *   },
  * )
  *
- * @property string $date
- * @property string $ko;
- * @property string $home;
- * @property string $match_type;
- * @property string $opponent;
- * @property string $result;
- * @property string $report;
- * @property string $referee;
- * @property string $food;
- * @property string $food_notes;
+// * @property string $date
+// * @property string $ko;
+// * @property string $home;
+// * @property string $match_type;
+// * @property string $opponent;
+// * @property string $result;
+// * @property string $report;
+// * @property string $referee;
+// * @property string $food;
+// * @property string $food_notes;
  */
 final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterface {
 
