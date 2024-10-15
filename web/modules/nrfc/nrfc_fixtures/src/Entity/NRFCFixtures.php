@@ -66,7 +66,7 @@ use Drupal\nrfc_fixtures\NRFCFixturesInterface;
 // * @property string $food;
 // * @property string $food_notes;
  */
-final class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterface {
+class NRFCFixtures extends ContentEntityBase implements NRFCFixturesInterface {
 
   use EntityChangedTrait;
 

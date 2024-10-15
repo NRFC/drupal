@@ -55,7 +55,7 @@ class NRFCFixturesRepo {
       'match_type' => $fixture->match_type->value,
       'opponent' => $fixture->opponent->value,
       'result' => $fixture->result->value,
-      'report' => $fixture->report->target_id == 0 ? "" : $fixture->report->target_id,
+      'report' => $fixture->report->target_id,
       'referee' => $fixture->referee->value,
       'food' => $fixture->food->value,
       'food_notes' => $fixture->food_notes->value,

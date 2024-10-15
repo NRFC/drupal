@@ -1,5 +1,5 @@
-<?php
-/** @phpstan-ignore  */
+<?php /** @noinspection ALL */
+
 namespace Drupal\nrfc\Unit;
 
 use Drupal;
@@ -7,6 +7,7 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\Entity\Node;
+use Drupal\nrfc_fixtures\Entity\NRFCFixtures;
 use Drupal\nrfc_fixtures\Entity\NRFCFixturesRepo;
 use Drupal\Tests\UnitTestCase;
 
@@ -78,9 +79,12 @@ class NRFCFixturesRepoTest extends UnitTestCase {
   public function testFixturesToArray() {
     $repo = Drupal::service('nrfc_fixtures.repo');
 
+    $fix = new NRFCFixtures([
+      "team_nid" => 123,
+    ], "nrfc_fixtures");
 
 
-    $data = $repo->fixturesToArray();
+    $data = $repo->fixturesToArray($fix);
   }
 
   //  public function testCreateOrUpdateFixture() {}
@@ -117,10 +121,21 @@ class NRFCFixturesRepoTest extends UnitTestCase {
       ->willReturn("foo"); // single fixture
     $nrfcFixturesEntityStorage->expects($this->any())
       ->method('create')
-      ->willReturn("foo"); // line 124
+      ->willReturn("foo");
     $nrfcFixturesEntityStorage->expects($this->any())
       ->method('loadByProperties')
-      ->willReturn([]); // line 124
+      ->willReturn([]);
+
+    /************************************************************** /
+     * Entity field manager
+     * /**************************************************************/
+    $entity_field_manager = $this->getMockBuilder(EntityFieldManagerInterface::class)
+      ->disableOriginalConstructor()
+      ->getMock();
+    $container->set('entity_field.manager', $entity_field_manager);
+    $entity_field_manager->expects($this->any())
+      ->method('getFieldDefinitions')
+      ->willReturn([]);
 
     /************************************************************** /
      * TAXONOMY TERMS
@@ -183,6 +198,16 @@ class NRFCFixturesRepoTest extends UnitTestCase {
             return $entity_storage;
         }
       });
+    $entity_type_manager->expects($this->any())
+      ->method('getDefinition')
+      ->willReturnCallback(function(string|null $property) use ($entity_storage, $entity_type_manager, $nrfcFixturesEntityStorage, $termsEntityStorage) {
+        switch ($property) {
+          case "nrfc_fixtures":
+            return new MockEntityTypemanager();
+          default: // null
+            return $entity_storage;
+        }
+      });
     /** FINISH NODE LOAD */
 
     $container->set('nrfc_fixtures.repo', new NRFCFixturesRepo(
@@ -203,11 +228,9 @@ class MockTerm {
   public static function load($id) {
     return new MockTerm(1);
   }
-
 }
 
 class MockTermStorage {
-
   public function __construct($terms) {
     $this->terms = $terms;
   }
@@ -215,5 +238,14 @@ class MockTermStorage {
   public function loadTree($vid) {
     return $this->terms;
   }
+}
 
+class MockEntityTypemanager {
+  public function getKey() {
+    return "DDDDD";
+  }
+
+  public function getKeys() {
+    return ["DDDDD"];
+  }
 }
