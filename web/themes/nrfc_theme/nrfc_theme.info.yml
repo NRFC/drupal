@@ -1,0 +1,13 @@
+name: 'NRFC Theme'
+type: theme
+description: 'NRFC theme'
+core_version_requirement: ^10
+base theme: stark
+packages:
+  - nrfc
+regions:
+  top_right: 'Top Right'
+  header: 'Header'
+  content: 'Content'
+  footer: 'Footer'
+

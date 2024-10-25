@@ -3,3 +3,6 @@ parameters:
     paths:
         - web/modules/nrfc
         - web/themes/custom
+    excludePaths:
+        - **/tests/**
+        - web/modules/nrfc/src/Drush/Commands/NrfcSkunk.php

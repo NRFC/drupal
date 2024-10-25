@@ -14,24 +14,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 final class NrfcLeagueTableScraperCommands extends DrushCommands {
 
   /**
-   * Constructs a NrfcLeagueTableScraperCommands object.
-   */
-  public function __construct(
-    private readonly Token $token,
-  ) {
-    parent::__construct();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('token'),
-    );
-  }
-
-  /**
    * Command description here.
    */
   #[CLI\Command(name: 'nrfc_league_table_scraper:fetch')]
@@ -39,31 +21,4 @@ final class NrfcLeagueTableScraperCommands extends DrushCommands {
   public function commandName() {
     nrfc_league_table_scraper_cron();
   }
-
-  /**
-   * An example of the table output format.
-   */
-  #[CLI\Command(name: 'nrfc_league_table_scraper:token', aliases: ['token'])]
-  #[CLI\FieldLabels(labels: [
-    'group' => 'Group',
-    'token' => 'Token',
-    'name' => 'Name'
-  ])]
-  #[CLI\DefaultTableFields(fields: ['group', 'token', 'name'])]
-  #[CLI\FilterDefaultField(field: 'name')]
-  public function token($options = ['format' => 'table']): RowsOfFields {
-    $all = $this->token->getInfo();
-    $rows = [];
-    foreach ($all['tokens'] as $group => $tokens) {
-      foreach ($tokens as $key => $token) {
-        $rows[] = [
-          'group' => $group,
-          'token' => $key,
-          'name' => $token['name'],
-        ];
-      }
-    }
-    return new RowsOfFields($rows);
-  }
-
 }

@@ -105,13 +105,16 @@
         }
     },
     "require-dev": {
+        "behat/behat": "^3.14",
         "behat/mink": "^1.11",
+        "behat/mink-browserkit-driver": "^2.2",
         "captainhook/captainhook-phar": "^5.23",
         "drupal/devel": "^5.3",
         "drupal/examples": "^4.0",
         "drupal/generated_content": "^1.5",
         "drupal/log_stdout": "^1.5",
         "mglaman/phpstan-drupal": "^1.2",
+        "mikey179/vfsstream": "^1.6",
         "phpspec/prophecy-phpunit": "^2.2",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^1.12",

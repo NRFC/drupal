@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function my_skeleton_theme_preprocess_page(array &$variables) {
+  // Custom preprocess logic can go here.
+}

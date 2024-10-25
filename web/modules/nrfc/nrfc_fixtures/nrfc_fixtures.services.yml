@@ -4,16 +4,14 @@ services:
     class: \Drupal\nrfc_fixtures\Entity\NRFCFixturesRepo
     arguments:
       - '@entity_type.manager'
-      - '@language_manager'
-      - '@context.repository'
-      - '@logger.channel_nrfc'
+      - '@logger.channel.nrfc'
     tags:
       - { name: nrfc_fixtures.repo }
 
   nrfc_fixtures.admin_page:
     class: \Drupal\nrfc_fixtures\Service\FixturesAdminController
     arguments:
-      - '@logger.channel_nrfc'
+      - '@logger.channel.nrfc'
       - '@nrfc_fixtures.repo'
     tags:
       - { name: nrfc_fixtures.admin_page }

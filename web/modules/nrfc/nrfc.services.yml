@@ -1,6 +1,6 @@
 services:
 
-  logger.channel_nrfc:
+  logger.channel.nrfc:
     parent: logger.channel_base
     arguments: ['nrfc']
 
@@ -8,6 +8,11 @@ services:
     class: \Drupal\nrfc\Service\NRFC
     arguments:
       - '@entity_type.manager'
-      - '@logger.channel_nrfc'
+      - '@logger.channel.nrfc'
     tags:
       - { name: nrfc.nrfc }
+
+  nrfc.commands.skunk:
+    class: \Drupal\nrfc\Drush\Commands\NrfcSkunk
+    tags:
+      - { name: drush.command }

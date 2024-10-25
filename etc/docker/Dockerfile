@@ -164,7 +164,6 @@ FROM base AS prod
 COPY --from=composer-base /opt/drupal /opt/drupal
 COPY 000-apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY settings.98_docker_override.php /opt/drupal/web/sites/default/settings.98_docker_override.php
-COPY settings.99_db.php /opt/drupal/web/sites/default/settings.99_db.php
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini && \
     sed -i "s/2M/16M/" /usr/local/etc/php/php.ini && \
