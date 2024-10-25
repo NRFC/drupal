@@ -25,7 +25,7 @@
     <!-- Example SIMPLETEST_DB value: mysql://username:password@localhost/database_name#table_prefix -->
     <env name="SIMPLETEST_DB" value="sqlite://localhost/:memory:"/>
     <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /path/to/webroot/sites/simpletest/browser_output -->
-    <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="./html/simpletest"/>
+<!--    <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="./html/simpletest"/>-->
     <!-- By default, browser tests will output links that use the base URL set
      in SIMPLETEST_BASE_URL. However, if your SIMPLETEST_BASE_URL is an internal
      path (such as may be the case in a virtual or Docker-based environment),
@@ -61,24 +61,15 @@
     <env name="MINK_DRIVER_ARGS_WEBDRIVER" value=''/>
   </php>
   <testsuites>
-    <testsuite name="unit">
-      <directory>web/modules/nrfc/tests/Unit</directory>
+    <testsuite name="kernel">
+      <directory>web/modules/nrfc/*/tests/src/Kernel</directory>
     </testsuite>
-<!--    <testsuite name="unit">-->
-<!--      <file>./tests/TestSuites/UnitTestSuite.php</file>-->
-<!--    </testsuite>-->
-<!--    <testsuite name="kernel">-->
-<!--      <file>./tests/TestSuites/KernelTestSuite.php</file>-->
-<!--    </testsuite>-->
-<!--    <testsuite name="functional">-->
-<!--      <file>./tests/TestSuites/FunctionalTestSuite.php</file>-->
-<!--    </testsuite>-->
-<!--    <testsuite name="functional-javascript">-->
-<!--      <file>./tests/TestSuites/FunctionalJavascriptTestSuite.php</file>-->
-<!--    </testsuite>-->
-<!--    <testsuite name="build">-->
-<!--      <file>./tests/TestSuites/BuildTestSuite.php</file>-->
-<!--    </testsuite>-->
+    <testsuite name="functional">
+      <directory>web/modules/nrfc/*/tests/src/Functional</directory>
+    </testsuite>
+    <testsuite name="unit">
+      <directory>web/modules/nrfc/*/tests/src/Functional</directory>
+    </testsuite>
   </testsuites>
   <listeners>
     <listener class="\Drupal\Tests\Listeners\DrupalListener">
@@ -87,22 +78,11 @@
   <!-- Settings for coverage reports. -->
   <coverage>
     <include>
-      <directory>./includes</directory>
-      <directory>./lib</directory>
-      <directory>./modules</directory>
-      <directory>../modules</directory>
-      <directory>../sites</directory>
+      <directory>./web/modules/nrfc</directory>
     </include>
     <exclude>
-      <directory>./modules/*/src/Tests</directory>
-      <directory>./modules/*/tests</directory>
-      <directory>../modules/*/src/Tests</directory>
-      <directory>../modules/*/tests</directory>
-      <directory>../modules/*/*/src/Tests</directory>
-      <directory>../modules/*/*/tests</directory>
-      <directory suffix=".api.php">./lib/**</directory>
-      <directory suffix=".api.php">./modules/**</directory>
-      <directory suffix=".api.php">../modules/**</directory>
+      <directory>./web/modules/nrfc/tests</directory>
+      <directory>./web/modules/nrfc/*/src/Routing</directory>
     </exclude>
   </coverage>
 </phpunit>

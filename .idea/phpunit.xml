@@ -4,6 +4,9 @@
     <option name="directories">
       <list>
         <option value="$PROJECT_DIR$/tests" />
+        <option value="$PROJECT_DIR$/web/modules/nrfc/tests" />
+        <option value="$PROJECT_DIR$/web/modules/nrfc/nrfc_fixtures/tests" />
+        <option value="$PROJECT_DIR$/web/modules/nrfc/nrfc_league_table_scraper/tests" />
       </list>
     </option>
   </component>

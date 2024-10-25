@@ -38,7 +38,7 @@ final class FixturesController extends ControllerBase {
    */
   public static function create(\Symfony\Component\DependencyInjection\ContainerInterface $container) {
     return new static(
-      $container->get('logger.channel_nrfc'),
+      $container->get('logger.channel.nrfc'),
       $container->get('nrfc.nrfc'),
       $container->get('nrfc_fixtures.repo'),
     );

@@ -8,7 +8,6 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * Configure site information settings for this site.
  *
@@ -54,7 +53,6 @@ final class NrfcLeagueTableScraperForm extends ConfigFormBase
    */
   public function buildForm(array $form, FormStateInterface $form_state)
   {
-
     $form['england_rfu_target'] = [
       '#type' => 'details',
       '#title' => $this->t('England RFU target'),

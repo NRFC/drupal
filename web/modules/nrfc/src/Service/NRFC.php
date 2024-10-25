@@ -5,7 +5,6 @@ namespace Drupal\nrfc\Service;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannel;
 use Drupal\node\Entity\Node;
-use Drupal\taxonomy\Entity\Term;
 
 final class NRFC {
 

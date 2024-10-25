@@ -710,6 +710,7 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
    '^.+\.nrfc\.test$',
    '^norwichrugby\.org$',
    '^.+\.norwichrugby\.org$',
+   'localhost',
  ];
 
 /**
@@ -822,6 +823,7 @@ $settings_path = $app_root . '/' . $site_path;
 $settings_files = scandir($settings_path, SCANDIR_SORT_ASCENDING,);
 foreach ($settings_files as $settings_file) {
   if ($settings_file !== "settings.php" && str_starts_with($settings_file, 'settings')) {
+//    print($settings_file . "\n");
     include $settings_path . "/" . $settings_file;
   }
 }

@@ -4,30 +4,26 @@ declare(strict_types=1);
 
 namespace Drupal\nrfc_fixtures\Entity;
 
-use Drupal\Core\Entity\EntityRepository;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Entity\Query\QueryInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\Plugin\Context\ContextRepositoryInterface;
 use Drupal\node\Entity\Node;
 use Drupal\nrfc\Service\NRFC;
-use Drupal\nrfc\Unit\MockTerm;
 use Drupal\taxonomy\Entity\Term;
-use Exception;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class NRFCFixturesRepo {
+/** @phpstan-consistent-constructor */
+class NRFCFixturesRepo implements ContainerInjectionInterface {
 
   private EntityTypeManagerInterface $entityTypeManager;
+
   private LoggerChannel $logger;
 
   private array $termList = [];
 
-
   public function __construct(
     EntityTypeManagerInterface $entityTypeManager,
-    LoggerChannel $logger
-
+    LoggerChannel $logger,
   ) {
     $this->entityTypeManager = $entityTypeManager;
     $this->logger = $logger;
@@ -37,121 +33,87 @@ class NRFCFixturesRepo {
     return sprintf("%s - %s [%d]", date("d/m/y", $report->getChangedTime()), $report->getTitle(), $report->id());
   }
 
-  public function fixturesToArray(array $fixtures): array {
-    $data = [];
-    foreach ($fixtures as $fixture) {
-      $data[] = $this->fixtureToArray($fixture);
+  public function createOrUpdateFixture(array $fixtureData, Node $team): NRFCFixtures {
+    // TODO Refactor all this, better validation and error handling
+    $nid = $fixtureData['nid'] ?? "";
+    $team_nid = $team->id();
+    $date = $fixtureData["date"] ?? "";
+    $ko = $fixtureData["ko"] ?? "";
+    $ha = strtolower($fixtureData["home"]) === "a" ? "Away" : "Home";
+    $match_type = $this->parseType($fixtureData["match_type"]);
+    $opponent = $fixtureData["opponent"] ?? "";
+    $result = $fixtureData["result"] ?? "";
+    $report = $this->getReportId($fixtureData["report"] ?? "");
+    $referee = $fixtureData["referee"] ?? "";
+    $food = $fixtureData["food"] ?? "";
+    $food_notes = $fixtureData["food_notes"] ?? "";
+
+    $node = FALSE;
+    if ($nid) {
+      /** @var $node NRFCFixtures */
+      $node = $this->entityTypeManager->getStorage('nrfc_fixtures')
+        ->load($nid);
     }
-    return $data;
-  }
 
-  public function fixtureToArray(NRFCFixtures $fixture): array {
-    return [
-      'nid' => $fixture->id(),
-      'team_nid' => $fixture->team_nid,
-      'date' => $fixture->date->value,
-      'ko' => $fixture->ko->value,
-      'home' => $fixture->home->value,
-      'match_type' => $fixture->match_type->value,
-      'opponent' => $fixture->opponent->value,
-      'result' => $fixture->result->value,
-      'report' => $fixture->report->target_id,
-      'referee' => $fixture->referee->value,
-      'food' => $fixture->food->value,
-      'food_notes' => $fixture->food_notes->value,
-    ];
-  }
-
-  public function getFixturesForTeam(Node|int $team): array {
-    $team = self::teamOrNid($team);
-    return $this->entityTypeManager->getStorage("nrfc_fixtures")
-      ->loadMultiple($this->getQuery()
-        ->condition('team_nid', $team->id())
-        ->accessCheck(TRUE)
-        ->execute());
-  }
-
-  private static function teamOrNid(Node|int $team): Node {
-    if (!($team instanceof Node)) {
-      $team = Node::load($team);
+    if ($node) {
+      $node->date->value = $date;
+      $node->ko->value = $ko;
+      $node->home->value = $ha;
+      $node->match_type->value = $match_type;
+      $node->opponent->value = $opponent;
+      $node->result->value = $result;
+      $node->report->target_id = $report;
+      $node->referee->value = $referee;
+      $node->food->value = $food;
+      $node->food_notes->value = $food_notes;
+      $node->save();
+      return $node;
     }
-    return $team;
+    $node = NRFCFixtures::create([
+      'type' => 'nrfc_fixtures',
+      'team_nid' => $team_nid,
+      'date' => $date,
+      'ko' => $ko,
+      'home' => $ha,
+      'match_type' => $match_type,
+      'opponent' => $opponent,
+      'result' => $result,
+      'report' => $report,
+      'referee' => $referee,
+      'food' => $food,
+      'food_notes' => $food_notes,
+    ]);
+    $node->save();
+    return $node;
   }
 
-  public function createOrUpdateFixture(array $fixtureData, Node $team): NRFCFixtures|bool {
-    // TODO Refactor all this, Ocams razor, better validation and error handling
-    try {
-      $team_nid = $team->id();
-      $delete = $fixtureData['delete'] ?? "";
-      $nid = $fixtureData['nid'] ?? "";
-      $date = date("d/m/Y", strtotime($fixtureData["date"] ?? ""));
-      $ko = $fixtureData["ko"] ?? "";
-      $ha = strtolower($fixtureData["home"]) === "a" ? "Away" : "Home";
-      $match_type = $this->parseType($fixtureData["match_type"]);
-      $opponent = $fixtureData["opponent"] ?? "";
-      $result = $fixtureData["result"] ?? "";
-      $report = $this->getReportId($row["report"] ?? "");
-      $referee = $fixtureData["referee"] ?? "";
-      $food = $fixtureData["food"] ?? "";
-      $food_notes = $fixtureData["food_notes"] ?? "";
-
-      $node = FALSE;
-      if ($nid) {
-        /** @var $node NRFCFixtures */
-        $node = $this->entityTypeManager->getStorage('nrfc_fixtures')
-          ->load($nid);
-      }
-
-      if ($node) {
-        if ($delete) {
-          $node->delete();
-        }
-        else {
-          $node->date->value = $date;
-          $node->ko->value = $ko;
-          $node->home->value = $ha;
-          $node->match_type->value = $match_type;
-          $node->opponent->value = $opponent;
-          $node->result->value = $result;
-          $node->report->target_id = $report;
-          $node->referee->value = $referee;
-          $node->food->value = $food;
-          $node->food_notes->value = $food_notes;
-          $node->save();
-          return $node;
-        }
-      }
-      else {
-        $this->entityTypeManager->getStorage('nrfc_fixtures')->create([
-          'type' => 'nrfc_fixtures',
-          'team_nid' => $team_nid,
-          'date' => $date,
-          'ko' => $ko,
-          'home' => $ha,
-          'match_type' => $match_type,
-          'opponent' => $opponent,
-          'result' => $result,
-          'report' => $report,
-          'referee' => $referee,
-          'food' => $food,
-          'food_notes' => $food_notes,
-        ])->save();
-        return $node;
-      }
-    }
-    catch (Exception $e) {
-      $this->logger->error($e->getMessage());
-      return FALSE;
-    }
-    return TRUE;
+  public function parseType(string $typeString): string {
+    $type = strtoupper($typeString);
+    return match ($type) {
+      "L" => "League",
+      "F" => "Friendly",
+      "FE" => "Festival",
+      "T" => "Tournament",
+      "NC" => "National Cup",
+      "CC" => "County Cup",
+      "C" => "Cup",
+      default => "",
+    };
   }
 
-  public function getReportId(string $report): ?int {
+  public function getReportId(string $report): int {
     $elements = explode(" ", $report);
-    if (count($elements)) {
-      return intval(preg_replace("/[^0-9 ]/", '', array_pop($elements)));
-    }
-    return NULL;
+    return intval(preg_replace("/[^0-9 ]/", '', array_pop($elements)));
+  }
+
+  /**
+   * @codeCoverageIgnore
+   */
+  public static function create(ContainerInterface $container): static {
+    return new static(
+      $container->get('nrfc_fixtures.repo'),
+      $container->get('logger.channel.nrfc'),
+    );
   }
 
   public function deleteAll($team): void {
@@ -163,12 +125,11 @@ class NRFCFixturesRepo {
     }
   }
 
-
   /**
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function getFixturesByTermName(string|Node $term): array {
+  public function getFixturesByTermName(string|Term $term): array {
     // Get term
     if (!$term instanceof Term) {
       $term = $this->caseInsensitiveTeamSectionSearch($term);
@@ -179,8 +140,8 @@ class NRFCFixturesRepo {
       ->loadTree(
         NRFC::TEAM_SECTION_ID,
         $term->id(),
-        null,
-        true
+        NULL,
+        TRUE
       );
     $tids = [
       $term->id(),
@@ -191,7 +152,6 @@ class NRFCFixturesRepo {
         $children
       ),
     ];
-
     // Get all teams under that term
     /*
       TODO - this query doesn't work
@@ -211,62 +171,91 @@ class NRFCFixturesRepo {
     $fixtures = [];
     // Filter teams for those with a term or parent term that matches. See comment above, we should be able to fold this into the DB query
     foreach ($teams as $index => $team) {
-      $sections = $team->get('field_section')->getValue();
-      if (count($sections) === 0) {
-        $this->logger->error(sprintf(
-          "No team section found for term '%s'.",
-          $team->getTitle())
-        );
-        continue;
-      }
-      else {
-        if (count($sections) > 1) {
-          $this->logger->warning(sprintf(
-            "Multiple sections found for term '%s'.",
-            $team->getTitle())
+      if ($team->hasField('field_section')) {
+        $sections = $team->get('field_section')->getValue();
+        if (count($sections) === 0) {
+          $this->logger->error(sprintf(
+              "No team section found for term '%s'.",
+              $team->getTitle())
           );
+          continue;
         }
-      }
-      $tid = array_pop($sections[0]);
-      if (!in_array($tid, $tids)) {
-        unset($teams[$index]);
-      }
-      else {
-        $fixtures[$team->getTitle()] = $this->getFixturesForTeam($team);
+        else {
+          if (count($sections) > 1) {
+            $this->logger->warning(sprintf(
+                "Multiple sections found for term '%s'.",
+                $team->getTitle())
+            );
+          }
+        }
+        $tid = array_pop($sections[0]);
+        if (!in_array($tid, $tids)) {
+          unset($teams[$index]);
+        }
+        else {
+          $fixtures[$team->getTitle()] = $this->getFixturesForTeam($team);
+        }
       }
     }
     return $fixtures;
   }
 
-  public function caseInsensitiveTeamSectionSearch($name): Term|MockTerm|null { // FIXME - get rid of MockTerm
+  public function caseInsensitiveTeamSectionSearch($name): Term|null {
+    $_name = strtolower($name);
     if (count($this->termList) == 0) {
       /* @var Term[] $terms */
       $terms = $this->entityTypeManager->getStorage('taxonomy_term')
-        ->loadTree(NRFC::TEAM_SECTION_ID);
+        ->loadTree(NRFC::TEAM_SECTION_ID, load_entities: TRUE);
       foreach ($terms as $term) {
-        $this->termList[strtolower($term->name)] = $term;
+        $this->termList[strtolower($term->getName())] = $term;
       }
     }
-    if (in_array($name, array_keys($this->termList))) {
-      return Term::load($this->termList[$name]->tid);
+    if (in_array(strtolower($_name), array_keys($this->termList))) {
+      return $this->termList[$_name];
     }
-    $this->logger->warning("No section found for " . $name);
+    $this->logger->warning("No section found for " . $_name);
     return NULL;
   }
 
-  public function parseType(string $typeString): string {
-    $type = strtoupper($typeString);
-    return match ($type) {
-      "L" => "League",
-      "F" => "Friendly",
-      "FE" => "Festival",
-      "T" => "Tournament",
-      "NC" => "National Cup",
-      "CC" => "County Cup",
-      "C" => "Cup",
-      default => "",
-    };
+  public function getFixturesForTeam(Node|int $team): array {
+    $team = self::teamOrNid($team);
+    $fixtures = NRFCFixtures::loadMultiple(
+      $this
+        ->entityTypeManager
+        ->getStorage("nrfc_fixtures")
+        ->getQuery()
+        ->condition('team_nid', $team->id())
+        ->accessCheck(TRUE)
+        ->execute());
+    return array_map(function($fix) {
+      $this->fixtureToArray($fix);
+    }, $fixtures);
   }
 
+  private static function teamOrNid(Node|int $team): Node {
+    if (!($team instanceof Node)) {
+      $team = Node::load($team);
+    }
+    return $team;
+  }
+
+  /** @noinspection MissingServiceXml */
+
+  public function fixtureToArray(NRFCFixtures $fixture): array {
+    return [
+      'nid' => $fixture->id(),
+      'team_nid' => $fixture->team_nid,
+      'date' => $fixture->date->value,
+      'ko' => $fixture->ko->value,
+      'home' => $fixture->home->value,
+      'match_type' => $fixture->match_type->value,
+      'opponent' => $fixture->opponent->value,
+      'result' => $fixture->result->value,
+      'report' => $fixture->report->target_id,
+      'referee' => $fixture->referee->value,
+      'food' => $fixture->food->value,
+      'food_notes' => $fixture->food_notes->value,
+    ];
+  }
 
 }

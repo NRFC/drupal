@@ -1,6 +1,6 @@
-<ul>
+<ul id="nrfc-fixtures-team-index">
   {% for team in teams %}
-    <li><a href="{{ url(
+    <li style="margin-bottom: 10px;"><a href="{{ url(
         'nrfc_fixtures.admin_page.team',
         {'team':team.id}
       ) }}">{{ team.getTitle }}</a></li>

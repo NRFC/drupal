@@ -12,6 +12,6 @@ services:
     arguments:
       - '@http_client'
       - '@database'
-      - '@logger.channel_nrfc'
+      - '@logger.channel.nrfc'
     tags:
       - { name: nrfc_league_table_scraper_engine }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="enGB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ head_title }}</title>
+  {{ attach_library('my_skeleton_theme/global-styling') }}
+</head>
+<body>
+  <header>
+    <div class="super-top">
+      <img src="{{ base_path ~ directory }}/images/logo.png" alt="Site Logo" />
+      {{ page.top_right }}
+    </div>
+    <div class="header-content">
+      {{ page.header }}
+    </div>
+  </header>
+  <main>
+    <div class="content">
+      {{ page.content }}
+    </div>
+  </main>
+  <footer>
+    <div class="footer-content">
+      {{ page.footer }}
+    </div>
+  </footer>
+</body>
+</html>
