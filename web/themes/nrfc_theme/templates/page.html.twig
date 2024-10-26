@@ -1,30 +1,34 @@
 <!DOCTYPE html>
 <html lang="enGB">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ head_title }}</title>
-  {{ attach_library('my_skeleton_theme/global-styling') }}
+  <title>{{ head_title|safe_join(' | ') }}</title>
+  <head-placeholder token="{{ placeholder_token }}">
+    <css-placeholder token="{{ placeholder_token }}">
+      <js-placeholder token="{{ placeholder_token }}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {{ attach_library('nrfc_theme/global-styling') }}
 </head>
 <body>
-  <header>
-    <div class="super-top">
-      <img src="{{ base_path ~ directory }}/images/logo.png" alt="Site Logo" />
-      {{ page.top_right }}
-    </div>
-    <div class="header-content">
-      {{ page.header }}
-    </div>
-  </header>
-  <main>
-    <div class="content">
-      {{ page.content }}
-    </div>
-  </main>
-  <footer>
-    <div class="footer-content">
-      {{ page.footer }}
-    </div>
-  </footer>
+<header>
+  <div class="super-top">
+    <img src="{{ base_path ~ directory }}/images/logo.png" alt="Site Logo"/>
+    <div>{{ page.top_right }}</div>
+  </div>
+  <div class="header-content">
+    <div class="founded">Founded<br />1885</div>
+    {{ page.header }}
+  </div>
+</header>
+<main>
+  <div class="content" style="border: 2px green solid">
+    {{ page.content }}
+  </div>
+</main>
+<footer>
+  <div class="footer-content" style="border: 2px yellow solid">
+    {{ page.footer }}
+  </div>
+</footer>
 </body>
 </html>

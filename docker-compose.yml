@@ -20,12 +20,17 @@ services:
     volumes:
       - ./web:/opt/drupal/web
     depends_on: [db]
+    restart: unless-stopped
 
 volumes:
   db-data:
 
-# openssl aes-256-cbc -d -a -in $(ls -rt etc/ansible/playbooks/backups/dev/var/tmp/dumps/*.sql.gz.enc) -out .docker/initdb.d/dump.sql -pass pass:$(cat .crypt-password)
-# mysql -uroot -p${MYSQL_ROOT_PASSWORD} -P3396 -h127.0.0.1 -e "drop database ${MYSQL_DATABASE}"
-# mysql -uroot -p${MYSQL_ROOT_PASSWORD} -P3396 -h127.0.0.1 -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE}"
-# mysql -uroot -p${MYSQL_ROOT_PASSWORD} -P3396 -h127.0.0.1 drupal < /tmp/dump.sql
-# drush cr
+# source .env
+# mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -P3396 -h127.0.0.1 -e "drop database ${MYSQL_DATABASE}"
+# mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -P3396 -h127.0.0.1 -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE}"
+# mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -P3396 -h127.0.1 drupal < etc/docker/initdb.d/dump.sql
+# docker compose exec drupal /opt/drupal/vendor/bin/drush cr
+#
+# docker compose exec drupal /opt/drupal/vendor/bin/drush upwd $USER password
+#  or
+# docker compose exec drupal /opt/drupal/vendor/bin/drush user:create $USER --mail='$USER@$HOSTNAME' --password='password'

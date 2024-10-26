@@ -7,6 +7,7 @@ packages:
   - nrfc
 regions:
   top_right: 'Top Right'
+  top_menu: 'Top Menu'
   header: 'Header'
   content: 'Content'
   footer: 'Footer'
