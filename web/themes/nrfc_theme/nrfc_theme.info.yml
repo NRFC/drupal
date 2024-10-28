@@ -9,6 +9,7 @@ regions:
   top_right: 'Top Right'
   top_menu: 'Top Menu'
   header: 'Header'
+  header_bottom: 'Header Bottom'
   content: 'Content'
   footer: 'Footer'
 
