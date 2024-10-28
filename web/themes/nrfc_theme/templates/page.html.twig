@@ -16,11 +16,17 @@
     <div>{{ page.top_right }}</div>
   </div>
   <div class="header-content">
-    <div class="founded">Founded<br />1885</div>
+    <div class="founded">Founded<br/>1885</div>
     {{ page.header }}
   </div>
   <div class="header-bottom">
-    aaa{{ header_bottom }}ss
+    <img class="bg_fade"
+         src="{{ base_path ~ directory }}/images/article-banner-pattern-transparent.png"
+         alt="Header background image"/>
+    {{ header_bottom }}
+    {% if settings.logo %}
+      <img src="{{ file_url(settings.logo.entity.uri.value) }}" alt="Logo">
+    {% endif %}
   </div>
 </header>
 <main>

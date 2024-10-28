@@ -1,8 +1,48 @@
 <?php
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\file\Entity\File;
+
 /**
- * Implements hook_preprocess_HOOK() for page templates.
+ * Implements hook_form_FORM_ID_alter().
  */
-function my_skeleton_theme_preprocess_page(array &$variables) {
-  // Custom preprocess logic can go here.
+function nrfc_theme_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+  $header_file_url = _get_header_image_file();
+
+  $form["nrfc_front_page"] = [
+    "#title" => t("Front page"),
+    "#type" => "fieldset",
+  ];
+
+  if ($header_file_url) {
+    $form["nrfc_front_page"]['nrfc_theme_header_image_current'] = [
+      '#markup' => "<img src='" . $header_file_url . "' alt='Current header image' />",
+    ];
+  }
+
+  $form["nrfc_front_page"]['nrfc_theme_header_image'] = [
+    '#type' => 'managed_file',
+    '#title' => t('Upload the front page header image'),
+    '#description' => t('Upload an image to be used in masthead on the index page.'),
+    //    '#default_value' => \Drupal::config('nrfc_theme.settings')
+    //      ->get('header_image'),
+    '#upload_location' => 'public://nrfc_theme_images/',
+    '#multiple' => FALSE,
+    '#default_value' => theme_get_setting('nrfc_theme_header_image'),
+    '#upload_validators' => [
+      'file_validate_extensions' => ['gif png jpg jpeg'],
+    ],
+  ];
+}
+
+function _get_header_image_file() {
+  $image_ids = theme_get_setting('nrfc_theme_header_image');
+  //,\Drupal::config('nrfc_theme.settings')->get('header_image');
+
+  if (!empty($image_ids)) {
+    $file = File::load($image_ids[0]);
+    if ($file) {
+      return \Drupal::service('file_url_generator')->generate($file->getFileUri())->toString();
+    }
+  }
 }
