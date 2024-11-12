@@ -42,7 +42,31 @@ function _get_header_image_file() {
   if (!empty($image_ids)) {
     $file = File::load($image_ids[0]);
     if ($file) {
-      return \Drupal::service('file_url_generator')->generate($file->getFileUri())->toString();
+      return \Drupal::service('file_url_generator')
+        ->generate($file->getFileUri())
+        ->toString();
     }
+  }
+}
+
+//function nrfc_theme_extend_variables(&$variables) {
+//  $theme_name = \Drupal::theme()->getActiveTheme()->getName();
+//  $theme_settings = \Drupal::config($theme_name . '.settings');
+//  CacheableMetadata::createFromRenderArray($variables)
+//    ->addCacheableDependency($theme_settings)
+//    ->applyTo($variables);
+//  // Union all theme setting variables to the twig template variables.
+//  $variables += $theme_settings->getOriginal();
+//}
+
+function nrfc_theme_preprocess_page(&$variables) {
+  // extend twig variables with theme settings
+  // nrfc_theme_extend_variables($variables);
+  $nrfc_theme_header_image_id = theme_get_setting('nrfc_theme_header_image');
+  if ($nrfc_theme_header_image_id && count($nrfc_theme_header_image_id) > 0) {
+    $file = File::load($nrfc_theme_header_image_id[0]);
+    $url = $file->getFileUri();
+    $header_image = $url;
+    $variables["nrfc_theme_header_image"] = $header_image;
   }
 }

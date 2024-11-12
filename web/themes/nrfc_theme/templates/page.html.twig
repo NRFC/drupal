@@ -24,8 +24,8 @@
          src="{{ base_path ~ directory }}/images/article-banner-pattern-transparent.png"
          alt="Header background image"/>
     {{ header_bottom }}
-    {% if settings.logo %}
-      <img src="{{ file_url(settings.logo.entity.uri.value) }}" alt="Logo">
+    {% if nrfc_theme_header_image %}
+      <img src="{{ file_url(nrfc_theme_header_image.entity.uri.value) }}" alt="Logo">
     {% endif %}
   </div>
 </header>
